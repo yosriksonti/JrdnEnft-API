@@ -1,5 +1,7 @@
 package tn.kindergarten.spring.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -29,13 +31,19 @@ public class Doctor extends ProfilAdmin {
 
 
 
+
+
+
+
 	public Doctor(String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, RoleAdmin roleA,boolean Availability ) {
-		super(name, lastname, phonenumber, email, address, password, image, cin, login, roleA);
-		
-		this.Availability=Availability;
+			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
+		super(name, lastname, phonenumber, email, address, password, image, cin, login, birthday, roleA);
 		// TODO Auto-generated constructor stub
 	}
+
+
+
+
 
 
 	
