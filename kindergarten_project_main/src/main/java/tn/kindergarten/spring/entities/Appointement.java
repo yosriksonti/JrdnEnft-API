@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,8 +21,10 @@ public class Appointement implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="dd/MM/yy")
 	private Date date;
-	private int idParent;
-	private int idmaneger;
+	@OneToOne
+	private Parent Parent;
+	@OneToOne
+	private ProfilAdmin maneger;
 	public int getId() {
 		return id;
 	}
@@ -34,27 +37,23 @@ public class Appointement implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public int getIdParent() {
-		return idParent;
-	}
-	public void setIdParent(int idParent) {
-		this.idParent = idParent;
-	}
-	public int getIdmaneger() {
-		return idmaneger;
-	}
-	public void setIdmaneger(int idmaneger) {
-		this.idmaneger = idmaneger;
-	}
+	
+	
 	public Appointement() {
 		super();
 	}
-	public Appointement(Date date, int idParent, int idmaneger) {
+	
+	
+	
+	
+	
+	public Appointement(Date date, Parent idParent, ProfilAdmin idmaneger) {
 		super();
 		this.date = date;
-		this.idParent = idParent;
-		this.idmaneger = idmaneger;
+		this.Parent = idParent;
+		this.maneger = idmaneger;
 	}
+	
 	
 	
 }

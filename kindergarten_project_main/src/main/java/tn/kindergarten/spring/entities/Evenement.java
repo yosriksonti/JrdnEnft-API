@@ -2,11 +2,14 @@ package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,11 +26,25 @@ public class Evenement implements Serializable{
 	@JsonFormat(pattern="dd/MM/yy")
 	private Date date;
 	private String image;
-	private int idorganisateur;
-    private String nameorganisateur;
 	private String nbParticipant;
 	private String atelier;
+	@ManyToOne
+	private ProfilAdmin profiladmin;
+	@ManyToMany
+	private List<Parent> parents;
 	
+	public ProfilAdmin getProfiladmin() {
+		return profiladmin;
+	}
+	public void setProfiladmin(ProfilAdmin profiladmin) {
+		this.profiladmin = profiladmin;
+	}
+	public List<Parent> getParents() {
+		return parents;
+	}
+	public void setParents(List<Parent> parents) {
+		this.parents = parents;
+	}
 	public  int getId() {
 		return id;
 	}
@@ -72,18 +89,7 @@ public class Evenement implements Serializable{
 		this.atelier = atelier;
 	}
 	
-	public int getIdorganisateur() {
-		return idorganisateur;
-	}
-	public void setIdorganisateur(int idorganisateur) {
-		this.idorganisateur = idorganisateur;
-	}
-	public String getNameorganisateur() {
-		return nameorganisateur;
-	}
-	public void setNameorganisateur(String nameorganisateur) {
-		this.nameorganisateur = nameorganisateur;
-	}
+	
 	public Evenement(String name, String type, Date date, String image, String organisateur, String nbParticipant,
 			String atelier) {
 		super();
@@ -102,15 +108,14 @@ public class Evenement implements Serializable{
 	
 	
 	
-	public Evenement(String name, String type, Date date, String image, int idorganisateur, String nameorganisateur,
+	public Evenement(String name, String type, Date date, String image, 
 			String nbParticipant, String atelier) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.date = date;
 		this.image = image;
-		this.idorganisateur = idorganisateur;
-		this.nameorganisateur = nameorganisateur;
+		
 		this.nbParticipant = nbParticipant;
 		this.atelier = atelier;
 	}
