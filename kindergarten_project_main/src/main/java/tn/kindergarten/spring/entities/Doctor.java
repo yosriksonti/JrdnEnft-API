@@ -3,6 +3,7 @@ package tn.kindergarten.spring.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Doctor extends ProfilAdmin {
@@ -10,9 +11,9 @@ public class Doctor extends ProfilAdmin {
 	private  boolean Availability ;
 	
 	
-	  //@OneToOne
-	 // @JoinColumn(name = "kindergarten_fk")
-	//private Daycare kindergarten;
+	@OneToOne 
+	// @JoinColumn(name=Kindergarten)
+	private Daycare daycare;
 
 	public boolean isAvailability() {
 		return Availability;

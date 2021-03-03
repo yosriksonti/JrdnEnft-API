@@ -1,15 +1,18 @@
 package tn.kindergarten.spring.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,7 +36,18 @@ public class ProfilAdmin {
     private String Image;
     private String cin;
     private String login;
-    @Temporal(TemporalType.DATE)
+    
+    @OneToMany(mappedBy="manager",fetch=FetchType.EAGER )
+	private List<Daycare> daycares;
+    public List<Daycare> getDaycares() {
+		return daycares;
+	}
+
+	public void setDaycares(List<Daycare> daycares) {
+		this.daycares = daycares;
+	}
+
+	@Temporal(TemporalType.DATE)
     private Date birthday;
 	
 	public Date getBirthday() {

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +23,23 @@ public class Favorite implements Serializable {
 	
 	@JsonIgnore
 	//@JsonBackReference
-	@OneToOne(mappedBy="employe")
-	private String kindergarten;
+	@ManyToOne
+	private Daycare daycare;
+	@ManyToOne
+	private Visitor visitor ;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public Visitor getVisitor() {
+		return visitor;
+	}
+	public void setVisitor(Visitor visitor) {
+		this.visitor = visitor;
+	} 
 	
 }
