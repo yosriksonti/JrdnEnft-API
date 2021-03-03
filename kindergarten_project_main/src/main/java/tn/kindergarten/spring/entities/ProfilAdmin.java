@@ -38,7 +38,7 @@ public class ProfilAdmin {
     private String cin;
     private String login;
     
-    @OneToMany(mappedBy="manager",fetch=FetchType.EAGER )
+    @OneToMany(mappedBy="manager" )
 	private List<Daycare> daycares = new ArrayList<Daycare>();
     public List<Daycare> getDaycares() {
 		return daycares;

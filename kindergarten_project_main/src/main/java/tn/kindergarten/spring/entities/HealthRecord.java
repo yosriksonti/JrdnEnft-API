@@ -39,8 +39,10 @@ public class HealthRecord implements Serializable {
 
 	
 	
-	//@OneToOne 
-	//private Daycare idKid;
+	@ManyToOne
+    @JoinColumn(name="daycare_id", nullable=false)
+	private Daycare daycare;
+	
 	
 	
 	@ManyToOne
