@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,12 +27,21 @@ public class Parent implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER )
 	//@NotNull
+	
 	private List<Child> children;
 	
-	@ManyToMany(mappedBy="parents",fetch=FetchType.EAGER )
+	@ManyToOne
 	//@NotNull
-	private List<Daycare> daycares;
+	private Daycare daycare;
 	
+	public Daycare getDaycare() {
+		return daycare;
+	}
+
+	public void setDaycare(Daycare daycare) {
+		this.daycare = daycare;
+	}
+
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private Status Status;
@@ -52,13 +62,7 @@ public class Parent implements Serializable {
 		this.children = children;
 	}
 
-	public List<Daycare> getDaycares() {
-		return daycares;
-	}
 
-	public void setDaycares(List<Daycare> daycares) {
-		this.daycares = daycares;
-	}
 
 	public Status getStatus() {
 		return Status;

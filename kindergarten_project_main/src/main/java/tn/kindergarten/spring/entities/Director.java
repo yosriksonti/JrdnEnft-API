@@ -3,12 +3,13 @@ package tn.kindergarten.spring.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Director extends ProfilAdmin {
 	@OneToOne 
-	// @JoinColumn(name=Kindergarten)
+	 @JoinColumn(name="Kindergarten")
 	private Daycare daycare;
 	public Director() {
 		super();

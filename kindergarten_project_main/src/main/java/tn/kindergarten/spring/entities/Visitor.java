@@ -26,7 +26,7 @@ import tn.kindergarten.spring.entities.Status;
 
 
 @Entity
-public class Visitor extends ProfilAdmin implements Serializable {
+public class Visitor implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

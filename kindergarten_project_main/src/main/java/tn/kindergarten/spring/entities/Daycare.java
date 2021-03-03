@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.FetchType;
@@ -43,8 +44,8 @@ public class Daycare implements Serializable{
 		private ProfilAdmin manager;
 		
 		@JsonIgnore
-		@ManyToMany
-		private List<Parent> parents;
+		@OneToMany
+		private List<Parent> parents = new ArrayList<Parent>();
 		
 		
 		//@JsonBackReference  

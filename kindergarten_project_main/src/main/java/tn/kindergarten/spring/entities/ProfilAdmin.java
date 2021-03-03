@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import javax.persistence.TemporalType;
 
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class ProfilAdmin {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -38,7 +39,7 @@ public class ProfilAdmin {
     private String login;
     
     @OneToMany(mappedBy="manager",fetch=FetchType.EAGER )
-	private List<Daycare> daycares;
+	private List<Daycare> daycares = new ArrayList<Daycare>();
     public List<Daycare> getDaycares() {
 		return daycares;
 	}
