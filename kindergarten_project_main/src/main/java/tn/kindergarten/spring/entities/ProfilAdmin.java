@@ -31,7 +31,12 @@ public class ProfilAdmin {
     private String Address;
     private String Password;
     private String Image;
-    public Date getBirthday() {
+    private String cin;
+    private String login;
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+	
+	public Date getBirthday() {
 		return birthday;
 	}
 
@@ -39,12 +44,6 @@ public class ProfilAdmin {
 		this.birthday = birthday;
 	}
 
-	private String cin;
-    private String login;
-    
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
-	
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private RoleAdmin roleA;
@@ -144,8 +143,10 @@ public class ProfilAdmin {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	public ProfilAdmin(String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, RoleAdmin roleA) {
+			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
 		super();
 		this.name = name;
 		this.lastname = lastname;
@@ -156,6 +157,7 @@ public class ProfilAdmin {
 		Image = image;
 		this.cin = cin;
 		this.login = login;
+		this.birthday = birthday;
 		this.roleA = roleA;
 	}
 	
