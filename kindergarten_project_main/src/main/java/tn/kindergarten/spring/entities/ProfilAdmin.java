@@ -19,37 +19,29 @@ import javax.persistence.TemporalType;
 
 
 
-@Entity
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class ProfilAdmin {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int id; 
 	
-	private String name;
-	private String lastname;
-	private int phonenumber;
+	protected String name;
+	protected String lastname;
+	protected int phonenumber;
 	
 	//@Column(unique=true)
-	private String email;
-    private String Address;
-    private String Password;
-    private String Image;
-    private String cin;
-    private String login;
-    
-    @OneToMany(mappedBy="manager" )
-	private List<Daycare> daycares = new ArrayList<Daycare>();
-    public List<Daycare> getDaycares() {
-		return daycares;
-	}
+	protected String email;
+	protected String Address;
+	protected String Password;
+	protected String Image;
+	protected String cin;
+	protected String login;
 
-	public void setDaycares(List<Daycare> daycares) {
-		this.daycares = daycares;
-	}
 
 	@Temporal(TemporalType.DATE)
-    private Date birthday;
+	protected Date birthday;
 	
 	public Date getBirthday() {
 		return birthday;
@@ -61,16 +53,8 @@ public class ProfilAdmin {
 
 	@Enumerated(EnumType.STRING)
 	//@NotNull
-	private RoleAdmin roleA;
+	protected RoleAdmin roleA;
 	
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 
 	public String getName() {

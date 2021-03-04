@@ -24,7 +24,7 @@ public class Appointement implements Serializable {
 	@OneToOne
 	private Parent Parent;
 	@OneToOne
-	private ProfilAdmin maneger;
+	private Manager maneger;
 	public int getId() {
 		return id;
 	}
@@ -51,7 +51,7 @@ public class Appointement implements Serializable {
 		super();
 		this.date = date;
 		this.Parent = idParent;
-		this.maneger = idmaneger;
+		this.maneger = (Manager) idmaneger;
 	}
 	
 	

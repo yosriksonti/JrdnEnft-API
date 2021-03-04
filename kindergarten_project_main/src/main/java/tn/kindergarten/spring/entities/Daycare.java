@@ -42,7 +42,7 @@ public class Daycare implements Serializable{
 		@JsonIgnore
 		@ManyToOne
 		@JoinColumn(name="manager_id", nullable=false)
-		private ProfilAdmin manager;
+		private Manager manager;
 		
 		@JsonIgnore
 		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
@@ -106,11 +106,11 @@ public class Daycare implements Serializable{
 			this.doctor = doctor;
 		}
 
-		public ProfilAdmin getManagers() {
+		public Manager getManager() {
 			return manager;
 		}
 
-		public void setManagers(ProfilAdmin manager) {
+		public void setManager(Manager manager) {
 			this.manager = manager;
 		}
 
