@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,23 +11,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Director extends ProfilAdmin {
+public class Director extends ProfilAdmin implements Serializable {
 	
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean isActive; 
+	
+
+	
+	
+	@Override
 	public int getId() {
-		return id;
+		// TODO Auto-generated method stub
+		return super.getId();
 	}
 
+	@Override
 	public void setId(int id) {
-		this.id = id;
+		// TODO Auto-generated method stub
+		super.setId(id);
 	}
-	
-	
-	
 
 	@Override
 	public String getName() {

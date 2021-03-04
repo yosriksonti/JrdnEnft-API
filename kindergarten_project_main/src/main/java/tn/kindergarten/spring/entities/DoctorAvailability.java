@@ -79,6 +79,22 @@ public class DoctorAvailability implements Serializable {
 	public void setEndwork(Date endwork) {
 		this.endwork = endwork;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Doctor getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Doctor doc) {
+		this.doc = doc;
+	}
 	
 	
 	

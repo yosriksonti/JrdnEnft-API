@@ -13,14 +13,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 
-
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ProfilAdmin {
 
 	@Id
@@ -46,6 +47,20 @@ public class ProfilAdmin {
 	public Date getBirthday() {
 		return birthday;
 	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
