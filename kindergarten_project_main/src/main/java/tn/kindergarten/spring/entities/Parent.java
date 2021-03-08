@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,6 +22,10 @@ public class Parent implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	private String email;
+	private String password;
+	
+	
 	//@JsonBackReference  
 	@JsonIgnore
 	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER )
@@ -33,18 +36,22 @@ public class Parent implements Serializable {
 	@ManyToOne
 	//@NotNull
 	private Daycare daycare;
-	
-	public Daycare getDaycare() {
-		return daycare;
-	}
-
-	public void setDaycare(Daycare daycare) {
-		this.daycare = daycare;
-	}
 
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private Status Status;
+
+	public Parent() {}
+
+	public Parent(int id, String email, String password, List<Child> children, Daycare daycare,
+			tn.kindergarten.spring.entities.Status status) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.children = children;
+		this.daycare = daycare;
+		Status = status;
+	}
 
 	public int getId() {
 		return id;
@@ -52,6 +59,22 @@ public class Parent implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Child> getChildren() {
@@ -62,7 +85,13 @@ public class Parent implements Serializable {
 		this.children = children;
 	}
 
+	public Daycare getDaycare() {
+		return daycare;
+	}
 
+	public void setDaycare(Daycare daycare) {
+		this.daycare = daycare;
+	}
 
 	public Status getStatus() {
 		return Status;
@@ -71,6 +100,10 @@ public class Parent implements Serializable {
 	public void setStatus(Status status) {
 		Status = status;
 	}
+	
+	
 
+	
+	
 
 }
