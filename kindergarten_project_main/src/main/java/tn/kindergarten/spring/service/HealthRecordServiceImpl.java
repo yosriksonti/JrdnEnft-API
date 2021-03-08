@@ -50,6 +50,12 @@ public class HealthRecordServiceImpl implements IHealthRecordService {
 		// TODO Auto-generated method stub
 		return (List<HealthRecord>) healthR.findAll();
 	}
+
+	@Override
+	public HealthRecord findHealthRecord(int HealthRecordId) {
+		
+		return null;
+	}
 	
 	
 	
