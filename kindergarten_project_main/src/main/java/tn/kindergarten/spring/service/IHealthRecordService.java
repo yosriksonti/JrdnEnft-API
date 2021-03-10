@@ -11,6 +11,7 @@ public interface IHealthRecordService {
 	public void ModifyHealthRecordById(int HealthRecordId , Date AppointDate ,  String description,String etat,String images);
 	public void DeleteHealthRecordById(int HealthRecordId);
 	public List<HealthRecord> getAllHealthRecords() ;
+	public HealthRecord findHealthRecord(int HealthRecordId);
 	
 
 }

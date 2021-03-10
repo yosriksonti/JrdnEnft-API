@@ -39,5 +39,12 @@ public class RestDirectorController {
 	{
 		return idirectorservice.getDirectorById(id);
 	}
-
+	
+	
+	@GetMapping("/AllDirector")
+	@ResponseBody
+	public Director getAll(@PathVariable("id") int id )
+	{
+		return idirectorservice.getDirectorById(id);
+	}
 }

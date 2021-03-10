@@ -12,6 +12,7 @@ public interface IDoctorService {
 			String image);
 	public void DeleteDoctorById(int docId);
 	public List<Doctor> getAllDoctor();
-	;
+	public Doctor findDoctor(int docId);
+	
 
 }
