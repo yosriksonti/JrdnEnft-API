@@ -8,11 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +31,8 @@ public class Daycare implements Serializable{
 	private String reputation;
 	
 	private int nbReclamations ;
-	
+
+
 	//@JsonBackReference  
 	@JsonIgnore
 	@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
@@ -41,9 +42,43 @@ public class Daycare implements Serializable{
 	//@JsonBackReference  
 		@JsonIgnore
 		@ManyToOne
-		@JoinColumn(name="manager_id", nullable=false)
+		@JoinColumn(name="manager_id", nullable=true)
 		private Manager manager;
-		
+		@JsonIgnore
+		@ManyToMany
+		@JoinColumn(name="favorite_id", nullable=true)
+
+		private List <Favorite> favorites;
+		public Daycare
+		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
+				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
+				Director director) {
+			super();
+			this.id = id;
+			this.region = region;
+			this.logo = logo;
+			this.reputation = reputation;
+			this.nbReclamations = nbReclamations;
+			this.doctor = doctor;
+			this.manager = manager;
+			this.favorites = favorites;
+			this.parents = parents;
+			this.healthRecords = healthRecords;
+			this.director = director;
+		}
+		public List<Favorite> getFavorites() {
+			return favorites;
+		}
+		public void setFavorites(List<Favorite> favorites) {
+			this.favorites = favorites;
+		}
+		public List<HealthRecord> getHealthRecords() {
+			return healthRecords;
+		}
+		public void setHealthRecords(List<HealthRecord> healthRecords) {
+			this.healthRecords = healthRecords;
+		}
+
 		@JsonIgnore
 		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
 		private List<Parent> parents = new ArrayList<Parent>();
@@ -57,7 +92,10 @@ public class Daycare implements Serializable{
 		@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
 		//@NotNull
 		private Director director;
-
+		public Daycare() {
+			super();
+			
+		}
 		public int getId() {
 			return id;
 		}
