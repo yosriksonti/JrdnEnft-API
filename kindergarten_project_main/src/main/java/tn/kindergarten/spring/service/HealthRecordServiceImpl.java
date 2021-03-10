@@ -53,8 +53,13 @@ public class HealthRecordServiceImpl implements IHealthRecordService {
 
 	@Override
 	public HealthRecord findHealthRecord(int HealthRecordId) {
+		HealthRecord hr= healthR.findById(HealthRecordId).get();
+		return hr;
 		
-		return null;
+		
+		
+		
+		
 	}
 	
 	
