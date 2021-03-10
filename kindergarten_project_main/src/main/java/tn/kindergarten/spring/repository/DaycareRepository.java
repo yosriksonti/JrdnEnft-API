@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import tn.kindergarten.spring.entities.Daycare;
 
 @Repository
-public interface DaycareRepository extends CrudRepository<Daycare, Integer> {
+public interface DaycareRepository extends CrudRepository<Daycare, Integer> 
+{
 
 }

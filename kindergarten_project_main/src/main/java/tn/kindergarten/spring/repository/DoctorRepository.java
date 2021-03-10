@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import tn.kindergarten.spring.entities.Doctor;
 
 @Repository
-public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
+public interface DoctorRepository extends CrudRepository<Doctor, Integer> 
+{
 
 }
