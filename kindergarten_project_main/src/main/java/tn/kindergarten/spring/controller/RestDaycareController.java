@@ -3,6 +3,7 @@ package tn.kindergarten.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,10 +52,9 @@ public class RestDaycareController
 
 @GetMapping(value = "/daycares/{id}/path") 
 @ResponseBody
-	public Graph getDaycarePath(@PathVariable("id") int id) 
+	public Map<String,Integer> getDaycarePath(@PathVariable("id") int id) 
 	{
-	
-	return daycareServiceImpl.getShortestPathsChildren(id);
+	return daycareServiceImpl.getShortestPathsChildren(id); 
 	}
 
 @PostMapping(value = "/daycares/add") 

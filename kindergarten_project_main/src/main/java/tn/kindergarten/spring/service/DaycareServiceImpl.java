@@ -1,9 +1,11 @@
 package tn.kindergarten.spring.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -83,7 +85,8 @@ public class DaycareServiceImpl implements IDaycareService
 		 return tmp;
 	}
 	
-	/////////////////// APIs //////////////////////
+	
+	/*////////////////// APIs /////////////////////*/
 	
 	public List<Child> getDaycareChildren(int id){
 		
@@ -150,45 +153,63 @@ public class DaycareServiceImpl implements IDaycareService
 			    }
 			}
 	
-	public Graph getShortestPathsChildren(int daycareId) {
+	public Map<String,Integer> getShortestPathsChildren(int daycareId) {
 		List<Child> daycareChildren = getDaycareChildren(daycareId);
 		Graph graph = new Graph();
 		Node daycareNode = new Node("Daycare");
-		int counter = 0;
+		List<Node> nodes = new ArrayList<Node>();
+		int mainCounter = 0, secondaryCounter = 0;
 		for(Child child : daycareChildren) {
-			Node mainChildNode = new Node(child.getName());
+			nodes.add(new Node(child.getName()));
+		}
+		daycareNode.addDestination(nodes.get(0), 1);
+		int nodesSize = nodes.size();
+		for(Child child : daycareChildren) {
+			Node mainChildNode = nodes.get(mainCounter%nodesSize);
 			for(Child child2 : daycareChildren) {
-				counter++;
 				if(child.getId() != child2.getId()) {
-					Node secondaryChildNode = new Node(child2.getName());
-					mainChildNode.addDestination(secondaryChildNode, counter%10);
+					System.out.println("##################");
+					System.out.println("Main: "+child.getName());
+					System.out.println("Secondary: "+child2.getName());
+					System.out.println("Distance: "+(mainCounter+1)*(secondaryCounter+1));
+					Node secondaryChildNode = nodes.get(secondaryCounter%nodesSize);
+					mainChildNode.addDestination(secondaryChildNode, (mainCounter+1)*(secondaryCounter+1));
 				}
+				secondaryCounter++;
 			}
-			daycareNode.addDestination(mainChildNode, counter%25);
+			mainCounter++;
+			secondaryCounter=0;
 			graph.addNode(mainChildNode);
 		}
 		graph.addNode(daycareNode);
-
-		
-		return calculateShortestPathFromSource(graph, daycareNode);
+		Graph pathGraph = calculateShortestPathFromSource(graph, daycareNode);
+		Map<String,Integer> map = new HashMap<>();
+		for(Node node : pathGraph.getNodes()) {
+			map.put(node.getName(), node.getDistance());
+		}
+		return map;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* Node mainChildNode = new Node(child.getName());
+			if(counter == 0 ) {
+				daycareNode.addDestination(mainChildNode, 1);
+			}
+			for(Child child2 : daycareChildren) {
+				counter++;
+				System.out.println("#####COUNTER: "+counter+"#####");
+				if(child.getId() != child2.getId() && counter%3 == 0) {
+					System.out.println("Main: "+child.getName());
+					System.out.println("Secondary: "+child2.getName());
+					System.out.println("Distance: "+counter);
+					Node secondaryChildNode = new Node(child2.getName());
+					mainChildNode.addDestination(secondaryChildNode, counter);
+				}
+				
+			}
+			graph.addNode(mainChildNode); */
+
+	/*////////////////// APIs /////////////////////*/
+
 	
 	
 	@Autowired

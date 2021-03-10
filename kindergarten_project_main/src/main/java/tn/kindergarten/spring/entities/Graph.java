@@ -11,5 +11,12 @@ public class Graph {
         nodes.add(nodeA);
     }
 
-    // getters and setters 
+	public Set<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(Set<Node> nodes) {
+		this.nodes = nodes;
+	}
+	
 }

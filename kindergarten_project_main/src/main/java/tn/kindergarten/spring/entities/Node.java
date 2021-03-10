@@ -10,7 +10,7 @@ public class Node {
     private String name;
     
     private List<Node> shortestPath = new LinkedList<>();
-    
+        
     private Integer distance = Integer.MAX_VALUE;
     
     Map<Node, Integer> adjacentNodes = new HashMap<>();
