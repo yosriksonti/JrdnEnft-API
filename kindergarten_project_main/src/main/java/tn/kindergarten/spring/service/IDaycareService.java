@@ -2,8 +2,6 @@ package tn.kindergarten.spring.service;
 
 import tn.kindergarten.spring.entities.Favorite;
 
-public interface IDaycareService 
-{
 	
 import java.util.List;
 
@@ -13,9 +11,9 @@ public interface IDaycareService {
 	
 	boolean addDaycare(Daycare daycare);
 	boolean deleteDaycare(int id);
-	boolean updateLogoDaycare(Daycare daycare,int id);
-	Daycare findByid(int id);
+	boolean updateDaycare(Daycare daycare);
+	Daycare findById(int id);
 	List<Daycare> findAll();
-  int affecterDaycareFavoritee(Favorite favorite) ;
+    int affecterDaycareFavoritee(Favorite favorite) ;
 
 }
