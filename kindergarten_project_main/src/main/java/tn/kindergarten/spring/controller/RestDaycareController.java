@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Favorite;
+import tn.kindergarten.spring.entities.Graph;
 import tn.kindergarten.spring.entities.Visitor;
 import tn.kindergarten.spring.service.DaycareServiceImpl;
 @RestController
@@ -47,6 +48,15 @@ public class RestDaycareController
 	
 	return daycareServiceImpl.findById(id);
 	}
+
+@GetMapping(value = "/daycares/{id}/path") 
+@ResponseBody
+	public Graph getDaycarePath(@PathVariable("id") int id) 
+	{
+	
+	return daycareServiceImpl.getShortestPathsChildren(id);
+	}
+
 @PostMapping(value = "/daycares/add") 
 @ResponseBody
 	public boolean addDaycare(@RequestBody Daycare daycare) 

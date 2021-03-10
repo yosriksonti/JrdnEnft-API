@@ -84,6 +84,7 @@ public class DaycareServiceImpl implements IDaycareService
 	}
 	
 	/////////////////// APIs //////////////////////
+	
 	public List<Child> getDaycareChildren(int id){
 		
 		List<Daycare> daycares = findAll();
@@ -149,8 +150,8 @@ public class DaycareServiceImpl implements IDaycareService
 			    }
 			}
 	
-	public Graph getShortestPathsChildren(Daycare daycare) {
-		List<Child> daycareChildren = getDaycareChildren(daycare.getId());
+	public Graph getShortestPathsChildren(int daycareId) {
+		List<Child> daycareChildren = getDaycareChildren(daycareId);
 		Graph graph = new Graph();
 		Node daycareNode = new Node("Daycare");
 		int counter = 0;
