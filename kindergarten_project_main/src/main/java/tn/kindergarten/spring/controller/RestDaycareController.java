@@ -30,16 +30,21 @@ public class RestDaycareController
 @ResponseBody
 	public List<Daycare> getDaycares() 
 	{
+		List<Daycare> daycares =  daycareServiceImpl.findAll();
+		for(Daycare daycare : daycares) {
+			daycare.setManager(null);
+		}
+		return daycares;
 	
-	return daycareServiceImpl.findAll();
 	}
 
 @GetMapping(value = "/daycares/{id}") 
 @ResponseBody
 	public Daycare getDaycare(@PathVariable("id") int id) 
 	{
-	
-	return daycareServiceImpl.findById(id);
+		 Daycare daycare = daycareServiceImpl.findById(id);
+		 daycare.setManager(null);
+		 return daycare;
 	}
 
 @GetMapping(value = "/daycares/child/{id}") 
@@ -47,14 +52,16 @@ public class RestDaycareController
 	public Daycare getDaycareChild(@PathVariable("id") int id) 
 	{
 	
-	return daycareServiceImpl.findById(id);
+		Daycare daycare = daycareServiceImpl.findDaycareChild(id);
+		daycare.setManager(null);
+		return daycare;
 	}
 
 @GetMapping(value = "/daycares/{id}/path") 
 @ResponseBody
 	public Map<String,Integer> getDaycarePath(@PathVariable("id") int id) 
 	{
-	return daycareServiceImpl.getShortestPathsChildren(id); 
+		return daycareServiceImpl.getShortestPathsChildren(id); 
 	}
 
 @PostMapping(value = "/daycares/add") 
@@ -62,7 +69,7 @@ public class RestDaycareController
 	public boolean addDaycare(@RequestBody Daycare daycare) 
 	{
 	
-	return daycareServiceImpl.addDaycare(daycare);
+		return daycareServiceImpl.addDaycare(daycare);
 	//return 1 ;
 	}
 
@@ -71,7 +78,7 @@ public class RestDaycareController
 	public boolean updateDaycare(@RequestBody Daycare daycare) 
 	{
 	
-	return daycareServiceImpl.updateDaycare(daycare);
+		return daycareServiceImpl.updateDaycare(daycare);
 	//return 1 ;
 	}
 
@@ -80,7 +87,7 @@ public class RestDaycareController
 	public boolean deleteDaycare(@PathVariable("id") int id) 
 	{
 	
-	return daycareServiceImpl.deleteDaycare(id);
+		return daycareServiceImpl.deleteDaycare(id);
 	}
 
 @PutMapping(value = "/affecterDaycareFavorite/{DaycareId}") 

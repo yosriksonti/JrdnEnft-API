@@ -50,9 +50,9 @@ public class DaycareServiceImpl implements IDaycareService
 
 	@Override
 	public Daycare findById(int id) {
-		return daycareRepository.findById(id).get();
+		Daycare daycare = daycareRepository.findById(id).get(); 
+		return daycare;
 	}
-	
 	public Daycare findDaycareChild(int idChild) {
 		List<Daycare> daycares = findAll();
 		Daycare daycare = new Daycare();

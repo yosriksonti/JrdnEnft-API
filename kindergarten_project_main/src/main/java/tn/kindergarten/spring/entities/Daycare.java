@@ -40,10 +40,9 @@ public class Daycare implements Serializable{
 	private Doctor doctor;
 	
 	//@JsonBackReference  
-		@JsonIgnore
 		@ManyToOne
-		@JoinColumn(name="manager_id", nullable=true)
 		private Manager manager;
+
 		@JsonIgnore
 		@ManyToMany
 		@JoinColumn(name="favorite_id", nullable=true)
