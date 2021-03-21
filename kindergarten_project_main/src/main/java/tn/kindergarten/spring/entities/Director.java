@@ -174,8 +174,8 @@ public class Director extends ProfilAdmin implements Serializable {
 	}
 
 
-	@OneToOne 
-	 @JoinColumn(name="Kindergarten")
+	@OneToOne
+	@JoinColumn(name="Kindergarten")
 	private Daycare daycare;
 	public Director() {
 		super();

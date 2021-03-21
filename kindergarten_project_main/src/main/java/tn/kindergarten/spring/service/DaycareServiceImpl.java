@@ -85,6 +85,17 @@ public class DaycareServiceImpl implements IDaycareService
 		 return tmp;
 	}
 	
+	public List<Daycare> tmp(int managerId) {
+		 List<Daycare> tmp = (List<Daycare>) daycareRepository.findAll();
+		 List<Daycare> daycares = new ArrayList<Daycare>();
+		 for(Daycare daycare : tmp ) {
+			 if(daycare.getManager().getId() == managerId ) {
+				 daycares.add(daycare);
+			 }
+		 }
+		 return daycares;
+	}
+	
 	
 	/*////////////////// APIs /////////////////////*/
 	
