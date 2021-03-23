@@ -1,10 +1,12 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,16 @@ public class Doctor extends ProfilAdmin implements Serializable {
 
 	
 	private boolean isActive; 
+	
+	@OneToOne 
+	private Daycare daycare;
+	
+	
+	@OneToMany(mappedBy="doc")
+	private List<HealthRecord> healthRecords;
+	
+	@OneToMany(mappedBy="doc" , fetch = FetchType.LAZY)
+	private List<DoctorAvailability> avaibility = new ArrayList<>();
 	
 	
 	
@@ -225,15 +237,7 @@ public class Doctor extends ProfilAdmin implements Serializable {
 		super.setRoleA(roleA);
 	}
 
-	@OneToOne 
-	private Daycare daycare;
-	
-	
-	@OneToMany(mappedBy="doc")
-	private List<HealthRecord> healthRecords;
-	
-	@OneToMany(mappedBy="doc")
-	private List<DoctorAvailability> avaibility;
+
 
 
 	public Doctor() {

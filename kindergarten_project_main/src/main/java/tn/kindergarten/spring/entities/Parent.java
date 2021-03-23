@@ -1,6 +1,7 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+
 @Entity
 public class Parent implements Serializable {
 	
@@ -23,12 +26,24 @@ public class Parent implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+
+	private String email;
+	private String password;
+	
+	
+	
+	@OneToMany(mappedBy="healthrecordsParent")
+	private List<HealthRecord> healthrecords;
+	
+	@OneToMany(mappedBy = "parent" , fetch=FetchType.LAZY)   
+    private List<Appointement> Apps = new ArrayList<>();
+
 	//@JsonBackReference  
 	@JsonIgnore
-	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER )
+	@OneToMany(mappedBy="parent" )
 	//@NotNull
 	
-	private List<Child> children;
+	private List<Child> children= new ArrayList<Child>();
 	
 	@ManyToOne
 	//@NotNull

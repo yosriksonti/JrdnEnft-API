@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import tn.kindergarten.spring.entities.HealthRecord;
+import tn.kindergarten.spring.entities.Parent;
 
 public interface IHealthRecordService {
 	
@@ -12,6 +13,8 @@ public interface IHealthRecordService {
 	public void DeleteHealthRecordById(int HealthRecordId);
 	public List<HealthRecord> getAllHealthRecords() ;
 	public HealthRecord findHealthRecord(int HealthRecordId);
+	
+	public List<Parent> getAllParentsJPQL();
 	
 
 }

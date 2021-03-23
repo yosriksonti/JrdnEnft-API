@@ -49,7 +49,9 @@ public class HealthRecord implements Serializable {
     @JoinColumn(name="doc_id", nullable=false)
 	private Doctor doc;
 	
-
+	@ManyToOne
+	@JoinColumn(name="parent_id", nullable=false)
+	private Parent healthrecordsParent;
 	
 	
 	

@@ -34,7 +34,7 @@ public class Daycare implements Serializable{
 	
 	//@JsonBackReference  
 	@JsonIgnore
-	@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
+	@OneToOne(mappedBy="daycare" )
 	//@NotNull
 	private Doctor doctor;
 	
@@ -45,16 +45,16 @@ public class Daycare implements Serializable{
 		private Manager manager;
 		
 		@JsonIgnore
-		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
+		@OneToMany(mappedBy="daycare")
 		private List<Parent> parents = new ArrayList<Parent>();
 		
 		@OneToMany(mappedBy="daycare")
-		private List<HealthRecord> healthRecords;
+		private List<HealthRecord> healthRecords = new ArrayList<HealthRecord>();
 		
 		
 		//@JsonBackReference  
 		@JsonIgnore
-		@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
+		@OneToOne(mappedBy="daycare" )
 		//@NotNull
 		private Director director;
 
