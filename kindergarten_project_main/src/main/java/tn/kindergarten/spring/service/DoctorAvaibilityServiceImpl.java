@@ -13,9 +13,33 @@ import tn.kindergarten.spring.repository.DoctorRepository;
 @Service
 public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 
+	@Override
+	public int addDoctorAvaibility(DoctorAvailability docAv) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void modifyDoctorAvaibility(boolean docav, Date dateBegin, Date dateEnd, int doctorAvaibilityId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteDoctorAvaibilityById(int doctorAvaibilityId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<DoctorAvailability> getAllDoctorAvaibility() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
-	
+	/*
 	@Autowired
 	DoctorAvaibilityRepository docA;
 	
@@ -58,6 +82,6 @@ public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 		return  (List<DoctorAvailability>) docA.findAll();
 	}
 	
-	
+	*/
 	
 }

@@ -33,7 +33,7 @@ public class AppoitementDoc implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@Column(name = "jour", nullable = false)
 	@Temporal(TemporalType.DATE)
