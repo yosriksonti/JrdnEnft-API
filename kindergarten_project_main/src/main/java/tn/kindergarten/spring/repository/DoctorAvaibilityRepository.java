@@ -11,7 +11,7 @@ import tn.kindergarten.spring.entities.DoctorAvailability;
 @Repository
 public interface DoctorAvaibilityRepository extends CrudRepository<DoctorAvailability, Integer>{
 	
-	@Query("select c from Creneau c where c.medecin.id=?1")
+	@Query("select c from DoctorAvailability c where c.doc.id=?1")
 	List<DoctorAvailability> findAllTimeslotbyDoctor(int idDoctor);
 
 }

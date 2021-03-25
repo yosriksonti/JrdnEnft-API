@@ -44,7 +44,7 @@ public class DoctorAvailability implements Serializable {
 	private Doctor doc;
 	
 	@Column (name = "id_doctor", nullable = false, insertable = false, updatable = false)
-	private long doctor;
+	private int doctor;
 	
 
 	private int hdebut;
@@ -79,7 +79,7 @@ public class DoctorAvailability implements Serializable {
 
 
 
-	public void setDoctor(long doctor) {
+	public void setDoctor(int doctor) {
 		this.doctor = doctor;
 	}
 

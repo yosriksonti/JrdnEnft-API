@@ -5,20 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.print.Doc;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import tn.kindergarten.spring.entities.Response;
 import tn.kindergarten.spring.entities.AppoitementDoc;
 import tn.kindergarten.spring.entities.Doctor;
@@ -32,6 +24,7 @@ public class AppoitmentDocController {
 	
 	@Autowired AvaibilityAppoitementService AvaibilityAppService;
 	@Autowired IDoctorService DoctorService;
+
 	
 	
 	private List<String> messages;
@@ -67,6 +60,10 @@ public class AppoitmentDocController {
 		// get parent
 		Parent parent = null;
 	
+		
+	
+		
+		
 		// parent not found ?
 		if (parent == null) {
 			List<String> messages = new ArrayList<String>();
@@ -111,17 +108,7 @@ public class AppoitmentDocController {
 		return new Response<DoctorAvailability>(0, null, availability);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	@RequestMapping(value = "/getAllCreneaux/{iddoc}")
 	public Response<List<DoctorAvailability>> getAllCreneaux(@PathVariable("iddoc") int idoc) {
@@ -184,12 +171,103 @@ public class AppoitmentDocController {
 			return new Response<List<AppoitementDoc>>(4,messages, null);
 		}
 		// on rend la réponse
-		SimpleBeanPropertyFilter rvFilter = SimpleBeanPropertyFilter.serializeAllExcept();
-		SimpleBeanPropertyFilter creneauFilter = SimpleBeanPropertyFilter.serializeAllExcept("medecin");
-		mapper.setFilterProvider(
-				new SimpleFilterProvider().addFilter("rvFilter", rvFilter).addFilter("creneauFilter", creneauFilter));
-		return new Response<List<Rv>>(0, null, rvs);
+
+		return new Response<List<AppoitementDoc>>(0, null, rvs);
 	}
+	
+	
+	@RequestMapping(value = "/getRvById/{id}", method = RequestMethod.GET)
+	public Response<AppoitementDoc> getRvById(@PathVariable("id") int id) {
+	
+		
+		return getApp(id);
+	}
+	
+	
+	@RequestMapping(value = "/getCreneauById/{id}", method = RequestMethod.GET)
+	public Response<DoctorAvailability> getAvaibilityById(@PathVariable("id") int id)
+	{
+		
+		DoctorAvailability doctorAvailability = null ;
+		doctorAvailability = AvaibilityAppService.findTimeslotById(id);
+		
+		
+		
+		return new Response<DoctorAvailability>(0,null , doctorAvailability);
+		
+		
+	}
+	
+	
+	
+	
+	@PostMapping(value = "/ajouterRv/{day}/{idDocAvaib}/{idParent}")
+	public Response<AppoitementDoc> ajouterRv(@PathVariable("day") String day,@PathVariable("idDocAvaib") int idDoctoravai,@PathVariable("idParent") int idParent) {
+
+	
+		// on récupère les valeurs postées
+
+	
+		
+		// date verification
+		Date jourAgenda = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(false);
+		try {
+			jourAgenda = sdf.parse(day);
+		} catch (ParseException e) {
+			List<String> messages = new ArrayList<String>();
+			messages.add(String.format("the date [%s] is not valid", day));
+			return new Response<AppoitementDoc>(6, messages, null);
+		}
+		// we get the avaibility
+	//	Response<DoctorAvailability> responseAvaiblity = getAvaibilityById(idDoctoravai);
+		//if (responseAvaiblity.getStatus() != 0) {
+			
+			
+		//	return new Response<AppoitementDoc>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
+	//	}
+		//DoctorAvailability créneau = responseAvaiblity.getBody();
+		// we get the parent
+		
+		DoctorAvailability  créneau = new DoctorAvailability();
+		
+		créneau.setDoc(DoctorService.findDoctor(7));
+		créneau.setDoctor(7);
+		créneau.setId(1);
+		créneau.setHdebut(17);
+		créneau.setHfin(20);
+	
+		
+	//	Response<Parent> responseParent = getParent(idParent);
+	//	if (responseParent.getStatus() != 0) {
+		//	return new Response<AppoitementDoc>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
+	//	}
+		//Parent parent = responseParent.getBody();
+		
+		Parent parent = new Parent();
+		
+		parent.setId(1);
+	
+		
+		
+		
+		
+		// we add the appoitement
+		AppoitementDoc rv = new AppoitementDoc() ;
+		
+			rv.setAvailability(créneau);
+			rv.setDay(jourAgenda);
+			rv.setParent(parent);
+			
+			AvaibilityAppService.createApp(rv);
+	
+
+		return new Response<AppoitementDoc>(0, null, rv);
+	}
+	
+	
+	
 	
 	
 	

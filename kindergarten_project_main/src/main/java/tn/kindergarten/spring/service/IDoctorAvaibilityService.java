@@ -11,6 +11,7 @@ public interface IDoctorAvaibilityService {
 	public void modifyDoctorAvaibility(boolean docav, Date dateBegin, Date dateEnd, int doctorAvaibilityId);
 	public void deleteDoctorAvaibilityById(int doctorAvaibilityId );
 	public List<DoctorAvailability> getAllDoctorAvaibility();
+
 	
 
 }

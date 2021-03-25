@@ -36,7 +36,7 @@ public class Parent implements Serializable {
 	private List<HealthRecord> healthrecords;
 	
 	@OneToMany(mappedBy = "parent" , fetch=FetchType.LAZY)   
-    private List<Appointement> Apps = new ArrayList<>();
+    private List<AppoitementDoc> Apps = new ArrayList<>();
 
 	//@JsonBackReference  
 	@JsonIgnore
