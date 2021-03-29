@@ -28,22 +28,32 @@ import tn.kindergarten.spring.entities.Status;
 
 @Entity
 public class Visitor implements Serializable {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	
 	private String name;
+	
 	private String lastname;
+	
 	private int phonenumber;
 	
 	//@Column(unique=true)
 	private String email;
+	
     private String Address;
+    
     private String Password;
+    
     private String Image;
+    
     private String cin;
+    
     private String login;
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+    
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+	
 	
 	
 
@@ -64,7 +74,6 @@ public class Visitor implements Serializable {
 		this.id = id;
 		this.birthday = birthday;
 		Status = status;
-		this.favorites = favorites;
 	}
 
 	public String getName() {
@@ -147,8 +156,7 @@ public class Visitor implements Serializable {
 		this.birthday = birthday;
 	}
 
-	@Temporal(TemporalType.DATE)
-    private Date birthday;
+	
 	
 	
 	public Status getStatus() {
@@ -159,13 +167,7 @@ public class Visitor implements Serializable {
 		Status = status;
 	}
 
-	public List<Favorite> getFavorites() {
-		return favorites;
-	}
 
-	public void setFavorites(List<Favorite> favorites) {
-		this.favorites = favorites;
-	}
 
 	public int getId() {
 		return id;
@@ -184,6 +186,4 @@ public class Visitor implements Serializable {
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private Status Status;
-	@OneToMany(mappedBy="visitor")
-	private List<Favorite> favorites;
 }

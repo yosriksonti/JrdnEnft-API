@@ -6,13 +6,10 @@ import java.util.Date;
 
 
 import javax.persistence.Entity;
-<<<<<<< Updated upstream
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-=======
 import javax.persistence.FetchType;
->>>>>>> Stashed changes
 import javax.persistence.JoinColumn;
 
 import javax.persistence.OneToOne;
@@ -182,13 +179,9 @@ public class Director extends ProfilAdmin implements Serializable {
 	}
 
 
-<<<<<<< Updated upstream
 	@OneToOne 
 	 @JoinColumn(name="Kindergarten")
-=======
-	@OneToOne
-	@JoinColumn(name="daycare")
->>>>>>> Stashed changes
+
 	private Daycare daycare;
 	public Director() {
 		super();

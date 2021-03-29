@@ -19,8 +19,16 @@ public class Manager extends ProfilAdmin implements Serializable {
 	private boolean isActive;
 	
 	@OneToMany(mappedBy="manager" )
-	private List<Daycare> daycares = new ArrayList<Daycare>();
+	private List<Daycare> daycares;
 
+	public Manager() {
+		super();
+	}
+	public Manager(boolean isActive, List<Daycare> daycares) {
+		super();
+		this.isActive = isActive;
+		this.daycares = daycares;
+	}
 	public List<Daycare> getDaycares() {
 		return daycares;
 	}

@@ -3,10 +3,9 @@ package tn.kindergarten.spring.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.kindergarten.spring.entities.Doctor;
+import tn.kindergarten.spring.entities.Post;
 
 @Repository
-public interface DoctorRepository extends CrudRepository<Doctor, Integer> 
-{
+public interface PostRepository extends CrudRepository<Post,Integer>{
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import tn.kindergarten.spring.entities.Director;
 
 
-public interface DirectorRepository  extends CrudRepository<Director, Integer>{
+public interface DirectorRepository  extends CrudRepository<Director, Integer>
+{
 
 }
