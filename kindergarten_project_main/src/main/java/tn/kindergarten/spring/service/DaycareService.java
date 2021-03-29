@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.kindergarten.spring.entities.Daycare;
+import tn.kindergarten.spring.entities.Favorite;
 import tn.kindergarten.spring.repository.DaycareRepository;
 @Service
 public class DaycareService implements IDaycareService{
@@ -43,6 +44,12 @@ public class DaycareService implements IDaycareService{
 	public List<Daycare> findAll() {
 		 List<Daycare> tmp = (List<Daycare>) daycareRepository.findAll();
 		 return tmp;
+	}
+
+	@Override
+	public int affecterDaycareFavoritee(Favorite favorite) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

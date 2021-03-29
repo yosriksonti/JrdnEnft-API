@@ -23,6 +23,17 @@ public class VisitorServiceImpl implements IVisitorService
 	{
 		Visitor visitor1 = visitorRepository.findById(visitortId).get();
 		visitor1.setName(visitor.getName());
+		visitor1.setLastname(visitor.getLastname());
+		visitor1.setAddress(visitor.getAddress());
+		visitor1.setBirthday(visitor.getBirthday());
+		visitor1.setImage(visitor.getImage());
+		visitor1.setPassword(visitor.getPassword());
+		visitor1.setStatus(visitor.getStatus());
+		visitor1.setCin(visitor.getCin());
+		visitor1.setEmail(visitor.getEmail());
+		visitor1.setLogin(visitor.getLogin());
+		visitor1.setPhonenumber(visitor.getPhonenumber());
+		
 		visitorRepository.save(visitor1);
 	}
 	@Override
@@ -36,6 +47,13 @@ public class VisitorServiceImpl implements IVisitorService
 	@Override
 	public Visitor read (int id) {
 		Visitor visitor = visitorRepository.findById(id).get();
+		return visitor;
+	}
+	
+	public Visitor setVIP(int id) {
+		Visitor visitor = visitorRepository.findById(id).get();
+		visitor.setVIP(true);
+		visitorRepository.save(visitor);
 		return visitor;
 	}
 	
