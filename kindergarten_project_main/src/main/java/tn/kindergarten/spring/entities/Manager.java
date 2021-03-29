@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 public class Manager extends ProfilAdmin implements Serializable {
 	
 	
-	
-
 
 	private boolean isActive;
 	

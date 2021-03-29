@@ -1,7 +1,10 @@
 package tn.kindergarten.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.ProfilAdmin;
@@ -26,9 +29,15 @@ public class DirectorService implements IDirectorService {
 		return directorrepo.findById(profilid).get();
 		
 	}
+	public List<Director> getAllDirector() {
+		return (List<Director>) directorrepo.findAll();
+}
 	@Override
-	public void updateDirector(Director director, int id) {
-		// TODO Auto-generated method stub
+	public Director updateDirector( int id, Director director) {
+		Director d = directorrepo.findById(id).get();
+		director.setId(d.getId());
+		directorrepo.save(director);
+		return director;
 		
 	}
 
