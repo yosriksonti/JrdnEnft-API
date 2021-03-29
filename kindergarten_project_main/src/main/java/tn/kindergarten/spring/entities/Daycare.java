@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
@@ -54,9 +55,12 @@ public class Daycare implements Serializable{
 		
 		//@JsonBackReference  
 		@JsonIgnore
-		@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
-		//@NotNull
+		@OneToOne
+		@JoinColumn(name="director")
 		private Director director;
+	    @OneToMany(mappedBy = "daycare",
+	            cascade = CascadeType.ALL)
+	    private List<Reclamation> reclamations;
 
 		public int getId() {
 			return id;

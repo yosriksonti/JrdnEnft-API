@@ -50,6 +50,14 @@ public class DoctorAvailability implements Serializable {
 	
 	
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public DoctorAvailability(boolean availability, Date beginwork, Date endwork) {
 		super();
 		Availability = availability;

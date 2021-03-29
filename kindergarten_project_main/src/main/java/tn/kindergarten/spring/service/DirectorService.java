@@ -33,8 +33,11 @@ public class DirectorService implements IDirectorService {
 		return (List<Director>) directorrepo.findAll();
 }
 	@Override
-	public void updateDirector(Director director, int id) {
-		// TODO Auto-generated method stub
+	public Director updateDirector( int id, Director director) {
+		Director d = directorrepo.findById(id).get();
+		director.setId(d.getId());
+		directorrepo.save(director);
+		return director;
 		
 	}
 

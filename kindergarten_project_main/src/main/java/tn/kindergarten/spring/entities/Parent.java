@@ -2,7 +2,9 @@ package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,6 +35,7 @@ public class Parent implements Serializable {
 	@ManyToOne
 	//@NotNull
 	private Daycare daycare;
+<<<<<<< Updated upstream
 	
 	public Daycare getDaycare() {
 		return daycare;
@@ -41,6 +44,11 @@ public class Parent implements Serializable {
 	public void setDaycare(Daycare daycare) {
 		this.daycare = daycare;
 	}
+=======
+    @OneToMany(mappedBy = "parent", 
+            cascade = CascadeType.ALL)
+    private List<Reclamation> reclamation;
+>>>>>>> Stashed changes
 
 	@Enumerated(EnumType.STRING)
 	//@NotNull
