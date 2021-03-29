@@ -4,14 +4,15 @@ import tn.kindergarten.spring.entities.Favorite;
 
 	
 import java.util.List;
+import java.util.Map;
 
 import tn.kindergarten.spring.entities.Post;
 
 public interface IPostService {
 	
-	boolean addPost(Post post);
 	boolean deletePost(int id);
 	boolean updatePost(Post post);
 	Post findById(int id);
-	List<Post> findAllByDaycareId(int daycareId);
+	Map<Integer,Integer> updateLikes(Post post);
+	Map<Integer,Integer> updateDislikes(Post post);
 }

@@ -48,10 +48,12 @@ public class Daycare implements Serializable{
 		@JoinColumn(name="favorite_id", nullable=true)
 
 		private List <Favorite> favorites;
+		@OneToOne
+		private Position position;
 		public Daycare
 		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
 				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
-				Director director) {
+				Director director, List<Post> posts,Position position ) {
 			super();
 			this.id = id;
 			this.region = region;
@@ -64,6 +66,14 @@ public class Daycare implements Serializable{
 			this.parents = parents;
 			this.healthRecords = healthRecords;
 			this.director = director;
+			this.posts = posts;
+			this.position = position;
+		}
+		public Position getPosition() {
+			return position;
+		}
+		public void setPosition(Position position) {
+			this.position = position;
 		}
 		public List<Favorite> getFavorites() {
 			return favorites;
@@ -108,6 +118,12 @@ public class Daycare implements Serializable{
 			this.id = id;
 		}
 
+		public List<Post> getPosts() {
+			return posts;
+		}
+		public void setPosts(List<Post> posts) {
+			this.posts = posts;
+		}
 		public String getRegion() {
 			return region;
 		}

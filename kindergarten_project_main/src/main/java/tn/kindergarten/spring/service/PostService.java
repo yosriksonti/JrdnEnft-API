@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.service;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,13 +26,6 @@ public class PostService implements IPostService {
 	PostRepository postRepository;
 	
 	@Override
-	public boolean addPost(Post post) {
-		
-		postRepository.save(post);
-		return true;
-	}
-
-	@Override
 	public boolean deletePost(int id) {
 		postRepository.delete(postRepository.findById(id).get());
 		return true;
@@ -39,6 +33,7 @@ public class PostService implements IPostService {
 
 	@Override
 	public boolean updatePost(Post post) {
+		post.setModificationDate(new Date());
 		postRepository.save(post);
 		return true;
 	}
@@ -49,17 +44,44 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<Post> findAllByDaycareId(int daycareId) {
-		List<Post> posts = (List<Post>) postRepository.findAll(); 
-		List<Post> daycarePosts = new ArrayList();
-		
-		for(Post post : posts )
-		{
-			if(post.getId() == daycareId) {
-				daycarePosts.add(post);
-			}
+	public Map<Integer,Integer> updateLikes(Post post) {
+		Post startPost = findById(post.getId());
+		int startLikes = startPost.getLikes();
+		startPost.setLikes(startLikes+post.getLikes());
+		startPost.setModificationDate(new Date());
+		Post endPost = findById(post.getId());
+		int endLikes = endPost.getLikes();
+		System.out.println("start: "+startLikes+" | end: "+endLikes);
+		if(endLikes == startLikes+1) {
+			updatePost(startPost);
+			Map<Integer,Integer> resp = new HashMap<Integer,Integer>();
+			resp.put(post.getId(), startPost.getLikes());
+			return resp;
+		} else {
+			return updateLikes(post);
 		}
-		return daycarePosts;
 	}
+
+	@Override
+	public Map<Integer,Integer> updateDislikes(Post post) {
+		Post startPost = findById(post.getId());
+		int startDislikes = startPost.getDislikes();
+		startPost.setDislikes(startDislikes+post.getDislikes());
+		startPost.setModificationDate(new Date());
+		Post endPost = findById(post.getId());
+		int endDislikes = endPost.getDislikes();
+		if(endDislikes == startDislikes + 1) {
+			updatePost(startPost);
+			Map<Integer,Integer> resp = new HashMap<Integer,Integer>();
+			resp.put(post.getId(), startPost.getDislikes());
+			return resp;
+		} else {
+			return updateDislikes(post);
+		}
+	}
+	
+	
+
+
 
 }
