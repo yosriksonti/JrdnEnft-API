@@ -11,10 +11,7 @@ import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.HealthRecord;
 import tn.kindergarten.spring.entities.Reclamation;
-<<<<<<< Updated upstream
-=======
 import tn.kindergarten.spring.entities.TypeReclamation;
->>>>>>> Stashed changes
 import tn.kindergarten.spring.repository.DaycareRepository;
 import tn.kindergarten.spring.repository.DirectorRepository;
 import tn.kindergarten.spring.repository.ManagerRepository;
@@ -34,26 +31,12 @@ public class ReclamationService implements IReclamationService{
 	DirectorRepository directorrepository;
 	@Autowired 
 	DaycareRepository daycarerepo;
-<<<<<<< Updated upstream
-=======
 	@Autowired
 	DaycareServiceImpl daycareService;
->>>>>>> Stashed changes
 	
 	
 	public int addReclamation(Reclamation reclamation) {
 		
-<<<<<<< Updated upstream
-		//reclamationrepo.save(reclamation);
-	
-		
-		Daycare daycare  = daycarerepo.findById(reclamation.getDaycare().getId()).get();
-		System.out.println(daycare.getDirector().getId());
-		Director director = directorrepository.findById(daycare.getDirector().getId()).get();
-		
-		sendemailservice.sendEmail(director.getEmail(), reclamation.getParent().getEmail(), reclamation.getDescripRec(), reclamation.getRecName());
-		return 1;
-=======
 		reclamationrepo.save(reclamation);
 	
 		TypeReclamation typerec = null ;
@@ -75,7 +58,6 @@ public class ReclamationService implements IReclamationService{
 		}
 	
 			return 1;
->>>>>>> Stashed changes
 	}
 	
 	public List<Reclamation> getAll() {

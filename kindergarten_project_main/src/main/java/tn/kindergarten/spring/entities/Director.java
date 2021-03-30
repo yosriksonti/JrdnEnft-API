@@ -3,17 +3,12 @@ package tn.kindergarten.spring.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
 public class Director extends ProfilAdmin implements Serializable {
@@ -188,14 +183,8 @@ public class Director extends ProfilAdmin implements Serializable {
 	}
 
 
-<<<<<<< Updated upstream
-	@OneToOne 
-	 @JoinColumn(name="Kindergarten")
-
-=======
 	@OneToOne
 	@JoinColumn(name="Kindergarten")
->>>>>>> Stashed changes
 	private Daycare daycare;
 	public Director() {
 		super();

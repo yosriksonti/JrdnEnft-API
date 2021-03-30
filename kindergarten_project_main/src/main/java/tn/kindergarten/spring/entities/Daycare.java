@@ -8,10 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-<<<<<<< Updated upstream
-import javax.persistence.CascadeType;
-=======
->>>>>>> Stashed changes
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -83,19 +79,10 @@ public class Daycare implements Serializable{
 		@JoinColumn(name="favorite_id", nullable=true)
 
 		private List <Favorite> favorites;
-<<<<<<< Updated upstream
-		@OneToOne
-		private Position position;
-		public Daycare
-		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
-				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
-				Director director, List<Post> posts,Position position ) {
-=======
 		public Daycare
 		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
 				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
 				Director director) {
->>>>>>> Stashed changes
 			super();
 			this.id = id;
 			this.region = region;
@@ -108,17 +95,6 @@ public class Daycare implements Serializable{
 			this.parents = parents;
 			this.healthRecords = healthRecords;
 			this.director = director;
-<<<<<<< Updated upstream
-			this.posts = posts;
-			this.position = position;
-		}
-		public Position getPosition() {
-			return position;
-		}
-		public void setPosition(Position position) {
-			this.position = position;
-=======
->>>>>>> Stashed changes
 		}
 		public List<Favorite> getFavorites() {
 			return favorites;
@@ -149,15 +125,8 @@ public class Daycare implements Serializable{
 		@JsonIgnore
 		@OneToOne
 		@JoinColumn(name="director")
-<<<<<<< Updated upstream
-		private Director director;
-	    @OneToMany(mappedBy = "daycare",
-	            cascade = CascadeType.ALL)
-	    private List<Reclamation> reclamations;
-=======
 		//@NotNull
 		private Director director;
->>>>>>> Stashed changes
 		public Daycare() {
 			super();
 			
@@ -170,12 +139,6 @@ public class Daycare implements Serializable{
 			this.id = id;
 		}
 
-		public List<Post> getPosts() {
-			return posts;
-		}
-		public void setPosts(List<Post> posts) {
-			this.posts = posts;
-		}
 		public String getRegion() {
 			return region;
 		}

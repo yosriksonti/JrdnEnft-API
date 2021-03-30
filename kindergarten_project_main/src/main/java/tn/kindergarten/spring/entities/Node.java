@@ -11,28 +11,6 @@ public class Node {
     
     private List<Node> shortestPath = new LinkedList<>();
         
-<<<<<<< Updated upstream
-    private double distance = Double.MAX_VALUE;
-    private String Maps;
-    
-    public String getMaps() {
-		return Maps;
-	}
-
-	public void setMaps(String maps) {
-		Maps = maps;
-	}
-
-	Map<Node, Double> adjacentNodes = new HashMap<>();
-
-    public void addDestination(Node destination, double distance) {
-        adjacentNodes.put(destination, distance);
-    }
- 
-    public Node(String name,String Maps) {
-        this.name = name;
-        this.Maps = Maps;
-=======
     private Integer distance = Integer.MAX_VALUE;
     
     Map<Node, Integer> adjacentNodes = new HashMap<>();
@@ -43,7 +21,6 @@ public class Node {
  
     public Node(String name) {
         this.name = name;
->>>>>>> Stashed changes
     }
 
 	public String getName() {
@@ -62,21 +39,6 @@ public class Node {
 		this.shortestPath = shortestPath;
 	}
 
-<<<<<<< Updated upstream
-	public Double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(Double distance) {
-		this.distance = distance;
-	}
-
-	public Map<Node, Double> getAdjacentNodes() {
-		return adjacentNodes;
-	}
-
-	public void setAdjacentNodes(Map<Node, Double> adjacentNodes) {
-=======
 	public Integer getDistance() {
 		return distance;
 	}
@@ -90,7 +52,6 @@ public class Node {
 	}
 
 	public void setAdjacentNodes(Map<Node, Integer> adjacentNodes) {
->>>>>>> Stashed changes
 		this.adjacentNodes = adjacentNodes;
 	}
     
