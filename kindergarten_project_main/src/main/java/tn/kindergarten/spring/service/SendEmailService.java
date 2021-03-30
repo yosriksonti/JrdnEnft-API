@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 public class SendEmailService {
 	
 	@Autowired
+<<<<<<< Updated upstream
 	private JavaMailSender javaMailSender ;
+=======
+    JavaMailSender javaMailSender ;
+>>>>>>> Stashed changes
 	
 	public void sendEmail(String to ,String From, String body ,String topic) {
 	 SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

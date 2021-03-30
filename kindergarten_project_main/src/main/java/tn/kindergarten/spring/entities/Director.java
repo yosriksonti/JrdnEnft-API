@@ -28,7 +28,16 @@ public class Director extends ProfilAdmin implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private boolean isActive; 
 	
-
+	@OneToOne()
+	@JoinColumn(name="FK_TPA_ID")
+    private FileDB filedb;
+	
+	public FileDB getFiledb() {
+		return filedb;
+	}
+	public void setFiledb(FileDB filedb) {
+		this.filedb = filedb;
+	}
 	
 	
 	@Override
@@ -179,21 +188,29 @@ public class Director extends ProfilAdmin implements Serializable {
 	}
 
 
+<<<<<<< Updated upstream
 	@OneToOne 
 	 @JoinColumn(name="Kindergarten")
 
+=======
+	@OneToOne
+	@JoinColumn(name="Kindergarten")
+>>>>>>> Stashed changes
 	private Daycare daycare;
 	public Director() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Director(String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
-		super(name, lastname, phonenumber, email, address, password, image, cin, login, birthday, roleA);
-		// TODO Auto-generated constructor stub
+
+	public Director(boolean isActive, FileDB filedb, Daycare daycare) {
+		super();
+		this.isActive = isActive;
+		this.filedb = filedb;
+		this.daycare = daycare;
 	}
 
+	
 	
 	
 

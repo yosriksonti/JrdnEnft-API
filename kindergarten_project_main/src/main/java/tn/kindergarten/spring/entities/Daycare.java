@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+<<<<<<< Updated upstream
 import javax.persistence.CascadeType;
+=======
+>>>>>>> Stashed changes
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -24,7 +27,38 @@ public class Daycare implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	private String daycareName;
+	public Daycare(int id, String daycareName, String region, String logo, String reputation, int nbReclamations,
+			Doctor doctor, Manager manager, List<Favorite> favorites, List<Parent> parents, List<Post> posts,
+			List<HealthRecord> healthRecords, Director director) {
+		super();
+		this.id = id;
+		this.daycareName = daycareName;
+		this.region = region;
+		this.logo = logo;
+		this.reputation = reputation;
+		this.nbReclamations = nbReclamations;
+		this.doctor = doctor;
+		this.manager = manager;
+		this.favorites = favorites;
+		this.parents = parents;
+		this.posts = posts;
+		this.healthRecords = healthRecords;
+		this.director = director;
+	}
+	public String getDaycareName() {
+		return daycareName;
+	}
+	public void setDaycareName(String daycareName) {
+		this.daycareName = daycareName;
+	}
+	public List<Post> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
 	private String region;
 	
 	private String logo;
@@ -49,12 +83,19 @@ public class Daycare implements Serializable{
 		@JoinColumn(name="favorite_id", nullable=true)
 
 		private List <Favorite> favorites;
+<<<<<<< Updated upstream
 		@OneToOne
 		private Position position;
 		public Daycare
 		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
 				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
 				Director director, List<Post> posts,Position position ) {
+=======
+		public Daycare
+		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
+				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
+				Director director) {
+>>>>>>> Stashed changes
 			super();
 			this.id = id;
 			this.region = region;
@@ -67,6 +108,7 @@ public class Daycare implements Serializable{
 			this.parents = parents;
 			this.healthRecords = healthRecords;
 			this.director = director;
+<<<<<<< Updated upstream
 			this.posts = posts;
 			this.position = position;
 		}
@@ -75,6 +117,8 @@ public class Daycare implements Serializable{
 		}
 		public void setPosition(Position position) {
 			this.position = position;
+=======
+>>>>>>> Stashed changes
 		}
 		public List<Favorite> getFavorites() {
 			return favorites;
@@ -105,10 +149,15 @@ public class Daycare implements Serializable{
 		@JsonIgnore
 		@OneToOne
 		@JoinColumn(name="director")
+<<<<<<< Updated upstream
 		private Director director;
 	    @OneToMany(mappedBy = "daycare",
 	            cascade = CascadeType.ALL)
 	    private List<Reclamation> reclamations;
+=======
+		//@NotNull
+		private Director director;
+>>>>>>> Stashed changes
 		public Daycare() {
 			super();
 			

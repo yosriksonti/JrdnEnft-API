@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,8 +12,12 @@ import org.springframework.context.event.EventListener;
 
 import tn.kindergarten.spring.service.SendEmailService;
 >>>>>>> Stashed changes
+=======
+import org.springframework.web.bind.annotation.RestController;
+>>>>>>> Stashed changes
 
 @SpringBootApplication
+@RestController
 public class KindergartenProjectMainApplication {
   
 	@Autowired

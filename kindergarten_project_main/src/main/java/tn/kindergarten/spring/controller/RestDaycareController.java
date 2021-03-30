@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Favorite;
 import tn.kindergarten.spring.entities.Graph;
+<<<<<<< Updated upstream
 import tn.kindergarten.spring.entities.Post;
+=======
+>>>>>>> Stashed changes
 import tn.kindergarten.spring.entities.Visitor;
 import tn.kindergarten.spring.service.DaycareServiceImpl;
 @RestController
@@ -60,7 +63,11 @@ public class RestDaycareController
 
 @GetMapping(value = "/daycares/{id}/path") 
 @ResponseBody
+<<<<<<< Updated upstream
 	public Map<String,String> getDaycarePath(@PathVariable("id") int id) 
+=======
+	public Map<String,Integer> getDaycarePath(@PathVariable("id") int id) 
+>>>>>>> Stashed changes
 	{
 		return daycareServiceImpl.getShortestPathsChildren(id); 
 	}
@@ -74,6 +81,7 @@ public class RestDaycareController
 	//return 1 ;
 	}
 
+<<<<<<< Updated upstream
 @PostMapping(value = "/daycares/posts/add") 
 @ResponseBody
 	public List<Post> addDaycarePost(@RequestBody Post post) 
@@ -83,6 +91,8 @@ public class RestDaycareController
 	//return 1 ;
 	}
 
+=======
+>>>>>>> Stashed changes
 @PutMapping(value = "/daycares/update") 
 @ResponseBody
 	public boolean updateDaycare(@RequestBody Daycare daycare) 
@@ -136,5 +146,17 @@ public class RestDaycareController
 	return daycareServiceImpl.getFavoriteeById(favoriteId);
 	//return 1 ;
 	}
+<<<<<<< Updated upstream
+=======
+
+@GetMapping(value = "/daycares/statistics") 
+@ResponseBody
+	public Map<String,Double> getStatic() 
+	{
+	
+	return daycareServiceImpl.getStatic();
+	//return 1 ;
+	}
+>>>>>>> Stashed changes
 }
 
