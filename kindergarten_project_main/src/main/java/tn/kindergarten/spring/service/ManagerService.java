@@ -1,11 +1,9 @@
 package tn.kindergarten.spring.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.kindergarten.spring.entities.Director;
+
 import tn.kindergarten.spring.entities.Manager;
 import tn.kindergarten.spring.repository.DirectorRepository;
 import tn.kindergarten.spring.repository.ManagerRepository;
@@ -35,12 +33,6 @@ public class ManagerService implements IManagerService{
 		Manager manager1 = managerrepository.findById(id).get();
 		manager1.setName(manager.getName());
 		managerrepository.save(manager1);
-	}
-
-	@Override
-	public List<Director> getAllDirector() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

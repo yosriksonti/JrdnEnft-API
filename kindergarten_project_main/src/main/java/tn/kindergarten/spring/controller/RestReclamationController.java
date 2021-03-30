@@ -34,6 +34,14 @@ public class RestReclamationController {
 	public ResponseEntity<List<Reclamation>> getAll() {
 		return new ResponseEntity<> (ireclamationservice.getAll(), HttpStatus.OK);
 	}
+	@GetMapping("/getDaycareById")
+	public ResponseEntity<List<Reclamation>> getRecByParentId(int parentId){
+		return new ResponseEntity<> (ireclamationservice.getRecByParentId(parentId), HttpStatus.OK);
+	}
+	@GetMapping("/ getById")
+	public ResponseEntity <Reclamation>  getRecById(int id){
+		return new ResponseEntity<Reclamation>(ireclamationservice.getRecById(id),HttpStatus.OK);
+	}
 	
 	
 

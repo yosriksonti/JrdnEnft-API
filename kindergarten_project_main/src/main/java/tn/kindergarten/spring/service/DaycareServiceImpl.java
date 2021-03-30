@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -19,16 +18,12 @@ import org.springframework.stereotype.Service;
 import tn.kindergarten.spring.entities.Child;
 import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Parent;
-import tn.kindergarten.spring.entities.Position;
 import tn.kindergarten.spring.entities.Post;
 import tn.kindergarten.spring.entities.Favorite;
 import tn.kindergarten.spring.entities.Graph;
 import tn.kindergarten.spring.entities.Node;
 import tn.kindergarten.spring.repository.DaycareRepository;
 import tn.kindergarten.spring.repository.FavoriteRepository;
-import tn.kindergarten.spring.repository.PostRepository;
-
-import java.awt.geom.Point2D;
 @Service
 public class DaycareServiceImpl implements IDaycareService 
 {
@@ -36,8 +31,6 @@ public class DaycareServiceImpl implements IDaycareService
 	
 	@Autowired
 	DaycareRepository daycareRepository;
-	@Autowired
-	PostRepository postRepository;
 
 	@Override
 	public boolean addDaycare(Daycare daycare) {
@@ -126,7 +119,7 @@ public class DaycareServiceImpl implements IDaycareService
 	
 	
 	public static Graph calculateShortestPathFromSource(Graph graph, Node source) {
-	    source.setDistance((double)0);
+	    source.setDistance((Integer)0);
 
 	    Set<Node> settledNodes = new HashSet<>();
 	    Set<Node> unsettledNodes = new HashSet<>();
@@ -136,10 +129,10 @@ public class DaycareServiceImpl implements IDaycareService
 	    while (unsettledNodes.size() != 0) {
 	        Node currentNode = getLowestDistanceNode(unsettledNodes);
 	        unsettledNodes.remove(currentNode);
-	        for (Entry < Node, Double> adjacencyPair: 
+	        for (Entry < Node, Integer> adjacencyPair: 
 	          currentNode.getAdjacentNodes().entrySet()) {
 	            Node adjacentNode = adjacencyPair.getKey();
-	            Double edgeWeight = adjacencyPair.getValue();
+	            Integer edgeWeight = adjacencyPair.getValue();
 	            if (!settledNodes.contains(adjacentNode)) {
 	                calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
 	                unsettledNodes.add(adjacentNode);
@@ -152,9 +145,9 @@ public class DaycareServiceImpl implements IDaycareService
 	
 	private static Node getLowestDistanceNode(Set < Node > unsettledNodes) {
 	    Node lowestDistanceNode = null;
-	    double lowestDistance = Integer.MAX_VALUE;
+	    int lowestDistance = Integer.MAX_VALUE;
 	    for (Node node: unsettledNodes) {
-	        double nodeDistance = node.getDistance();
+	        int nodeDistance = node.getDistance();
 	        if (nodeDistance < lowestDistance) {
 	            lowestDistance = nodeDistance;
 	            lowestDistanceNode = node;
@@ -163,8 +156,8 @@ public class DaycareServiceImpl implements IDaycareService
 	    return lowestDistanceNode;
 	}
 	private static void calculateMinimumDistance(Node evaluationNode,
-			Double edgeWeigh, Node sourceNode) {
-		Double sourceDistance = sourceNode.getDistance();
+			  Integer edgeWeigh, Node sourceNode) {
+			    Integer sourceDistance = sourceNode.getDistance();
 			    if (sourceDistance + edgeWeigh < evaluationNode.getDistance()) {
 			        evaluationNode.setDistance(sourceDistance + edgeWeigh);
 			        LinkedList<Node> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
@@ -173,30 +166,27 @@ public class DaycareServiceImpl implements IDaycareService
 			    }
 			}
 	
-	public Map<String,String> getShortestPathsChildren(int daycareId) {
-		Daycare daycare = findById(daycareId);
-		Position daycarePosition = daycare.getPosition();
+	public Map<String,Integer> getShortestPathsChildren(int daycareId) {
 		List<Child> daycareChildren = getDaycareChildren(daycareId);
 		Graph graph = new Graph();
-		Node daycareNode = new Node("Daycare",": 'https://www.google.com/maps/search/"+daycare.getPosition().getX()+","+daycare.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
+		Node daycareNode = new Node("Daycare");
 		List<Node> nodes = new ArrayList<Node>();
 		int mainCounter = 0, secondaryCounter = 0;
 		for(Child child : daycareChildren) {
-			Node childNode = new Node(child.getName(),": 'https://www.google.com/maps/search/"+child.getPosition().getX()+","+child.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
-			nodes.add(childNode);
+			nodes.add(new Node(child.getName()));
 		}
+		daycareNode.addDestination(nodes.get(0), 1);
 		int nodesSize = nodes.size();
 		for(Child child : daycareChildren) {
-			Node mainChildNode = nodes.get(mainCounter);
-			daycareNode.addDestination(mainChildNode,Point2D.distance(daycarePosition.getX(), daycarePosition.getY(), child.getPosition().getX(), child.getPosition().getY()) );
+			Node mainChildNode = nodes.get(mainCounter%nodesSize);
 			for(Child child2 : daycareChildren) {
 				if(child.getId() != child2.getId()) {
 					System.out.println("##################");
 					System.out.println("Main: "+child.getName());
 					System.out.println("Secondary: "+child2.getName());
-					System.out.println("Distance: "+Point2D.distance(child.getPosition().getX(),child.getPosition().getY(), child2.getPosition().getX(), child2.getPosition().getY()));
-					Node secondaryChildNode = nodes.get(secondaryCounter);
-					mainChildNode.addDestination(secondaryChildNode, Point2D.distance(child.getPosition().getX(), child.getPosition().getY(), child2.getPosition().getX(),child2.getPosition().getY()));
+					System.out.println("Distance: "+(mainCounter+1)*(secondaryCounter+1));
+					Node secondaryChildNode = nodes.get(secondaryCounter%nodesSize);
+					mainChildNode.addDestination(secondaryChildNode, (mainCounter+1)*(secondaryCounter+1));
 				}
 				secondaryCounter++;
 			}
@@ -206,13 +196,11 @@ public class DaycareServiceImpl implements IDaycareService
 		}
 		graph.addNode(daycareNode);
 		Graph pathGraph = calculateShortestPathFromSource(graph, daycareNode);
-		Map<Node,Double> map = new HashMap<>();
+		Map<String,Integer> map = new HashMap<>();
 		for(Node node : pathGraph.getNodes()) {
-			map.put(node, node.getDistance());
+			map.put(node.getName(), node.getDistance());
 		}
-		LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-		map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedMap.put(x.getKey().getName(), x.getKey().getMaps()));;
-		return sortedMap;
+		return map;
 	}
 	
 	/* Node mainChildNode = new Node(child.getName());
@@ -235,19 +223,6 @@ public class DaycareServiceImpl implements IDaycareService
 
 	/*////////////////// APIs /////////////////////*/
 
-	///////////////////// POSTS /////////////////////
-	public List<Post> addDaycarePost(Post post){
-		Daycare daycare = daycareRepository.findById(post.getDaycare().getId()).get();
-		List<Post> posts = daycare.getPosts();
-		posts.add(post);
-		daycare.setPosts(posts);
-		daycareRepository.save(daycare);
-		return posts;
-	}
-	
-	
-	
-	///////////////////// POSTS /////////////////////
 	
 	
 	@Autowired
@@ -308,4 +283,43 @@ public class DaycareServiceImpl implements IDaycareService
 
 	
 	}
+	public Daycare removeParent(int daycareId , int parentId) {
+		Daycare daycare = findById(daycareId);
+		List<Parent> parents = daycare.getParents();
+		for(int i = 0;i<parents.size();i++) {
+			if (parents.get(i).getId()==parentId) {
+				parents.remove(i);
+			}
+		}
+		daycare.setParents(parents);
+		daycareRepository.save(daycare);
+		return daycare;
+		
+		
+		
+	}
+	/////////////statistic/////////////
+    @Override
+    public Map<Integer,Double> getStatic(){
+    	List<Daycare> daycares = findAll();
+    	Map<Integer,Double> statics = new HashMap<Integer,Double>();
+		for(Daycare daycare : daycares) {
+			int sumLikes = 0;
+			int sumDislikes = 0;
+			List<Post> daycarePosts = daycare.getPosts();
+			for(Post post : daycarePosts) {
+				sumLikes += post.getLikes();
+				sumDislikes += post.getDislikes();
+			}
+			statics.put(daycare.getId(),(double) sumLikes/(sumLikes/sumDislikes));
+		
+		}
+    	LinkedHashMap<Integer,Double> sortedMap = new LinkedHashMap<>();
+    	statics.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()) );
+    	return sortedMap;
+    	
+    	
+    	
+    	
+    }
 }

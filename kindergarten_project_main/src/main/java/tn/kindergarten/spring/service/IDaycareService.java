@@ -4,6 +4,7 @@ import tn.kindergarten.spring.entities.Favorite;
 
 	
 import java.util.List;
+import java.util.Map;
 
 import tn.kindergarten.spring.entities.Daycare;
 
@@ -15,5 +16,6 @@ public interface IDaycareService {
 	Daycare findById(int id);
 	List<Daycare> findAll();
     int affecterDaycareFavoritee(Favorite favorite) ;
-
+    public Map<Integer,Double> getStatic ();
+    
 }

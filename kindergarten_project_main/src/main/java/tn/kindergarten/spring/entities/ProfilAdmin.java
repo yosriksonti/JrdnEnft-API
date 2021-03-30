@@ -13,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,7 +29,12 @@ public class ProfilAdmin {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id; 
+
+
+
+
 	
+
 	protected String name;
 	protected String lastname;
 	protected int phonenumber;
@@ -42,11 +49,7 @@ public class ProfilAdmin {
 
 
 	@Temporal(TemporalType.DATE)
-<<<<<<< Updated upstream
 	protected Date birthday;
-=======
-	public Date birthday;
->>>>>>> Stashed changes
 	
 	public Date getBirthday() {
 		return birthday;
@@ -178,23 +181,6 @@ public class ProfilAdmin {
 		this.birthday = birthday;
 		this.roleA = roleA;
 	}
-	public ProfilAdmin(int id ,String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
-		super();
-		this.id=id;
-		this.name = name;
-		this.lastname = lastname;
-		this.phonenumber = phonenumber;
-		this.email = email;
-		Address = address;
-		Password = password;
-		Image = image;
-		this.cin = cin;
-		this.login = login;
-		this.birthday = birthday;
-		this.roleA = roleA;
-	}
-	
 	
 	
 	

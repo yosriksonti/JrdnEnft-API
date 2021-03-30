@@ -11,26 +11,16 @@ public class Node {
     
     private List<Node> shortestPath = new LinkedList<>();
         
-    private double distance = Double.MAX_VALUE;
-    private String Maps;
+    private Integer distance = Integer.MAX_VALUE;
     
-    public String getMaps() {
-		return Maps;
-	}
+    Map<Node, Integer> adjacentNodes = new HashMap<>();
 
-	public void setMaps(String maps) {
-		Maps = maps;
-	}
-
-	Map<Node, Double> adjacentNodes = new HashMap<>();
-
-    public void addDestination(Node destination, double distance) {
+    public void addDestination(Node destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
  
-    public Node(String name,String Maps) {
+    public Node(String name) {
         this.name = name;
-        this.Maps = Maps;
     }
 
 	public String getName() {
@@ -49,19 +39,19 @@ public class Node {
 		this.shortestPath = shortestPath;
 	}
 
-	public Double getDistance() {
+	public Integer getDistance() {
 		return distance;
 	}
 
-	public void setDistance(Double distance) {
+	public void setDistance(Integer distance) {
 		this.distance = distance;
 	}
 
-	public Map<Node, Double> getAdjacentNodes() {
+	public Map<Node, Integer> getAdjacentNodes() {
 		return adjacentNodes;
 	}
 
-	public void setAdjacentNodes(Map<Node, Double> adjacentNodes) {
+	public void setAdjacentNodes(Map<Node, Integer> adjacentNodes) {
 		this.adjacentNodes = adjacentNodes;
 	}
     
