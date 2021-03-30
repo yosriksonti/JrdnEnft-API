@@ -8,17 +8,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+
 public class Evenement implements Serializable{
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
     private String name;
 	private String type;
@@ -29,15 +35,19 @@ public class Evenement implements Serializable{
 	private String nbParticipant;
 	private String atelier;
 	@ManyToOne
-	private Manager profiladmin;
+	private Manager manager;
 	@ManyToMany
 	private List<Parent> parents;
+	@OneToOne()
+	@JoinColumn(name="FK_TPA_ID")
+    private FileDB filedb;
 	
-	public ProfilAdmin getProfiladmin() {
-		return profiladmin;
+	
+	public FileDB getFiledb() {
+		return filedb;
 	}
-	public void setProfiladmin(Manager profiladmin) {
-		this.profiladmin = profiladmin;
+	public void setFiledb(FileDB filedb) {
+		this.filedb = filedb;
 	}
 	public List<Parent> getParents() {
 		return parents;
@@ -90,17 +100,7 @@ public class Evenement implements Serializable{
 	}
 	
 	
-	public Evenement(String name, String type, Date date, String image, String organisateur, String nbParticipant,
-			String atelier) {
-		super();
-		this.name = name;
-		this.type = type;
-		this.date = date;
-		this.image = image;
-		
-		this.nbParticipant = nbParticipant;
-		this.atelier = atelier;
-	}
+	
 	public Evenement(int id) {
 		super();
 		this.id = id;
@@ -108,20 +108,43 @@ public class Evenement implements Serializable{
 	
 	
 	
-	public Evenement(String name, String type, Date date, String image, 
-			String nbParticipant, String atelier) {
+	
+	public Evenement(String name, String type, Date date, String image, String nbParticipant, String atelier,
+			Manager manager, List<Parent> parents) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.date = date;
 		this.image = image;
-		
 		this.nbParticipant = nbParticipant;
 		this.atelier = atelier;
+		this.manager = manager;
+		this.parents = parents;
+	}
+	public Evenement(int id, String name, String type, Date date, String image, String nbParticipant, String atelier,
+			Manager manager, List<Parent> parents) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.date = date;
+		this.image = image;
+		this.nbParticipant = nbParticipant;
+		this.atelier = atelier;
+		this.manager = manager;
+		this.parents = parents;
 	}
 	public Evenement() {
 		super();
 	}
+	public Manager getManager() {
+		return manager;
+	}
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+	
+	
 	
 	
 	

@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import tn.kindergarten.spring.entities.Appointement;
-@Repository
+
 public interface AppointementRepository extends CrudRepository<Appointement, Integer> {
 	
-	@Query("select a.maneger  , a.date,a.shift from Appointement a where maneger_id=:id and date>=:date")
+	@Query("select a from Appointement a where maneger_id=:id and date>=:date")
     public List<Appointement> getAppointementByIdDate(@Param("id")int id,@Param ("date") Date date);
 }
