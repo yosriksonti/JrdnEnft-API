@@ -5,12 +5,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import tn.kindergarten.spring.entities.Response;
 import tn.kindergarten.spring.entities.AppoitementDoc;
 import tn.kindergarten.spring.entities.Doctor;
@@ -81,6 +90,9 @@ public class AppoitmentDocController {
 		// get appoitement
 		AppoitementDoc rv = null;
 	
+		rv = AvaibilityAppService.findAppById(id);
+		
+		
 		// appoitement not found ?
 		if (rv == null) {
 			List<String> messages = new ArrayList<String>();
@@ -137,6 +149,14 @@ public class AppoitmentDocController {
 	}
 	
 	
+	
+	
+	/*
+	 * *
+	 * 
+	 * REST 
+	 * 
+	 */
 
 	@RequestMapping(value = "/getRvMedecinJour/{idDoctor}/{day}")
 	public Response<List<AppoitementDoc>> getRvMedecinJour(@PathVariable("idDoctor") int idDoctor,
@@ -176,11 +196,11 @@ public class AppoitmentDocController {
 	}
 	
 	
-	@RequestMapping(value = "/getRvById/{id}", method = RequestMethod.GET)
-	public Response<AppoitementDoc> getRvById(@PathVariable("id") int id) {
+	@RequestMapping(value = "/getRvById/{id}" , method = RequestMethod.GET )
+	public AppoitementDoc getRvById(@PathVariable("id") int id) {
 	
+		return AvaibilityAppService.findAppById(id);
 		
-		return getApp(id);
 	}
 	
 	
@@ -265,6 +285,27 @@ public class AppoitmentDocController {
 
 		return new Response<AppoitementDoc>(0, null, rv);
 	}
+	
+	
+	
+	@DeleteMapping(value = "/supprimerRv/{id}")
+	public Response<Void> supprimerRv(@PathVariable("id") int id ) {
+	
+		
+		Response<AppoitementDoc> responseRv = getApp(id);
+		if (responseRv.getStatus() != 0) {
+			return new Response<Void>(responseRv.getStatus(), responseRv.getMessages(), null);
+		}
+	
+		AvaibilityAppService.deleteApp(id);
+	
+		// ok
+		return new Response<Void>(0, null, null);
+	}
+	
+	
+	//agenda of doctor of a day 
+	
 	
 	
 	

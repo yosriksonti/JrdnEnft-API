@@ -20,7 +20,7 @@ import javax.persistence.GeneratedValue;
 
 
 @Entity
-@Table(name = "Appointment")
+@Table(name = "Doc appoitement")
 
 public class AppoitementDoc implements Serializable {
 
@@ -33,7 +33,7 @@ public class AppoitementDoc implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name = "jour", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -70,11 +70,11 @@ public class AppoitementDoc implements Serializable {
 		return idParent;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
