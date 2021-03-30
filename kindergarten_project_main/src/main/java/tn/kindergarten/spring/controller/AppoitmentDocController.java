@@ -221,33 +221,33 @@ public class AppoitmentDocController {
 			return new Response<AppoitementDoc>(6, messages, null);
 		}
 		// we get the avaibility
-	//	Response<DoctorAvailability> responseAvaiblity = getAvaibilityById(idDoctoravai);
-		//if (responseAvaiblity.getStatus() != 0) {
+		Response<DoctorAvailability> responseAvaiblity = getAvaibilityById(idDoctoravai);
+		if (responseAvaiblity.getStatus() != 0) {
 			
 			
-		//	return new Response<AppoitementDoc>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
-	//	}
-		//DoctorAvailability créneau = responseAvaiblity.getBody();
+			return new Response<AppoitementDoc>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
+		}
+		DoctorAvailability créneau = responseAvaiblity.getBody();
 		// we get the parent
 		
-		DoctorAvailability  créneau = new DoctorAvailability();
-		
-		créneau.setDoc(DoctorService.findDoctor(7));
-		créneau.setDoctor(7);
-		créneau.setId(1);
-		créneau.setHdebut(17);
-		créneau.setHfin(20);
 	
 		
-	//	Response<Parent> responseParent = getParent(idParent);
-	//	if (responseParent.getStatus() != 0) {
-		//	return new Response<AppoitementDoc>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
-	//	}
-		//Parent parent = responseParent.getBody();
+		//créneau.setDoctor(DoctorService.findDoctor(7));
 		
-		Parent parent = new Parent();
+	//	créneau.setId(1);
+	//	créneau.setHdebut(17);
+	//	créneau.setHfin(20);
+	
 		
-		parent.setId(1);
+		Response<Parent> responseParent = getParent(idParent);
+		if (responseParent.getStatus() != 0) {
+			return new Response<AppoitementDoc>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
+		}
+		Parent parent = responseParent.getBody();
+		
+		//Parent parent = new Parent();
+		
+	//	parent.setId(1);
 	
 		
 		

@@ -80,8 +80,8 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 
 	@Override
 	public DoctorAvailability createTimeslot(Date jour, DoctorAvailability docAvai, Parent parent) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return DocAvaiRepo.save(docAvai);
 	}
 
 	@Override

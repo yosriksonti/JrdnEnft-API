@@ -6,17 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.kindergarten.spring.entities.Doctor;
 import tn.kindergarten.spring.entities.DoctorAvailability;
 import tn.kindergarten.spring.repository.DoctorAvaibilityRepository;
 import tn.kindergarten.spring.repository.DoctorRepository;
 
 @Service
 public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
+	
+	
+	
+	@Autowired
+	private DoctorAvaibilityRepository DocAvaiRepo;
 
 	@Override
-	public int addDoctorAvaibility(DoctorAvailability docAv) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addDoctorAvaibility(DoctorAvailability docAv , Doctor doc) {
+		 DocAvaiRepo.save(docAv);
+		 docAv.setDoc(doc);
+		return docAv.getId();
 	}
 
 	@Override
@@ -34,9 +41,9 @@ public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 	@Override
 	public List<DoctorAvailability> getAllDoctorAvaibility() {
 		// TODO Auto-generated method stub
-		return null;
+		return  (List<DoctorAvailability>) DocAvaiRepo.findAll();
 	}
-
+	
 	
 	
 	/*
@@ -76,12 +83,7 @@ public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 		
 	}
 
-	@Override
-	public List<DoctorAvailability> getAllDoctorAvaibility() {
-		// TODO Auto-generated method stub
-		return  (List<DoctorAvailability>) docA.findAll();
-	}
-	
+
 	*/
 	
 }

@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.kindergarten.spring.entities.AppoitementDoc;
 import tn.kindergarten.spring.entities.Doctor;
 import tn.kindergarten.spring.entities.DoctorAvailability;
 import tn.kindergarten.spring.entities.HealthRecord;
 import tn.kindergarten.spring.entities.Parent;
 import tn.kindergarten.spring.entities.Response;
 import tn.kindergarten.spring.service.IDoctorAvaibilityService;
+import tn.kindergarten.spring.service.IDoctorService;
 
 @RestController
 public class RestDoctorAvailability {
@@ -31,14 +34,30 @@ public class RestDoctorAvailability {
 	@Autowired 
 	IDoctorAvaibilityService IDoctorAvaibilityService;
 	
+	@Autowired 
+	IDoctorService IDoctor;
+	
 	
 	
 	@PostMapping("/addDoctorAvaibility")
 	@ResponseBody
-	public DoctorAvailability ajouterHealthRecord(@RequestBody DoctorAvailability docAv)
-	{
-		IDoctorAvaibilityService.addDoctorAvaibility(docAv);
-		return docAv;
+	public Response<DoctorAvailability> ajouterDoctorAvaibility(@RequestBody DoctorAvailability docAv)
+	{	
+		Doctor doc = null;
+		try {
+		 doc = IDoctor.findDoctor(docAv.getDoctor());
+		}
+		catch (Exception e) {
+			e.getMessage();
+			List<String> messages = new ArrayList<String>();
+			messages.add(e.getMessage());
+			return new Response<DoctorAvailability>(2,messages, null);
+			
+		}
+		
+		IDoctorAvaibilityService.addDoctorAvaibility(docAv , doc);
+	
+		return new Response<DoctorAvailability>(0, null, docAv);
 	}
 	
 	@DeleteMapping("/deleteDoctorAvaibilityById/{id}")

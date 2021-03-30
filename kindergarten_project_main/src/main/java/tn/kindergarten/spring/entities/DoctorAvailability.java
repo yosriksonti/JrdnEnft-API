@@ -40,10 +40,10 @@ public class DoctorAvailability implements Serializable {
 	private int id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="doc_id", nullable=false)
+    @JoinColumn(name="doc_id" , nullable = true)
 	private Doctor doc;
 	
-	@Column (name = "id_doctor", nullable = false, insertable = false, updatable = false)
+	@Column (name = "id_doctor",updatable = false)
 	private int doctor;
 	
 
@@ -73,14 +73,44 @@ public class DoctorAvailability implements Serializable {
 	
 	
 	
-	public long getDoctor() {
+	public int getDoctor() {
 		return doctor;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public Doctor getDoc() {
+		return doc;
+	}
+
+
+
+	public void setDoc(Doctor doc) {
+		this.doc = doc;
 	}
 
 
 
 	public void setDoctor(int doctor) {
 		this.doctor = doctor;
+	}
+
+
+
+	public void setDoctor(Doctor doc) {
+		this.doc = doc;
 	}
 
 
@@ -151,38 +181,24 @@ public class DoctorAvailability implements Serializable {
 	{
 		
 	}
-	
-	
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Doctor getDoc() {
-		return doc;
-	}
-
-	public void setDoc(Doctor doc) {
-		this.doc = doc;
-	}
 
 
 
-	public DoctorAvailability( Doctor doc, int hdebut, int mdebut, int hfin, int mfin
+
+	public DoctorAvailability( int hdebut, int mdebut, int hfin, int mfin , int iddoc
 		) {
 		super();
 		
-		this.doc = doc;
+	
 		this.hdebut = hdebut;
 		this.mdebut = mdebut;
 		this.hfin = hfin;
 		this.mfin = mfin;
+		this.doctor=iddoc;
 		
 	}
+
+
 
 
 
