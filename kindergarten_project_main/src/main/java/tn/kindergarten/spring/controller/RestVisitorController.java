@@ -1,5 +1,7 @@
 package tn.kindergarten.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.Visitor;
 import tn.kindergarten.spring.service.IVisitorService;
@@ -21,12 +24,19 @@ public class RestVisitorController
 	@Autowired
 	IVisitorService ivisitorService ;
 	
-	@PostMapping("/addVisitor")
+	@PostMapping("/addVisitor/{idfiledb}")
 	@ResponseBody
-	public Visitor addVisitor(@RequestBody Visitor visitor)
+	public Visitor addVisitor(@RequestBody Visitor visitor,@PathVariable (value ="idfiledb") String idfiledb)
 	{
-		ivisitorService.addVisitorr(visitor);
+		ivisitorService.addVisitorr(visitor,idfiledb);
 		return visitor;
+	}
+	
+	@PostMapping("/visitor/closestDaycares")
+	@ResponseBody
+	public List<Daycare> getClosestDaycares(@RequestBody Visitor visitor)
+	{
+		return ivisitorService.getClosest(visitor);
 	}
 	
 	
@@ -34,7 +44,7 @@ public class RestVisitorController
 		
 		@PutMapping(value = "/updateVisitor/{id}") 
 		public void updateVisitor(@RequestBody Visitor visitor,@PathVariable("id")int visitorId)
-		{
+		{   
 			ivisitorService.updateVisitor(visitor, visitorId);
 		}
 		
@@ -54,7 +64,12 @@ public class RestVisitorController
 			return id;
 		}
 		
-		
+		@PostMapping("/visitor/daycares ")
+		@ResponseBody
+		public List<Daycare> getDaycares(@RequestBody Visitor visitor)
+		{
+			return ivisitorService.getDaycaresForVisitor(visitor);
+		}
 		
 	
 		

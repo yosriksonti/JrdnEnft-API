@@ -18,7 +18,7 @@ public class RestDirectorController {
 	IDirectorService idirectorservice;
 	
 	
-	@PostMapping("/addVisitor/{idfiledb}")
+	@PostMapping("/addDirector/{idfiledb}")
 	@ResponseBody
 	public Director addDirector(@RequestBody Director director,@PathVariable (value ="idfiledb") String idfiledb)
 	{

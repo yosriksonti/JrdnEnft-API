@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -45,32 +46,39 @@ public class Visitor implements Serializable {
     
     private String Password;
     
-    private String Image;
-    
+    @OneToOne()
+    private FileDB filedb;    
     private String cin;
     
-    private String login;
+    public FileDB getFiledb() {
+		return filedb;
+	}
+    
+    public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	@OneToOne
+	private Position position;
+
+	public void setFiledb(FileDB filedb) {
+		this.filedb = filedb;
+	}
+
+
+
+
+
+
+
+	private String login;
     
     private boolean isVIP;
     
-    public Visitor(int id, String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, boolean isVIP, Date birthday,
-			tn.kindergarten.spring.entities.Status status) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.lastname = lastname;
-		this.phonenumber = phonenumber;
-		this.email = email;
-		Address = address;
-		Password = password;
-		Image = image;
-		this.cin = cin;
-		this.login = login;
-		this.isVIP = isVIP;
-		this.birthday = birthday;
-		Status = status;
-	}
+
 
 	public boolean isVIP() {
 		return isVIP;
@@ -89,23 +97,7 @@ public class Visitor implements Serializable {
 	
 
 	
-	public Visitor(String name, String lastname, int phonenumber, String email, String address, String password,
-			String image, String cin, String login, int id, Date birthday,
-			tn.kindergarten.spring.entities.Status status, List<Favorite> favorites) {
-		super();
-		this.name = name;
-		this.lastname = lastname;
-		this.phonenumber = phonenumber;
-		this.email = email;
-		Address = address;
-		Password = password;
-		Image = image;
-		this.cin = cin;
-		this.login = login;
-		this.id = id;
-		this.birthday = birthday;
-		Status = status;
-	}
+
 
 	public String getName() {
 		return name;
@@ -155,13 +147,7 @@ public class Visitor implements Serializable {
 		Password = password;
 	}
 
-	public String getImage() {
-		return Image;
-	}
 
-	public void setImage(String image) {
-		Image = image;
-	}
 
 	public String getCin() {
 		return cin;
@@ -210,6 +196,25 @@ public class Visitor implements Serializable {
 
 	public Visitor() {
 		super();
+	}
+	
+	public Visitor(int id, String name, String lastname, int phonenumber, String email, String address, String password,
+			FileDB filedb, String cin, String login, boolean isVIP, Date birthday,
+			tn.kindergarten.spring.entities.Status status) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.lastname = lastname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		Address = address;
+		Password = password;
+		this.filedb = filedb;
+		this.cin = cin;
+		this.login = login;
+		this.isVIP = isVIP;
+		this.birthday = birthday;
+		Status = status;
 	}
 
 	
