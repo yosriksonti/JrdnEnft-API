@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.kindergarten.spring.entities.Parent;
+import tn.kindergarten.spring.entities.Status;
 import tn.kindergarten.spring.service.IParentService;
 
 @RestController
@@ -48,6 +49,16 @@ public class RestParentController {
 		Parent parent1 = parentService.updateParent(parent);
 		if(parent1 == null) new ResponseEntity<> (parent, HttpStatus.CONFLICT);
 		return new ResponseEntity<> (parent1, HttpStatus.OK);
+	}
+	
+	@GetMapping("/allByChildren")
+	public ResponseEntity<List<Parent>> allParentsByChildren() {
+		return new ResponseEntity<> (parentService.getOrderedByChildren(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getByStatus/{status>")
+	public ResponseEntity<List<Parent>> getParentsByStatus(@PathVariable("status") Status status) {
+		return new ResponseEntity<> (parentService.getFiteredByStatus(status), HttpStatus.OK);
 	}
 	
 

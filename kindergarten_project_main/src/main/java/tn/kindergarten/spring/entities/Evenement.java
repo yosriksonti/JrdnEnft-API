@@ -29,14 +29,14 @@ public class Evenement implements Serializable{
 	private String nbParticipant;
 	private String atelier;
 	@ManyToOne
-	private ProfilAdmin profiladmin;
+	private Manager profiladmin;
 	@ManyToMany
 	private List<Parent> parents;
 	
 	public ProfilAdmin getProfiladmin() {
 		return profiladmin;
 	}
-	public void setProfiladmin(ProfilAdmin profiladmin) {
+	public void setProfiladmin(Manager profiladmin) {
 		this.profiladmin = profiladmin;
 	}
 	public List<Parent> getParents() {
