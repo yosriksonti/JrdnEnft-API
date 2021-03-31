@@ -6,7 +6,7 @@ import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.Reclamation;
 
 public interface IReclamationService {
-	public int addReclamation(Reclamation reclamation);
+	public Reclamation addReclamation(Reclamation reclamation);
 	
 	public List<Reclamation> getAll ( );
 	public List<Reclamation> getReclamationByDaycareId(int id);

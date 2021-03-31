@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import tn.kindergarten.spring.entities.Daycare;
 import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.HealthRecord;
+import tn.kindergarten.spring.entities.Parent;
 import tn.kindergarten.spring.entities.Reclamation;
 import tn.kindergarten.spring.entities.TypeReclamation;
 import tn.kindergarten.spring.repository.DaycareRepository;
@@ -33,9 +34,11 @@ public class ReclamationService implements IReclamationService{
 	DaycareRepository daycarerepo;
 	@Autowired
 	DaycareServiceImpl daycareService;
+	@Autowired
+	ParentServiceImpl parentService;
 	
 	
-	public int addReclamation(Reclamation reclamation) {
+public Reclamation addReclamation(Reclamation reclamation) {
 		
 		reclamationrepo.save(reclamation);
 	
@@ -48,16 +51,18 @@ public class ReclamationService implements IReclamationService{
 		sendemailservice.sendEmail(director.getEmail(), reclamation.getParent().getEmail(), reclamation.getDescripRec(), reclamation.getRecName());
 		}
 		else if (reclamation.getTypeRec()== typerec.blame) {
-			sendemailservice.sendEmail( reclamation.getParent().getEmail(),director.getEmail(), reclamation.getDescripRec(), reclamation.getRecName());
+			Parent parent = parentrepo.findById(reclamation.getParent().getId()).get();
+			sendemailservice.sendEmail( parent.getEmail(),director.getEmail(), reclamation.getDescripRec(), reclamation.getRecName());
 			}
 		int parentrec = reclamationrepo.findParentBlames(reclamation.getParent().getId());
 		if (parentrec>2)
 		    { 
-			daycareService.removeParent(daycare.getId(),reclamation.getParent().getId());;
-			sendemailservice.sendEmail(reclamation.getParent().getEmail(), director.getEmail(), "you have been baned from "+daycare.getDaycareName(), "removal");
+			Parent parent = parentrepo.findById(reclamation.getParent().getId()).get();
+			parentService.updateIsActive(parent.getId(),false);
+			sendemailservice.sendEmail(parent.getEmail(), director.getEmail(), "Your Account has been Diactivated due to having 3 (or more) consecutive Blames.", "Account Diactivated");
 		}
 	
-			return 1;
+			return reclamation;
 	}
 	
 	public List<Reclamation> getAll() {

@@ -22,12 +22,11 @@ public class RestReclamationController {
 	@Autowired
 	IReclamationService  ireclamationservice;
 	
-	@PostMapping("/addReclamation")
-	@ResponseBody
-	public Reclamation ajouterReclamation(@RequestBody Reclamation reclamation)
+	@PostMapping("/reclamation/add")
+	public ResponseEntity <Reclamation> ajouterReclamation(@RequestBody Reclamation reclamation)
 	{
-		ireclamationservice.addReclamation(reclamation);
-		return reclamation;
+		return new ResponseEntity<Reclamation>(ireclamationservice.addReclamation(reclamation),HttpStatus.OK);
+		 
 	}
 	
 	@GetMapping("/getAll")
@@ -46,3 +45,4 @@ public class RestReclamationController {
 	
 
 }
+

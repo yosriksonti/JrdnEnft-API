@@ -73,5 +73,12 @@ public class ParentServiceImpl implements IParentService {
 		return parents;
 	}
 	
+	public Parent updateIsActive(int parentId,boolean isActive) {
+		Parent parent = findParentById(parentId);
+		parent.setActive(isActive);
+		parentRepository.save(parent);
+		return parent;
+	}
+	
 
 }
