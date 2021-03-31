@@ -59,7 +59,7 @@ public class RestDaycareController
 
 @GetMapping(value = "/daycares/{id}/path") 
 @ResponseBody
-	public Map<String,Integer> getDaycarePath(@PathVariable("id") int id) 
+	public Map<String,String> getDaycarePath(@PathVariable("id") int id) 
 	{
 		return daycareServiceImpl.getShortestPathsChildren(id); 
 	}
