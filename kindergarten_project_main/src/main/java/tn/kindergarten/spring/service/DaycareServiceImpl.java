@@ -329,4 +329,12 @@ public List<Child> getDaycareChildren(int id){
     	
     	
     }
+    public List<Daycare> getClosestToPosition(Position position){
+    	
+    	List<Daycare> daycares = findAll();
+    	daycares.sort(( d1, d2) -> {
+    		return (int) (Point2D.distance(d1.getPosition().getX(), d1.getPosition().getY(), position.getX(),position.getY()) - Point2D.distance(d2.getPosition().getX(), d2.getPosition().getY(), position.getX(),position.getY())) * 1000;
+    	});
+    	return daycares;
+    }
 }
