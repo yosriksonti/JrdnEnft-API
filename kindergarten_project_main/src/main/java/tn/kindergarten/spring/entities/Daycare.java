@@ -179,11 +179,11 @@ public class Daycare implements Serializable{
 			this.doctor = doctor;
 		}
 
-		public Manager getManager() {
+		public ProfilAdmin getManagers() {
 			return manager;
 		}
 
-		public void setManager(Manager manager) {
+		public void setManagers(ProfilAdmin manager) {
 			this.manager = manager;
 		}
 
