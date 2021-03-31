@@ -230,6 +230,7 @@ public class DaycareServiceImpl implements IDaycareService
     FavoriteRepository favoriteRepository;
 	public int affecterDaycareFavoritee(Favorite favorite) 
 	{
+		System.out.println("Resp"+favorite.getDaycares().get(0).getId());
 		Daycare daycare = favorite.getDaycares().get(0);
 		Daycare daycareManagerEntity = daycareRepository.findById(favorite.getDaycares().get(0).getId()).get();
 		Favorite favoriteManagedEntity = favoriteRepository.findById(favorite.getId()).get();

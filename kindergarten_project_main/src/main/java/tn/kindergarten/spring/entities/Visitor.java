@@ -51,7 +51,38 @@ public class Visitor implements Serializable {
     
     private String login;
     
-    @Temporal(TemporalType.DATE)
+    private boolean isVIP;
+    
+    public Visitor(int id, String name, String lastname, int phonenumber, String email, String address, String password,
+			String image, String cin, String login, boolean isVIP, Date birthday,
+			tn.kindergarten.spring.entities.Status status) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.lastname = lastname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		Address = address;
+		Password = password;
+		Image = image;
+		this.cin = cin;
+		this.login = login;
+		this.isVIP = isVIP;
+		this.birthday = birthday;
+		Status = status;
+	}
+
+	public boolean isVIP() {
+		return isVIP;
+	}
+
+	public void setVIP(boolean isVIP) {
+		this.isVIP = isVIP;
+	}
+
+
+
+	@Temporal(TemporalType.DATE)
     private Date birthday;
 	
 	
