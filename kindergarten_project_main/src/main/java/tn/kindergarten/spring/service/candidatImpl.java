@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.kindergarten.spring.entities.Candidat;
+import tn.kindergarten.spring.entities.Evenement;
+import tn.kindergarten.spring.entities.FileDB;
 import tn.kindergarten.spring.entities.Manager;
 import tn.kindergarten.spring.repository.candidatRepository;
 
@@ -21,6 +23,14 @@ public class candidatImpl implements Icandidatservice{
 		
 	}
 	
-	
+	public int ajoutercand(Candidat candidat) 
+	{
+		
+		
+		candidatrepository.save(candidat);
+		return candidat.getId();
+		
+		
+	}
 	
 }

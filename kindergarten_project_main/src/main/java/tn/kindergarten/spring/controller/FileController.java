@@ -33,7 +33,7 @@ public class FileController {
 
   @PostMapping("/upload")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-    String message = "";
+    String message = "success";
     try {
       storageService.store(file);
 

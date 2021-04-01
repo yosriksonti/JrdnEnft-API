@@ -66,6 +66,16 @@ public class EventServiceImpl implements IEventService {
 	{
 		Evenement evenement1 = evenementRepository.findById(evenementId).get();
 		evenement1.setName(evenement.getName());
+		evenement1.setAtelier(evenement.getAtelier());
+		evenement1.setNbParticipant(evenement.getNbParticipant());
+		evenement1.setType(evenement.getType());
+		evenement1.setDate(evenement.getDate());
+		evenement1.setFiledb(evenement.getFiledb());
+
+
+
+
+
 		evenementRepository.save(evenement1);
 
 

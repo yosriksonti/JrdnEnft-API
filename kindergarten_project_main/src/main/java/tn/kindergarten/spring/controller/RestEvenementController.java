@@ -1,7 +1,11 @@
 package tn.kindergarten.spring.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +52,8 @@ public class RestEvenementController {
 	@PostMapping(value="/ajouterEvenement/{idfiledb}")
 
 	@ResponseBody
-    public  ResponseEntity<ResponseMessage> ajouterEvenemnt(@RequestBody Evenement evenement,@PathVariable (value ="idfiledb") String idfiledb) throws Exception 
-	{  String message = "";
+    public  ResponseEntity<ResponseMessage> ajouterEvenemnt(@Valid @RequestBody Evenement evenement,@PathVariable (value ="idfiledb") String idfiledb) throws Exception 
+	{  String message = "sucess";
 	
 	user.setEmailAddress("tayssir.khalifa@esprit.tn");  //Receiver's email address
 	/*
@@ -89,6 +97,19 @@ public List<Evenement> getAllEvenement() {
 		
 		return ieventService.getAllEvents();
 	}
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+      MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
     
     
  

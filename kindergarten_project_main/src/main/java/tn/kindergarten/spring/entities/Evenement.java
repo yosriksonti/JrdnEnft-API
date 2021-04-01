@@ -19,6 +19,12 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 
@@ -26,12 +32,17 @@ public class Evenement implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
+	@NotNull
+	@Size(max=50)
     private String name;
+	@NotBlank(message = "type may not be blank")
 	private String type;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="dd/MM/yy")
+	@Future(message = "future date required")
 	private Date date;
-	private String image;
+	private String image;	@Max(value = 50,message = "nombre de participant must be lower than 50")
 	private String nbParticipant;
 	private String atelier;
 	@ManyToOne
@@ -77,7 +88,9 @@ public class Evenement implements Serializable{
 		return date;
 	}
 	public void setDate(Date date) {
+		System.out.println(date);
 		this.date = date;
+		
 	}
 	public String getImage() {
 		return image;
@@ -142,6 +155,23 @@ public class Evenement implements Serializable{
 	}
 	public void setManager(Manager manager) {
 		this.manager = manager;
+	}
+	public Evenement(int id, @NotNull @Size(max = 50) String name,
+			@NotBlank(message = "type may not be blank") String type,
+			@Future(message = "future date required") Date date, String image,
+			@Max(value = 50, message = "nombre de participant must be lower than 50") String nbParticipant,
+			String atelier, Manager manager, List<Parent> parents, FileDB filedb) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.date = date;
+		this.image = image;
+		this.nbParticipant = nbParticipant;
+		this.atelier = atelier;
+		this.manager = manager;
+		this.parents = parents;
+		this.filedb = filedb;
 	}
 	
 	

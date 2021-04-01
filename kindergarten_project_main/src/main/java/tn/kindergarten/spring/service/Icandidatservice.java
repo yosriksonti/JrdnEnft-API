@@ -6,5 +6,6 @@ import tn.kindergarten.spring.entities.Candidat;
 
 public interface Icandidatservice {
 	public List<Candidat> getCandidates();
+	public int ajoutercand(Candidat candidat) ;
 
 }
