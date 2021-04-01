@@ -12,7 +12,7 @@ import tn.kindergarten.spring.entities.Parent;
 public interface AvaibilityAppoitementService {
 	
 	
-	public AppoitementDoc createApp(DoctorAvailability docAvai,Date day,Parent parent );
+	public boolean createApp(DoctorAvailability docAvai,Date day,Parent parent );
 	public AppoitementDoc updateApp(AppoitementDoc app);
 	
 	public void deleteApp(int idApp);

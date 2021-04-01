@@ -46,7 +46,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	
 	
 	@Override
-	public AppoitementDoc createApp(DoctorAvailability docAvai, Date day, Parent parent) {
+	public boolean createApp(DoctorAvailability docAvai, Date day, Parent parent) {
 		// TODO Auto-generated method stub
 		
 		AppoitementDoc rv = new AppoitementDoc() ;
@@ -56,7 +56,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 		rv.setConfirmed(false);
 		
 		appRepo.save(rv);
-		return rv;
+		return true;
 	}
 	
 	@Override

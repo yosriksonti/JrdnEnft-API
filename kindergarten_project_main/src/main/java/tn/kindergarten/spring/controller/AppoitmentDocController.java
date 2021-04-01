@@ -307,19 +307,24 @@ public class AppoitmentDocController {
 		String phone = appdoc.getParent().getPhonenumber();
 		System.out.println("******************************************");
 		System.out.println(phone);
-		String msg =("your appoitement of the doctor "+appdoc.getAvailability().getDoc().getName() +"is confirmed");
+		String msg =("your appoitement of the doctor "+appdoc.getAvailability().getDoc().getName() +" is confirmed");
+		
+		
 		SmsRequest smsRequest = new SmsRequest(phone, msg);
 		
-		
-		
-	
-		service.sendSms(smsRequest);
-		
+		try {
+			service.sendSms(smsRequest);
+		} catch (Exception e) {
+			// TODO: handle exception
+			messages.add(e.getMessage());
+			return new Response<AppoitementDoc>(6, messages, null);
+		}
+
 		return new Response<AppoitementDoc>(0, null, appdoc);
 	}
 	
 	@RequestMapping(value = "/ajouterRv/{day}/{idDocAvaib}/{idParent}" ,method = RequestMethod.POST)
-	public Response<AppoitementDoc> ajouterRv(@PathVariable("day") String day,@PathVariable("idDocAvaib") int idDoctoravai,@PathVariable("idParent") int idParent) {
+	public Response<Boolean> ajouterRv(@PathVariable("day") String day,@PathVariable("idDocAvaib") int idDoctoravai,@PathVariable("idParent") int idParent) {
 		// date verification
 		Date jourAgenda = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -329,32 +334,32 @@ public class AppoitmentDocController {
 		} catch (ParseException e) {
 			List<String> messages = new ArrayList<String>();
 			messages.add(String.format("the date [%s] is not valid", day));
-			return new Response<AppoitementDoc>(6, messages, null);
+			return new Response<Boolean>(6, messages, null);
 		}
 		// we get the avaibility
 		Response<DoctorAvailability> responseAvaiblity = getAvailability(idDoctoravai);
 		if (responseAvaiblity.getStatus() != 0) {
-			return new Response<AppoitementDoc>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
+			return new Response<Boolean>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
 		}
 		DoctorAvailability créneau = responseAvaiblity.getBody();
 		// we get the parent
 		Response<Parent> responseParent = getParent(idParent);
 		if (responseParent.getStatus() != 0) {
-			return new Response<AppoitementDoc>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
+			return new Response<Boolean>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
 		}
 		Parent parent = responseParent.getBody();
 		// we add the appoitement
-		AppoitementDoc rv = null;
+		boolean rv =false;
 		try {
-			rv =AvaibilityAppService.createApp(créneau, jourAgenda, parent);
+			 rv =AvaibilityAppService.createApp(créneau, jourAgenda, parent);
 		} catch (Exception e) {
 			// TODO: handle exception
-			messages.add(e.getMessage());
-			return new Response<AppoitementDoc>(6,messages , rv);
+			
+			return new Response<Boolean>(6,messages , rv);
 		}
 		
 			
-		return new Response<AppoitementDoc>(0, null, rv);
+		return new Response<Boolean>(0, messages, rv);
 	}
 	
 	

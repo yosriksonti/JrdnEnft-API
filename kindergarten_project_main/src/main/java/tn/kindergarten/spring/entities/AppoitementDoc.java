@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -40,14 +41,15 @@ public class AppoitementDoc implements Serializable {
 	@Column(name = "jour", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@NotNull
+	//@Future(message="appoitement must be in the future")
 	private Date day;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_parent")
 	private Parent parent;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_availability")
 	private DoctorAvailability availability;
 	
