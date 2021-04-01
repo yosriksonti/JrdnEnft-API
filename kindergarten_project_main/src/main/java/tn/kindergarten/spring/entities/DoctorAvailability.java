@@ -19,14 +19,14 @@ import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
-
-
-
 
 
 @Table(name = "Availability")
 @Entity
+
 public class DoctorAvailability implements Serializable {
 	
 	/**
@@ -38,41 +38,25 @@ public class DoctorAvailability implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@JsonIgnore
+	@ManyToOne
     @JoinColumn(name="doc_id" , nullable = true)
 	private Doctor doc;
 	
-	@Column (name = "id_doctor",updatable = false)
+	@Column (name = "id_doctor")
 	private int doctor;
-	
-
 	private int hdebut;
 	private int mdebut;
 	private int hfin;
 	private int mfin;
 	
+	
+	
 	@OneToMany(mappedBy = "availability")
-	private List<AppoitementDoc> Apps = new ArrayList<>();
-	/*
-	private  boolean Availability ;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date beginwork;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endwork;
+	private List<AppoitementDoc> Apps ;
 
-	public boolean isAvailability() {
-		return Availability;
-	}
-	
-	
-	*/
-	
-	
-	
-	
+
 	public int getDoctor() {
 		return doctor;
 	}
@@ -184,19 +168,21 @@ public class DoctorAvailability implements Serializable {
 
 
 
-
-	public DoctorAvailability( int hdebut, int mdebut, int hfin, int mfin , int iddoc
-		) {
+	public DoctorAvailability(Doctor doc, int doctor, int hdebut, int mdebut, int hfin, int mfin,
+			List<AppoitementDoc> apps) {
 		super();
-		
-	
+		this.doc = doc;
+		this.doctor = doctor;
 		this.hdebut = hdebut;
 		this.mdebut = mdebut;
 		this.hfin = hfin;
 		this.mfin = mfin;
-		this.doctor=iddoc;
-		
+		Apps = apps;
 	}
+
+
+
+
 
 
 

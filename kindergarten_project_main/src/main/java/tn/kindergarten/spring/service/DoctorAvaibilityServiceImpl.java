@@ -20,9 +20,9 @@ public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 	private DoctorAvaibilityRepository DocAvaiRepo;
 
 	@Override
-	public int addDoctorAvaibility(DoctorAvailability docAv , Doctor doc) {
+	public int addDoctorAvaibility(DoctorAvailability docAv ) {
 		 DocAvaiRepo.save(docAv);
-		 docAv.setDoc(doc);
+	
 		return docAv.getId();
 	}
 
@@ -35,6 +35,7 @@ public class DoctorAvaibilityServiceImpl implements IDoctorAvaibilityService {
 	@Override
 	public void deleteDoctorAvaibilityById(int doctorAvaibilityId) {
 		// TODO Auto-generated method stub
+		DocAvaiRepo.delete(DocAvaiRepo.findById(doctorAvaibilityId).get());
 		
 	}
 

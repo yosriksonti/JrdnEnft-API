@@ -30,6 +30,7 @@ public class Parent implements Serializable {
 	private String email;
 	private String password;
 	
+	private String phonenumber;
 	
 	
 	@OneToMany(mappedBy="healthrecordsParent")
@@ -85,6 +86,14 @@ public class Parent implements Serializable {
 
 	public void setStatus(Status status) {
 		Status = status;
+	}
+
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 
 

@@ -46,26 +46,36 @@ public class RestDoctorAvailability {
 		Doctor doc = null;
 		try {
 		 doc = IDoctor.findDoctor(docAv.getDoctor());
+		 System.out.println(doc.toString());
 		}
 		catch (Exception e) {
 			e.getMessage();
 			List<String> messages = new ArrayList<String>();
-			messages.add(e.getMessage());
+			messages.add("doctor not found , exception message :"+ e.getMessage());
 			return new Response<DoctorAvailability>(2,messages, null);
 			
 		}
+		docAv.setDoctor(doc);
+		IDoctorAvaibilityService.addDoctorAvaibility(docAv);
 		
-		IDoctorAvaibilityService.addDoctorAvaibility(docAv , doc);
-	
+		
 		return new Response<DoctorAvailability>(0, null, docAv);
 	}
 	
 	@DeleteMapping("/deleteDoctorAvaibilityById/{id}")
 	@ResponseBody
-	public int deleteHealthRecord(@PathVariable("id") int id )
+	public Response<DoctorAvailability> deleteDoctorAvaibilityById(@PathVariable("id") int id )
 	{
-		IDoctorAvaibilityService.deleteDoctorAvaibilityById(id);
-		return id;
+		List<String> messages = new ArrayList<String>();
+		try {
+			IDoctorAvaibilityService.deleteDoctorAvaibilityById(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			messages.add("docotor avaibility not found , exception message :" +e.getMessage());
+			return new Response<DoctorAvailability>(-1, messages, null);
+		}
+		messages.add("deleted successfully");
+		return new Response<DoctorAvailability>(0, messages, null);
 	}
 	
 	@PutMapping(value = "/modifyDoctorAvaibility/{id}/{docavBool}/{dateBegin}/{dateEnd}")
@@ -75,11 +85,14 @@ public class RestDoctorAvailability {
 		IDoctorAvaibilityService.modifyDoctorAvaibility(docavBool, dateBegin, dateEnd, id);
 	}
 	
+	
+	
 	@GetMapping(value = "/getAllDoctorAvaibility")
     @ResponseBody
-	public List<DoctorAvailability> getAllEmployes() {
+	public List<DoctorAvailability> getAllDoctorAvaibility() {
 		
-		return IDoctorAvaibilityService.getAllDoctorAvaibility();
+	
+		 return IDoctorAvaibilityService.getAllDoctorAvaibility();
 	}
 	
 	

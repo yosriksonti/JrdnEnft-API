@@ -16,6 +16,8 @@ public class AgendaDoctorDay implements Serializable {
 	private Doctor doc;
 	private Date day;
 	private DocAvaibilityDay[] docAvaiblityday;
+	
+	
 	public Doctor getDoc() {
 		return doc;
 	}

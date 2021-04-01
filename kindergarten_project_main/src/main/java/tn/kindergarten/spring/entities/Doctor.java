@@ -35,7 +35,7 @@ public class Doctor extends ProfilAdmin implements Serializable {
 	@OneToMany(mappedBy="doc")
 	private List<HealthRecord> healthRecords;
 	
-	@OneToMany(mappedBy="doc" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="doc")
 	private List<DoctorAvailability> avaibility = new ArrayList<>();
 	
 	
@@ -238,6 +238,13 @@ public class Doctor extends ProfilAdmin implements Serializable {
 	}
 
 
+
+
+	@Override
+	public String toString() {
+		return "Doctor [isActive=" + isActive + ", daycare=" + daycare + ", healthRecords=" + healthRecords
+				+ ", avaibility=" + avaibility + "]";
+	}
 
 
 	public Doctor() {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -21,14 +21,15 @@ import tn.kindergarten.spring.repository.DoctorAvaibilityRepository;
 import tn.kindergarten.spring.repository.DoctorRepository;
 
 
-@Service
+@org.springframework.stereotype.Service
 @Transactional
 public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementService {
 	
 	
+
+	//  private final Service service;
 	
-	
-	
+	 private final Service service;
 	@Autowired
 	private DoctorRepository docRepo;
 	
@@ -38,12 +39,26 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	@Autowired
 	private DoctorAvaibilityRepository DocAvaiRepo;
 
+    @Autowired
+    public AvaibilityAppoitementServiceImpl(Service service) {
+        this.service = service;
+    }
+	
+	
 	@Override
-	public AppoitementDoc createApp(AppoitementDoc app) {
+	public AppoitementDoc createApp(DoctorAvailability docAvai, Date day, Parent parent) {
+		// TODO Auto-generated method stub
 		
-		return appRepo.save(app);
+		AppoitementDoc rv = new AppoitementDoc() ;
+		rv.setAvailability(docAvai);
+		rv.setDay(day);
+		rv.setParent(parent);	
+		rv.setConfirmed(false);
+		
+		appRepo.save(rv);
+		return rv;
 	}
-
+	
 	@Override
 	public AppoitementDoc updateApp(AppoitementDoc app) {
 		
@@ -57,7 +72,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	
 	public AppoitementDoc findAppById(int idApp) {
 		// TODO Auto-generated method stub
 			
@@ -65,14 +80,14 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+
 	public List<AppoitementDoc> findAppointmentsByDoctorByDay(int idDoctor, Date day) {
 		// TODO Auto-generated method stub
 		return appRepo.findAppointmentByDoctorByDay(idDoctor, day);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	
 	public Long countAllAppointments() {
 		// TODO Auto-generated method stub
 		return appRepo.count();
@@ -97,21 +112,22 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	
 	public DoctorAvailability findTimeslotById(int id) {
 		// TODO Auto-generated method stub
 		return DocAvaiRepo.findById(id).get();
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	
 	public List<DoctorAvailability> findAllTimeslotOfDoctor(int idDoctor) {
 		// TODO Auto-generated method stub
-		return DocAvaiRepo.findAllTimeslotbyDoctor(idDoctor);
+		//return DocAvaiRepo.findAllTimeslotbyDoctor(idDoctor);
+		return null;
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	
 	public AgendaDoctorDay getAgendaDoctorDay(int idDoc, Date day) {
 				// get doctor's timeslot list
 				List<DoctorAvailability> avaibilityHours = findAllTimeslotOfDoctor(idDoc);
@@ -155,5 +171,26 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 		
 		
 	}
+
+	@Override
+	public void confirmAppoitement(AppoitementDoc app) {
+		// TODO Auto-generated method stub
+		
+		app.setConfirmed(true);
+		String phone = app.getParent().getPhonenumber();
+		System.out.println("******************************************");
+		System.out.println(phone);
+		SmsRequest smsRequest = null;
+		smsRequest.setPhoneNumber(phone);
+		smsRequest.setMessage("your appoitement of the doctor "+app.getAvailability().getDoc().getName() +"is confirmed");
+		
+		service.sendSms(smsRequest);
+		
+		
+		
+		
+	}
+
+
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 
@@ -20,7 +22,7 @@ import javax.persistence.GeneratedValue;
 
 
 @Entity
-@Table(name = "Doc appoitement")
+//@Table(name = "Doc appoitement")
 
 public class AppoitementDoc implements Serializable {
 
@@ -38,36 +40,45 @@ public class AppoitementDoc implements Serializable {
 	@Column(name = "jour", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@NotNull
-	
 	private Date day;
 	
-	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_parent")
 	private Parent parent;
 	
-	
-	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_availability")
 	private DoctorAvailability availability;
 	
-	
-	
 	@Column(name = "id_parent", nullable = false, insertable = false, updatable = false)
-	private long idParent;
+	private int idParent;
 	
 	@Column(name = "id_availability", nullable = false, insertable = false, updatable = false)
 	private long idAvailability;
 	
+	@Column(name = "is_Confirmed", nullable = false)
+	private boolean isConfirmed;
 	
+	
+	
+	
+	
+	public boolean isConfirmed() {
+		return isConfirmed;
+	}
+
+	public void setConfirmed(boolean isConfirmed) {
+		this.isConfirmed = isConfirmed;
+	}
+
 	public long getIdAvailability() {
 		return idAvailability;
 	}
 
-	public long getParent() {
-		return idParent;
+
+	public Parent getParent() {
+		return parent;
 	}
 
 	public int getId() {
@@ -102,6 +113,29 @@ public class AppoitementDoc implements Serializable {
 		super();
 	}
 
+	public AppoitementDoc(Date day, Parent parent, DoctorAvailability availability, int idParent,
+			long idAvailability) {
+		super();
+		this.day = day;
+		this.parent = parent;
+		this.availability = availability;
+		this.idParent = idParent;
+		this.idAvailability = idAvailability;
+	}
+
+	public long getIdParent() {
+		return idParent;
+	}
+
+	public void setIdParent(int idParent) {
+		this.idParent = idParent;
+	}
+
+	public void setIdAvailability(long idAvailability) {
+		this.idAvailability = idAvailability;
+	}
+
+		
 	
 	
 	
