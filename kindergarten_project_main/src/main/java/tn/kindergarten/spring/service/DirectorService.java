@@ -36,7 +36,12 @@ public class DirectorService implements IDirectorService {
 	}
 	@Override
 	public void updateDirector(Director director, int id) {
-		// TODO Auto-generated method stub
+		Director dirctr = getDirectorById(id);
+		if(director.getName() != null) {
+		dirctr.setName(director.getName());
+		}
+		directorrepo.save(dirctr);
+		
 		
 	}
 

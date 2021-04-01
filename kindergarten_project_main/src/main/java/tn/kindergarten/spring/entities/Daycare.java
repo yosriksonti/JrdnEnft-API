@@ -11,18 +11,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.validation.annotation.Validated;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Validated
 @Entity
 public class Daycare implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@NotEmpty
+    @NotBlank(message="Daycare Name may not be Empty")
 	private String daycareName;
 	public Daycare(int id, String daycareName, String region, String logo, String reputation, int nbReclamations,
 			Doctor doctor, Manager manager, List<Favorite> favorites, Position position, List<Parent> parents,
@@ -49,11 +57,16 @@ public class Daycare implements Serializable{
 	public void setDaycareName(String daycareName) {
 		this.daycareName = daycareName;
 	}
-
+	@NotEmpty
+    @NotBlank(message="Daycare Region may not be Empty")
 	private String region;
 	
+	@NotEmpty
+    @NotBlank(message="Daycare Logo may not be Empty")
 	private String logo;
 	
+	@NotEmpty
+    @NotBlank(message="Daycare Name may not be Empty")
 	private String reputation;
 	
 	private int nbReclamations ;

@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Reclamation implements Serializable {
 	@Id
@@ -34,10 +36,22 @@ public class Reclamation implements Serializable {
     private Date dateRec;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Parent parent;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Daycare daycare;
     
   
+	public Reclamation(int id, String recName, String descripRec, TypeReclamation typeRec, Date dateRec, Parent parent,
+			Daycare daycare) {
+		super();
+		this.id = id;
+		this.RecName = recName;
+		this.descripRec = descripRec;
+		this.typeRec = typeRec;
+		this.dateRec = dateRec;
+		this.parent = parent;
+		this.daycare = daycare;
+	}
+
 	public Parent getParent() {
 		return parent;
 	}
