@@ -177,14 +177,14 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 		// TODO Auto-generated method stub
 		
 		app.setConfirmed(true);
-		String phone = app.getParent().getPhonenumber();
-		System.out.println("******************************************");
-		System.out.println(phone);
-		SmsRequest smsRequest = null;
-		smsRequest.setPhoneNumber(phone);
-		smsRequest.setMessage("your appoitement of the doctor "+app.getAvailability().getDoc().getName() +"is confirmed");
+	//	String phone = app.getParent().getPhonenumber();
+		//System.out.println("******************************************");
+	//	System.out.println(phone);
+	//	SmsRequest smsRequest = null;
+//		smsRequest.setPhoneNumber(phone);
+	//	smsRequest.setMessage("your appoitement of the doctor "+app.getAvailability().getDoc().getName() +"is confirmed");
 		
-		service.sendSms(smsRequest);
+		//service.sendSms(smsRequest);
 		
 		
 		

@@ -10,8 +10,8 @@ public class SmsRequest {
    
     private  String message;
 
-    public SmsRequest(@JsonProperty("phoneNumber") String phoneNumber,
-                      @JsonProperty("message") String message) {
+    public SmsRequest(String phoneNumber,
+                     String message) {
         this.phoneNumber = phoneNumber;
         this.message = message;
     }

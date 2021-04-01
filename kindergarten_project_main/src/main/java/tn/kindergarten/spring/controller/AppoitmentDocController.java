@@ -307,9 +307,10 @@ public class AppoitmentDocController {
 		String phone = appdoc.getParent().getPhonenumber();
 		System.out.println("******************************************");
 		System.out.println(phone);
-		SmsRequest smsRequest = null;
-		smsRequest.setPhoneNumber(phone);
-		smsRequest.setMessage("your appoitement of the doctor "+appdoc.getAvailability().getDoc().getName() +"is confirmed");
+		String msg =("your appoitement of the doctor "+appdoc.getAvailability().getDoc().getName() +"is confirmed");
+		SmsRequest smsRequest = new SmsRequest(phone, msg);
+		
+		
 		
 	
 		service.sendSms(smsRequest);
