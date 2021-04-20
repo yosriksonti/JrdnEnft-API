@@ -19,14 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -42,35 +34,21 @@ public class ProfilAdmin {
 
 
 	
-    @NotEmpty
-    @NotBlank(message="Please enter your name")
+
 	protected String name;
-    @NotEmpty
-    @NotBlank(message="Please enter your lastname")
-    
 	protected String lastname;
-    @NotNull
-    //@NotBlank(message="Please enter your phone number")
-    
 	protected int phonenumber;
 	
 	//@Column(unique=true)
-	@Email
-    @NotEmpty
 	protected String email;
 	protected String Address;
 	protected String Password;
 	protected String Image;
-    @NotNull
-    @Size(max=8)
 	protected String cin;
 	protected String login;
 
 
 	@Temporal(TemporalType.DATE)
-	 @NotNull(message = "{user.birthday.notNull}")
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
-    @Past(message = "{user.birthday.past}")
 	protected Date birthday;
 	
 	public Date getBirthday() {

@@ -38,18 +38,8 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public boolean updatePost(Post post,int id) {
-		Post pst = findById(id);
-		if(post.getBody() != null) {
-			pst.setBody(post.getBody());
-		}
-		if(post.getMedia() != null) {
-			pst.setMedia(post.getMedia());
-		}
-		if(post.getTitle() != null) {
-			pst.setTitle(post.getTitle());
-		}
-		postRepository.save(pst);
+	public boolean updatePost(Post post) {
+		postRepository.save(post);
 		return true;
 	}
 
