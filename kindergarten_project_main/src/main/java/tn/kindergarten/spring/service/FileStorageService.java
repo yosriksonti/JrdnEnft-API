@@ -12,6 +12,7 @@ import tn.kindergarten.spring.entities.FileDB;
 import tn.kindergarten.spring.repository.FileDBRepository;
 
 
+
 @Service
 public class FileStorageService {
 
@@ -32,4 +33,5 @@ public class FileStorageService {
   public Stream<FileDB> getAllFiles() {
     return fileDBRepository.findAll().stream();
   }
+
 }

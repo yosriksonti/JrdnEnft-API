@@ -7,4 +7,5 @@ import tn.kindergarten.spring.entities.FileDB;
 
 public interface FileDBRepository extends JpaRepository<FileDB,String > {
 
+
 }
