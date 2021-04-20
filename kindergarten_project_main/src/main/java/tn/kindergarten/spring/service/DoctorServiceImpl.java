@@ -60,8 +60,8 @@ public class DoctorServiceImpl implements IDoctorService{
 
 	@Override
 	public Doctor findDoctor(int docId) {
-		Doctor doctor = docR.findById(docId).get();
-		return doctor;
+		Doctor docctor = docR.findById(docId).get();
+		return docctor;
 	}
 
 	

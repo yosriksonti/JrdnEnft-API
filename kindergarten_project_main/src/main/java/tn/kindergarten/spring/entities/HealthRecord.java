@@ -40,7 +40,7 @@ public class HealthRecord implements Serializable {
 	
 	
 	@ManyToOne
-    @JoinColumn(name="daycare_id", nullable=false)
+    @JoinColumn(name="daycare_id", nullable=true)
 	private Daycare daycare;
 	
 	
