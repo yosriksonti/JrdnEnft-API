@@ -17,13 +17,22 @@ public class RestDirectorController {
 	@Autowired
 	IDirectorService idirectorservice;
 	
-	@PostMapping("/addDirector")
+	
+	@PostMapping("/addDirector/{idfiledb}")
+	@ResponseBody
+	public Director addDirector(@RequestBody Director director,@PathVariable (value ="idfiledb") String idfiledb)
+	{
+		idirectorservice.addDirector(director,idfiledb);
+		return director;
+	}
+	
+	/*@PostMapping("/addDirector")
 	@ResponseBody
 	public Director ajouterDirector(@RequestBody Director director)
 	{
 		idirectorservice.addDirector(director);
 		return director;
-	}
+	}*/
 	
 	@DeleteMapping("/deleteDirector/{id}")
 	@ResponseBody
@@ -39,12 +48,5 @@ public class RestDirectorController {
 	{
 		return idirectorservice.getDirectorById(id);
 	}
-	
-	
-	@GetMapping("/AllDirector")
-	@ResponseBody
-	public Director getAll(@PathVariable("id") int id )
-	{
-		return idirectorservice.getDirectorById(id);
-	}
+
 }

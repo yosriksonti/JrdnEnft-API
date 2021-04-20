@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.kindergarten.spring.entities.HealthRecord;
+import tn.kindergarten.spring.entities.Parent;
 import tn.kindergarten.spring.repository.DoctorRepository;
 import tn.kindergarten.spring.repository.HealthRecordRepository;
 
@@ -53,8 +54,18 @@ public class HealthRecordServiceImpl implements IHealthRecordService {
 
 	@Override
 	public HealthRecord findHealthRecord(int HealthRecordId) {
+		HealthRecord hr= healthR.findById(HealthRecordId).get();
+		return hr;
 		
-		return null;
+		
+		
+		
+		
+	}
+
+	@Override
+	public List<Parent> getAllParentsJPQL() {
+	 return healthR.parentList();
 	}
 	
 	

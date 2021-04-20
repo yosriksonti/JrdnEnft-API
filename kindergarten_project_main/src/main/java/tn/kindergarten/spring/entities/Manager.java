@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Manager extends ProfilAdmin implements Serializable {
 	
@@ -18,11 +20,26 @@ public class Manager extends ProfilAdmin implements Serializable {
 	
 
 
+	public Manager() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Manager(String name, String lastname, int phonenumber, String email, String address, String password,
+			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
+		super(name, lastname, phonenumber, email, address, password, image, cin, login, birthday, roleA);
+		// TODO Auto-generated constructor stub
+	}
 	private boolean isActive;
 	
 	@OneToMany(mappedBy="manager" )
-	private List<Daycare> daycares = new ArrayList<Daycare>();
+	@JsonIgnore
+	private List<Daycare> daycares;
 
+	public Manager(boolean isActive, List<Daycare> daycares) {
+		super();
+		this.isActive = isActive;
+		this.daycares = daycares;
+	}
 	public List<Daycare> getDaycares() {
 		return daycares;
 	}
