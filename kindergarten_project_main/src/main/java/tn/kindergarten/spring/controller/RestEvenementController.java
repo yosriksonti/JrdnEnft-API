@@ -71,10 +71,10 @@ public class RestEvenementController {
 	}
 }
 	
-	@PutMapping(value = "/updateEvenement/{idevent}") 
-	public void updateNameEvenement(@RequestBody Evenement evenement,@PathVariable("idevent")int eventId)
-	{
-		ieventService.updateEvenement(evenement, eventId);
+	@PutMapping(value = "/updateEvenement/{idevent}/{idfiledb}") 
+	public void updateNameEvenement(@RequestBody Evenement evenement,@PathVariable("idevent")int eventId,@PathVariable (value ="idfiledb") String idfiledb)
+	{   
+		ieventService.updateEvenement(evenement, eventId,idfiledb);
 	}
 	// URL : http://localhost:8081/SpringMVC/servlet/deleteevenementById/2
     @DeleteMapping("/deleteevenementById/{idevent}") 

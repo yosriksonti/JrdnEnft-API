@@ -15,7 +15,7 @@ public interface IEventService {
 	public int ajouterEvent(Evenement evenement,String idfiledb) throws Exception;
 	public void deleteEvenementById(int evenementId);
     public Evenement getEvenementById(int id);
-    public void updateEvenement(Evenement evenement, int id);
     public Pageable buildPageRequest(HttpHeaders headers, Sort sort);
 	 public List<Evenement> getAllEvents();
+	void updateEvenement(Evenement evenement, int evenementId, String idfiledb);
 }

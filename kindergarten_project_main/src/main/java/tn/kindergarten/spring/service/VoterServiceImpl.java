@@ -90,6 +90,7 @@ public class VoterServiceImpl implements IVoterService{
     					 ));
     	 
     }
+    
    // retourner le resultat de l'election 
     public Entry<String, Integer> result(){  
     	Map<String,Integer> map= getWinner();

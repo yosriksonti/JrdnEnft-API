@@ -97,16 +97,19 @@ public class AppointementImpl implements IApointementservice {
 			}
 			lastDate = entry.getKey();
 		}
+		java.util.Date modifiedDate = new java.util.Date();
 		if(!found) {
 			System.out.println("HEEEREEE");
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(lastDate);
 			cal.add(Calendar.DATE, 1); 
-			java.util.Date modifiedDate = cal.getTime();
-			System.out.println(modifiedDate);
+			modifiedDate = cal.getTime();
+			System.out.println(lastDate);
 
 			firstAvailable = new Appointement(modifiedDate,tmpParent,tmpManager,shifts.values()[0]);
+		} else {
+			
 		}
 		System.out.println("FIRST"+firstAvailable.getDate());
 

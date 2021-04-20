@@ -62,15 +62,16 @@ public class EventServiceImpl implements IEventService {
 }
 	
 	@Override
-	public void updateEvenement(Evenement evenement,int evenementId)
+	public void updateEvenement(Evenement evenement,int evenementId,String idfiledb)
 	{
 		Evenement evenement1 = evenementRepository.findById(evenementId).get();
+		FileDB product2 =filedbrepository.findById(idfiledb).get();
 		evenement1.setName(evenement.getName());
 		evenement1.setAtelier(evenement.getAtelier());
 		evenement1.setNbParticipant(evenement.getNbParticipant());
 		evenement1.setType(evenement.getType());
 		evenement1.setDate(evenement.getDate());
-		evenement1.setFiledb(evenement.getFiledb());
+		evenement1.setFiledb(product2);
 
 
 
