@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import tn.kindergarten.spring.entities.FileDB;
 
-@Repository
-public interface FileDBRepository  extends JpaRepository<FileDB,String>{
+public interface FileDBRepository extends JpaRepository<FileDB,String > {
+
 
 }

@@ -1,5 +1,5 @@
 package tn.kindergarten.spring.entities;
 
 public enum shifts {
-SHIFTONE , SHIFTTWO
+Matin_a_8h , apres_midi
 }

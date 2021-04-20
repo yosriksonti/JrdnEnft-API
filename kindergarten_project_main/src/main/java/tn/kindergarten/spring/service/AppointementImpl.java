@@ -1,9 +1,12 @@
 package tn.kindergarten.spring.service;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.kindergarten.spring.entities.Appointement;
+import tn.kindergarten.spring.entities.Candidat;
 import tn.kindergarten.spring.entities.Director;
 import tn.kindergarten.spring.entities.shifts;
 import tn.kindergarten.spring.entities.Evenement;
 import tn.kindergarten.spring.entities.Manager;
 import tn.kindergarten.spring.entities.Parent;
+import tn.kindergarten.spring.entities.Vote;
 import tn.kindergarten.spring.repository.AppointementRepository;
+
+
 
 @Service
 public class AppointementImpl implements IApointementservice {
@@ -25,9 +32,10 @@ public class AppointementImpl implements IApointementservice {
 	AppointementRepository appointementRepository;
 	public List<Appointement> getAppointementByIdDate(int id ) throws Exception {
 		try {
+			//creating the instance of LocalDate using the day, month, year info
+
 			ZoneId defaultZoneId = ZoneId.systemDefault();
 			
-			//creating the instance of LocalDate using the day, month, year info
 		        LocalDate localDate = LocalDate.now();
 		 
 		        //local date + atStartOfDay() + default time zone + toInstant() = Date
@@ -46,18 +54,25 @@ public class AppointementImpl implements IApointementservice {
 	{  
 
 		try {
-		System.out.println(appointements.size());
-		Map<Date, List<Appointement>> map  = new HashMap<Date, List<Appointement>>();
-		ZoneId defaultZoneId = ZoneId.systemDefault();
-		
+		Map<java.util.Date, List<Appointement>> map  = new HashMap<java.util.Date, List<Appointement>>();
 		//creating the instance of LocalDate using the day, month, year info
-	        LocalDate lastDate = LocalDate.now();
-	     for(Appointement appointement : appointements  )
+
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate localDate = LocalDate.now();
+		java.util.Date lastDate = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+		for(Appointement appointement : appointements  )
 		{
-			List<Appointement> tmp = map.get(appointement.getDate().toString());
-			if(tmp.size() < 2) {
+			List<Appointement> tmp = new ArrayList();
+
+			//List<Appointement> tmp = map.get(appointement.getDate().toString());
+			if (map.get(appointement.getDate()) != null) {
+				tmp = map.get(appointement.getDate());
+			}
+			System.out.println("MAPEleMENT"+map.get(appointement.getDate()));
+	    	 if(tmp.size() < 2) {
 				tmp.add(appointement);
-				map.put(Date.valueOf(appointement.getDate().toString()), tmp);
+				System.out.println();
+				map.put(appointement.getDate(), tmp);
 			}
 		}
 		Appointement firstAvailable = new Appointement();
@@ -72,18 +87,31 @@ public class AppointementImpl implements IApointementservice {
 		
 		
 		
-		for (Map.Entry<Date, List<Appointement>> entry : map.entrySet()) {
+		for (Map.Entry<java.util.Date, List<Appointement>> entry : map.entrySet()) {
+			System.out.println(entry.getKey());
 			if(entry.getValue().size()<2) {
-				firstAvailable = new Appointement(entry.getValue().get(0).getDate(),tmpManager,tmpParent,shifts.values()[entry.getValue().size()+1]);
+				firstAvailable = new Appointement(entry.getKey(),tmpParent,tmpManager,shifts.values()[entry.getValue().size()]);
+				System.out.println("FOR"+firstAvailable.getDate());
 				found = true;
 				break;
 			}
-			lastDate = entry.getKey().toLocalDate();
+			lastDate = entry.getKey();
 		}
+		java.util.Date modifiedDate = new java.util.Date();
 		if(!found) {
-			firstAvailable = new Appointement(Date.from(lastDate.atStartOfDay(defaultZoneId).toInstant()),tmpParent,tmpManager,shifts.values()[0]);
+			System.out.println("HEEEREEE");
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(lastDate);
+			cal.add(Calendar.DATE, 1); 
+			modifiedDate = cal.getTime();
+			System.out.println(lastDate);
+
+			firstAvailable = new Appointement(modifiedDate,tmpParent,tmpManager,shifts.values()[0]);
+		} else {
+			
 		}
-		System.out.println(firstAvailable.getDate());
+		System.out.println("FIRST"+firstAvailable.getDate());
 
 		return firstAvailable;
 		} catch (Exception ex) {
@@ -104,6 +132,7 @@ public class AppointementImpl implements IApointementservice {
 			appointement.setManeger(tmpManager);
 			appointement.setParent(tmpParent);
 			
+			System.out.println("ADD"+appointement.getDate());
 			return addAppointement(appointement) ;
 		} catch (Exception ex) {
 			throw new Exception(ex);
@@ -114,5 +143,6 @@ public class AppointementImpl implements IApointementservice {
 		appointementRepository.save(appointement);
 		return appointement;
 	}
+
 	
 }

@@ -20,6 +20,15 @@ public class Manager extends ProfilAdmin implements Serializable {
 	
 
 
+	public Manager() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Manager(String name, String lastname, int phonenumber, String email, String address, String password,
+			String image, String cin, String login, Date birthday, RoleAdmin roleA) {
+		super(name, lastname, phonenumber, email, address, password, image, cin, login, birthday, roleA);
+		// TODO Auto-generated constructor stub
+	}
 	private boolean isActive;
 	
 	@OneToMany(mappedBy="manager" )
