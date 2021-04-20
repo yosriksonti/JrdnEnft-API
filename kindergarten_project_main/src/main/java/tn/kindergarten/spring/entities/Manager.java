@@ -35,9 +35,6 @@ public class Manager extends ProfilAdmin implements Serializable {
 	@JsonIgnore
 	private List<Daycare> daycares;
 
-	public Manager() {
-		super();
-	}
 	public Manager(boolean isActive, List<Daycare> daycares) {
 		super();
 		this.isActive = isActive;

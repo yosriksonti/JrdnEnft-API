@@ -22,7 +22,29 @@ public class Parent implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private boolean isActive = true; 
+	private boolean isActive = true;
+	private String phoneNumber;
+	public Parent(int id, boolean isActive, String phoneNumber, String email, String password, List<Child> children,
+			Daycare daycare, tn.kindergarten.spring.entities.Status status) {
+		super();
+		this.id = id;
+		this.isActive = isActive;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.password = password;
+		this.children = children;
+		this.daycare = daycare;
+		Status = status;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public Parent(int id, boolean isActive, String email, String password, List<Child> children, Daycare daycare,
 			tn.kindergarten.spring.entities.Status status) {
 		super();

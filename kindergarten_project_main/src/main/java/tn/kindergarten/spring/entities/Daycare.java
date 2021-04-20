@@ -115,7 +115,7 @@ public class Daycare implements Serializable{
 		}
 
 		@JsonIgnore
-		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
+		@OneToMany(mappedBy="daycare",fetch=FetchType.LAZY )
 		private List<Parent> parents = new ArrayList<Parent>();
 		
 		@JsonIgnore

@@ -58,6 +58,12 @@ public class DoctorServiceImpl implements IDoctorService{
 		return (List<Doctor>) docR.findAll();
 	}
 
+	@Override
+	public Doctor findDoctor(int docId) {
+		Doctor docctor = docR.findById(docId).get();
+		return docctor;
+	}
+
 	
 
 }
