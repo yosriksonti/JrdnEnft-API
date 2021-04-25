@@ -8,11 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,38 +23,7 @@ public class Daycare implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private String daycareName;
-	public Daycare(int id, String daycareName, String region, String logo, String reputation, int nbReclamations,
-			Doctor doctor, Manager manager, List<Favorite> favorites, List<Parent> parents, List<Post> posts,
-			List<HealthRecord> healthRecords, Director director) {
-		super();
-		this.id = id;
-		this.daycareName = daycareName;
-		this.region = region;
-		this.logo = logo;
-		this.reputation = reputation;
-		this.nbReclamations = nbReclamations;
-		this.doctor = doctor;
-		this.manager = manager;
-		this.favorites = favorites;
-		this.parents = parents;
-		this.posts = posts;
-		this.healthRecords = healthRecords;
-		this.director = director;
-	}
-	public String getDaycareName() {
-		return daycareName;
-	}
-	public void setDaycareName(String daycareName) {
-		this.daycareName = daycareName;
-	}
-	public List<Post> getPosts() {
-		return posts;
-	}
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
-	}
-
+	
 	private String region;
 	
 	private String logo;
@@ -62,60 +31,22 @@ public class Daycare implements Serializable{
 	private String reputation;
 	
 	private int nbReclamations ;
-
-
+	
 	//@JsonBackReference  
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name="doctor")
+	@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
+	//@NotNull
 	private Doctor doctor;
 	
 	//@JsonBackReference  
+		@JsonIgnore
 		@ManyToOne
-		private Manager manager;
-
-		@JsonIgnore
-		@ManyToMany
-		@JoinColumn(name="favorite_id", nullable=true)
-
-		private List <Favorite> favorites;
-		public Daycare
-		(int id, String region, String logo, String reputation, int nbReclamations, Doctor doctor,
-				Manager manager, List<Favorite> favorites, List<Parent> parents, List<HealthRecord> healthRecords,
-				Director director) {
-			super();
-			this.id = id;
-			this.region = region;
-			this.logo = logo;
-			this.reputation = reputation;
-			this.nbReclamations = nbReclamations;
-			this.doctor = doctor;
-			this.manager = manager;
-			this.favorites = favorites;
-			this.parents = parents;
-			this.healthRecords = healthRecords;
-			this.director = director;
-		}
-		public List<Favorite> getFavorites() {
-			return favorites;
-		}
-		public void setFavorites(List<Favorite> favorites) {
-			this.favorites = favorites;
-		}
-		public List<HealthRecord> getHealthRecords() {
-			return healthRecords;
-		}
-		public void setHealthRecords(List<HealthRecord> healthRecords) {
-			this.healthRecords = healthRecords;
-		}
-
-		@JsonIgnore
-		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
-		private List<Parent> parents = new ArrayList<Parent>();
+		@JoinColumn(name="manager_id", nullable=false)
+		private ProfilAdmin manager;
 		
-		@JsonIgnore
-		@OneToMany(mappedBy="daycare")
-		private List<Post> posts = new ArrayList<Post>();
+//		@JsonIgnore
+//		@OneToMany(mappedBy="daycare",fetch=FetchType.EAGER )
+//		private List<Parent> parents = new ArrayList<Parent>();
 		
 		@OneToMany(mappedBy="daycare")
 		private List<HealthRecord> healthRecords;
@@ -123,14 +54,10 @@ public class Daycare implements Serializable{
 		
 		//@JsonBackReference  
 		@JsonIgnore
-		@OneToOne
-		@JoinColumn(name="director")
+		@OneToOne(mappedBy="daycare",fetch=FetchType.EAGER )
 		//@NotNull
 		private Director director;
-		public Daycare() {
-			super();
-			
-		}
+
 		public int getId() {
 			return id;
 		}
@@ -187,13 +114,13 @@ public class Daycare implements Serializable{
 			this.manager = manager;
 		}
 
-		public List<Parent> getParents() {
-			return parents;
-		}
-
-		public void setParents(List<Parent> parents) {
-			this.parents = parents;
-		}
+//		public List<Parent> getParents() {
+//			return parents;
+//		}
+//
+//		public void setParents(List<Parent> parents) {
+//			this.parents = parents;
+//		}
 
 		public Director getDirector() {
 			return director;

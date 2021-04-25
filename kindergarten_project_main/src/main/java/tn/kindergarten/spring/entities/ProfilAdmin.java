@@ -13,61 +13,47 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 
-@MappedSuperclass
-@Inheritance(strategy=InheritanceType.JOINED)
+@Entity
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class ProfilAdmin {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id; 
-
-
-
-
+	private int id;
 	
-
-	protected String name;
-	protected String lastname;
-	protected int phonenumber;
+	private String name;
+	private String lastname;
+	private int phonenumber;
 	
 	//@Column(unique=true)
-	protected String email;
-	protected String Address;
-	protected String Password;
-	protected String Image;
-	protected String cin;
-	protected String login;
+	private String email;
+    private String Address;
+    private String Password;
+    private String Image;
+    private String cin;
+    private String login;
+    
+    @OneToMany(mappedBy="manager" )
+	private List<Daycare> daycares = new ArrayList<Daycare>();
+    public List<Daycare> getDaycares() {
+		return daycares;
+	}
 
+	public void setDaycares(List<Daycare> daycares) {
+		this.daycares = daycares;
+	}
 
 	@Temporal(TemporalType.DATE)
-	protected Date birthday;
+    private Date birthday;
 	
 	public Date getBirthday() {
 		return birthday;
 	}
-
-	
-	
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
@@ -75,8 +61,16 @@ public class ProfilAdmin {
 
 	@Enumerated(EnumType.STRING)
 	//@NotNull
-	protected RoleAdmin roleA;
+	private RoleAdmin roleA;
 	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 
 	public String getName() {

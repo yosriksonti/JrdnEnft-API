@@ -25,39 +25,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import tn.kindergarten.spring.entities.Favorite;
 import tn.kindergarten.spring.entities.Status;
 
-
 @Entity
 public class Visitor implements Serializable {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
-	private String name;
-	
-	private String lastname;
-	
-	private int phonenumber;
-	
-	//@Column(unique=true)
-	private String email;
-	
-    private String Address;
-    
-    private String Password;
-    
-    private String Image;
-    
-    private String cin;
-    
-    private String login;
-    
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
-	
-	
-	
 
-	
+	private String name;
+	private String lastname;
+	private int phonenumber;
+
+	// @Column(unique=true)
+	private String email;
+	private String Address;
+	private String Password;
+	private String Image;
+	private String cin;
+	private String login;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	public Visitor(String name, String lastname, int phonenumber, String email, String address, String password,
 			String image, String cin, String login, int id, Date birthday,
 			tn.kindergarten.spring.entities.Status status, List<Favorite> favorites) {
@@ -74,6 +59,7 @@ public class Visitor implements Serializable {
 		this.id = id;
 		this.birthday = birthday;
 		Status = status;
+		this.favorites = favorites;
 	}
 
 	public String getName() {
@@ -156,9 +142,9 @@ public class Visitor implements Serializable {
 		this.birthday = birthday;
 	}
 
-	
-	
-	
+	@Temporal(TemporalType.DATE)
+	private Date birthday;
+
 	public Status getStatus() {
 		return Status;
 	}
@@ -167,7 +153,13 @@ public class Visitor implements Serializable {
 		Status = status;
 	}
 
+	public List<Favorite> getFavorites() {
+		return favorites;
+	}
 
+	public void setFavorites(List<Favorite> favorites) {
+		this.favorites = favorites;
+	}
 
 	public int getId() {
 		return id;
@@ -181,9 +173,9 @@ public class Visitor implements Serializable {
 		super();
 	}
 
-	
-
 	@Enumerated(EnumType.STRING)
-	//@NotNull
+	// @NotNull
 	private Status Status;
+	@OneToMany(mappedBy = "visitor")
+	private List<Favorite> favorites;
 }

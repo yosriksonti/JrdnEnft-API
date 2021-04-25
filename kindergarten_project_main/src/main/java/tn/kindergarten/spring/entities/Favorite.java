@@ -1,16 +1,14 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,17 +23,10 @@ public class Favorite implements Serializable {
 	
 	@JsonIgnore
 	//@JsonBackReference
-	
-	@ManyToMany
-	@JoinColumn(name="daycare_id", nullable = true)
-
-	private List <Daycare> daycares;
-	
+	@ManyToOne
+	private Daycare daycare;
 	@ManyToOne
 	private Visitor visitor ;
-	public Favorite() {
-		
-	}
 	
 	public int getId() {
 		return id;
@@ -48,18 +39,6 @@ public class Favorite implements Serializable {
 		return visitor;
 	}
 	public void setVisitor(Visitor visitor) {
-		this.visitor = visitor;
-	}
-	public List<Daycare> getDaycares() {
-		return daycares;
-	}
-	public void setDaycares(List<Daycare> daycares) {
-		this.daycares = daycares;
-	}
-	public Favorite(int id, List<Daycare> daycares, Visitor visitor) {
-		super();
-		this.id = id;
-		this.daycares = daycares;
 		this.visitor = visitor;
 	} 
 	

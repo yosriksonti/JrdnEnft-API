@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.kindergarten.spring.entities.Parent;
+import tn.kindergarten.spring.entities.Status;
 import tn.kindergarten.spring.service.IParentService;
 
 @RestController
@@ -26,10 +27,15 @@ public class RestParentController {
 	private IParentService parentService;
 	
 	@PostMapping("/add")
-	public ResponseEntity<Parent> addParent(@Validated @RequestBody Parent parent) {
+	public ResponseEntity<Object> addParent(@Validated @RequestBody Parent parent) {
+		if(parent.getPassword().toString().length()<6) {
+			return new ResponseEntity<>("La longueur du mot de passe doit être > 6", HttpStatus.CONFLICT);
+			
+		}else {
 		Parent parent1 = parentService.addParent(parent);
 		if(parent1 == null) new ResponseEntity<> (parent, HttpStatus.CONFLICT);
 		return new ResponseEntity<> (parent1, HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping("/all")
@@ -48,6 +54,11 @@ public class RestParentController {
 		Parent parent1 = parentService.updateParent(parent);
 		if(parent1 == null) new ResponseEntity<> (parent, HttpStatus.CONFLICT);
 		return new ResponseEntity<> (parent1, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getByStatus/{status}")
+	public ResponseEntity<List<Parent>> getParentsByStatus(@PathVariable("status") Status status) {
+		return new ResponseEntity<> (parentService.getFiteredByStatus(status), HttpStatus.OK);
 	}
 	
 
