@@ -61,5 +61,36 @@ public class PostService implements IPostService {
 		}
 		return daycarePosts;
 	}
+	public Map<Integer,Integer> updateLikes(Post post) {
+		Post startPost = findById(post.getId());
+		int startLikes = startPost.getLikes();
+		startPost.setLikes(startLikes+post.getLikes());
+		Post endPost = findById(post.getId());
+		int endLikes = endPost.getLikes();
+		if(startLikes == endLikes-1) {
+			Map<Integer,Integer> responseMap = new HashMap<>();
+			postRepository.save(startPost);
+			responseMap.put(startPost.getId(), startPost.getLikes());
+			return responseMap;
+		} else {
+			return updateLikes(post);
+		}
+	}
+	
+	public Map<Integer,Integer> updateDislikes(Post post) {
+		Post startPost = findById(post.getId());
+		int startDislikes = startPost.getDislikes();
+		startPost.setDislikes(startDislikes+post.getDislikes());
+		Post endPost = findById(post.getId());
+		int endLDislkes = endPost.getDislikes();
+		if(startDislikes == endLDislkes-1) {
+			Map<Integer,Integer> responseMap = new HashMap<>();
+			postRepository.save(startPost);
+			responseMap.put(startPost.getId(), startPost.getDislikes());
+			return responseMap;
+		} else {
+			return updateDislikes(post);
+		}
+	}
 
 }

@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class KindergartenProjectMainApplication {
+public class KindergartenProjectMainApplication {	
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(KindergartenProjectMainApplication.class, args);
 	}
 

@@ -93,7 +93,7 @@ public class ReclamationService implements IReclamationService{
 	
 	@Override
 	public Reclamation getRecById(int id) {
-		
+		System.out.println(reclamationrepo.findById(id).get());
 		return reclamationrepo.findById(id).get();
 	}
 

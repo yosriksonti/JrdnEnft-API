@@ -20,7 +20,6 @@ public class Director extends ProfilAdmin implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private boolean isActive; 
 	
 	@OneToOne()

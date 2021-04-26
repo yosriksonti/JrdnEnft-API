@@ -23,6 +23,7 @@ import tn.kindergarten.spring.service.FileStorageService;
 @Controller
 @CrossOrigin("http://localhost:8005")
 public class FileController {
+	
 	 @Autowired
 	  private FileStorageService storageService;
 

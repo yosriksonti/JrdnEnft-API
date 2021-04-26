@@ -59,7 +59,7 @@ public class RestDaycareController
 
 @GetMapping(value = "/daycares/{id}/path") 
 @ResponseBody
-	public Map<String,Integer> getDaycarePath(@PathVariable("id") int id) 
+	public Map<String,String> getDaycarePath(@PathVariable("id") int id) 
 	{
 		return daycareServiceImpl.getShortestPathsChildren(id); 
 	}
@@ -124,6 +124,15 @@ public class RestDaycareController
 	{
 	
 	return daycareServiceImpl.getFavoriteeById(favoriteId);
+	//return 1 ;
+	}
+
+@GetMapping(value = "/daycares/statistics") 
+@ResponseBody
+	public Map<String,Double> getStatic() 
+	{
+	
+	return daycareServiceImpl.getStatic();
 	//return 1 ;
 	}
 }

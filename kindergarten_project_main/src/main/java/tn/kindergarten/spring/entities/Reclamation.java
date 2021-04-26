@@ -32,9 +32,9 @@ public class Reclamation implements Serializable {
 
 	@Temporal(TemporalType.DATE)
     private Date dateRec;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     private Parent parent;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     private Daycare daycare;
     
   

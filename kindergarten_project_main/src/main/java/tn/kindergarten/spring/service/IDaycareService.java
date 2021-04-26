@@ -16,6 +16,6 @@ public interface IDaycareService {
 	Daycare findById(int id);
 	List<Daycare> findAll();
     int affecterDaycareFavoritee(Favorite favorite) ;
-    public Map<Integer,Double> getStatic ();
+    public Map<String,Double> getStatic ();
     
 }

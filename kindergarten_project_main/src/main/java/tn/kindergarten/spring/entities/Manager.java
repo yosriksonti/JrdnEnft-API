@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Manager extends ProfilAdmin implements Serializable {
 	
@@ -21,6 +23,7 @@ public class Manager extends ProfilAdmin implements Serializable {
 	private boolean isActive;
 	
 	@OneToMany(mappedBy="manager" )
+	@JsonIgnore
 	private List<Daycare> daycares;
 
 	public Manager() {

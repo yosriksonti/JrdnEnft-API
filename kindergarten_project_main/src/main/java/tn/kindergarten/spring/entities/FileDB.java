@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ public class FileDB {
 	  @Id
 	  @GeneratedValue(generator = "uuid")
 	  @GenericGenerator(name = "uuid", strategy = "uuid2")	
+	  @Column(length=64)
 	  private String id;
 	  private String name;
 	  private String type;
