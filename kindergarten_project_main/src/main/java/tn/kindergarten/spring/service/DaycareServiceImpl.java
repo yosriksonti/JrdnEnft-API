@@ -168,16 +168,16 @@ public List<Child> getDaycareChildren(int id){
 			    }
 			}
 	
-	public Map<String,String> getShortestPathsChildren(int daycareId) {
+	public List<String> getShortestPathsChildren(int daycareId) {
 		Daycare daycare = findById(daycareId);
 		Position daycarePosition = daycare.getPosition();
 		List<Child> daycareChildren = getDaycareChildren(daycareId);
 		Graph graph = new Graph();
-		Node daycareNode = new Node("Daycare",": 'https://www.google.com/maps/search/"+daycare.getPosition().getX()+","+daycare.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
+		Node daycareNode = new Node("Daycare","https://www.google.com/maps/search/"+daycare.getPosition().getX()+","+daycare.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ");
 		List<Node> nodes = new ArrayList<Node>();
 		int mainCounter = 0, secondaryCounter = 0;
 		for(Child child : daycareChildren) {
-			Node childNode = new Node(child.getName(),": 'https://www.google.com/maps/search/"+child.getPosition().getX()+","+child.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
+			Node childNode = new Node(child.getName(),"https://www.google.com/maps/search/"+child.getPosition().getX()+","+child.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ");
 			nodes.add(childNode);
 		}
 		int nodesSize = nodes.size();
@@ -205,9 +205,9 @@ public List<Child> getDaycareChildren(int id){
 		for(Node node : pathGraph.getNodes()) {
 			map.put(node, node.getDistance());
 		}
-		LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-		map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedMap.put(x.getKey().getName(), x.getKey().getMaps()));;
-		return sortedMap;
+		List<String> sortedList = new ArrayList();
+		map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedList.add(x.getKey().getMaps()));;
+		return sortedList;
 	}
 	/* Node mainChildNode = new Node(child.getName());
 			if(counter == 0 ) {
@@ -283,12 +283,22 @@ public List<Child> getDaycareChildren(int id){
         return 1;
 	}
 	
-	public Favorite getFavoriteeById(int id) 
+	public List<Daycare> getFavoriteeById(int id) 
 	{
+		List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
+		int favoriteId = -1;
+		for(Favorite favorite : favorites) {
+			if(favorite.getVisitor().getId() == id) {
+				favoriteId = favorite.getId();
+				break;
+			}
+		}
 		
-		return favoriteRepository.findById(id).get();
-
-	
+		if(favoriteId != -1) {
+			return favoriteRepository.findById(favoriteId).get().getDaycares();
+		} else {
+			return new ArrayList();
+		}
 	}
 	public Daycare removeParent(int daycareId , int parentId) {
 		Daycare daycare = findById(daycareId);

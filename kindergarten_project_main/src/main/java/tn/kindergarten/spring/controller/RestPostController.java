@@ -30,6 +30,14 @@ public class RestPostController {
 			return post;
 		
 		}
+	@GetMapping(value = "/daycares/{id}/posts") 
+	@ResponseBody
+		public List<Post> getDaycarePost(@PathVariable("id") int id) 
+		{
+			List<Post> post =  postService.findAllByDaycareId(id);
+			return post;
+		
+		}
 	@PutMapping(value = "/posts/update") 
 	@ResponseBody
 		public boolean updatePost(@RequestBody Post post) 

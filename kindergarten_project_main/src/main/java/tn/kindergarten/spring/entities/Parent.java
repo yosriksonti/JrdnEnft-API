@@ -103,13 +103,12 @@ public class Parent implements Serializable {
 
 	//@JsonBackReference  
 	@JsonIgnore
-	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER )
+	@OneToMany(mappedBy="parent",fetch=FetchType.LAZY )
 	//@NotNull
 	
 	private List<Child> children;
 	
-	@ManyToOne
-	//@NotNull
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Daycare daycare;
 	
 	public Daycare getDaycare() {

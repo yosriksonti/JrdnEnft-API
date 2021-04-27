@@ -55,7 +55,7 @@ public class PostService implements IPostService {
 		
 		for(Post post : posts )
 		{
-			if(post.getId() == daycareId) {
+			if(post.getDaycare().getId() == daycareId) {
 				daycarePosts.add(post);
 			}
 		}
