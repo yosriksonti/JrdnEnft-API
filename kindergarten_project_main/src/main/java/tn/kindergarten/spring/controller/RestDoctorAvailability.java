@@ -25,6 +25,7 @@ import tn.kindergarten.spring.entities.DoctorAvailability;
 import tn.kindergarten.spring.entities.HealthRecord;
 import tn.kindergarten.spring.entities.Parent;
 import tn.kindergarten.spring.entities.Response;
+import tn.kindergarten.spring.repository.DoctorAvaibilityRepository;
 import tn.kindergarten.spring.service.IDoctorAvaibilityService;
 import tn.kindergarten.spring.service.IDoctorService;
 
@@ -33,6 +34,9 @@ public class RestDoctorAvailability {
 	
 	@Autowired 
 	IDoctorAvaibilityService IDoctorAvaibilityService;
+	
+	@Autowired
+	DoctorAvaibilityRepository DocAvaiRepo;
 	
 	@Autowired 
 	IDoctorService IDoctor;
@@ -43,9 +47,24 @@ public class RestDoctorAvailability {
 	@ResponseBody
 	public Response<DoctorAvailability> ajouterDoctorAvaibility(@RequestBody DoctorAvailability docAv)
 	{	
+		DoctorAvailability DocAvaSave= new DoctorAvailability();
+		
+		DocAvaSave.setHdebut(docAv.getHdebut());
+		DocAvaSave.setHfin(docAv.getHfin());
+		DocAvaSave.setMdebut(docAv.getMdebut());
+		DocAvaSave.setMfin(docAv.getMfin());
+		DocAvaSave.setDoctor(docAv.getDoc());
+		
+		
+		
+		
+		
+		
+		
+		
 		Doctor doc = null;
 		try {
-		 doc = IDoctor.findDoctor(docAv.getDoctor());
+		 doc = IDoctor.findDoctor(docAv.getDoc().getId());
 		 System.out.println(doc.toString());
 		}
 		catch (Exception e) {
@@ -55,8 +74,8 @@ public class RestDoctorAvailability {
 			return new Response<DoctorAvailability>(2,messages, null);
 			
 		}
-		docAv.setDoctor(doc);
-		IDoctorAvaibilityService.addDoctorAvaibility(docAv);
+	
+		IDoctorAvaibilityService.addDoctorAvaibility(DocAvaSave);
 		
 		
 		return new Response<DoctorAvailability>(0, null, docAv);

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -24,7 +23,33 @@ public class Daycare implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	private String daycareName;
+	public Daycare(int id, String daycareName, String region, String logo, String reputation, int nbReclamations,
+			Doctor doctor, Manager manager, List<Favorite> favorites, Position position, List<Parent> parents,
+			List<Post> posts, List<HealthRecord> healthRecords, Director director) {
+		super();
+		this.id = id;
+		this.daycareName = daycareName;
+		this.region = region;
+		this.logo = logo;
+		this.reputation = reputation;
+		this.nbReclamations = nbReclamations;
+		this.doctor = doctor;
+		this.manager = manager;
+		this.favorites = favorites;
+		this.position = position;
+		this.parents = parents;
+		this.posts = posts;
+		this.healthRecords = healthRecords;
+		this.director = director;
+	}
+	public String getDaycareName() {
+		return daycareName;
+	}
+	public void setDaycareName(String daycareName) {
+		this.daycareName = daycareName;
+	}
+
 	private String region;
 	
 	private String logo;
@@ -105,10 +130,8 @@ public class Daycare implements Serializable{
 		@JsonIgnore
 		@OneToOne
 		@JoinColumn(name="director")
+		//@NotNull
 		private Director director;
-	   // @OneToMany(mappedBy = "daycare",
-	     //       cascade = CascadeType.ALL)
-	   // private List<Reclamation> reclamations;
 		public Daycare() {
 			super();
 			

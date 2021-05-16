@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import io.jsonwebtoken.lang.Arrays;
 import tn.kindergarten.spring.entities.Doctor;
+import tn.kindergarten.spring.entities.DoctorAvailability;
 import tn.kindergarten.spring.entities.Response;
 import tn.kindergarten.spring.service.IDoctorService;
 
@@ -34,7 +35,9 @@ public class RestDoctorController {
 	@ResponseBody
 	public Doctor ajouterDoctor(@RequestBody Doctor Doctor)
 	{
+		
 		iDoctorservice.addDoctor(Doctor);
+		
 		return Doctor;
 	}
 	
@@ -86,11 +89,10 @@ public class RestDoctorController {
 	}
 	
 	
-	@PutMapping(value = "/ModifyDoctorById/{id}/{phonenumber}/{email}/{address}/{password}/{image}")
+	@PutMapping(value = "/ModifyDoctorById/{id}")
 	@ResponseBody
-	public void ModifyDoctorById(@PathVariable("id") int id ,@PathVariable("phonenumber") int  phonenumber ,@PathVariable("address") String address ,@PathVariable("password") String password ,@PathVariable("email") String email,@PathVariable("image") String image)
+	public void ModifyDoctorById(@RequestBody Doctor doc, @PathVariable("id") int id )
 	{
-		iDoctorservice.ModifyDoctorById(id, phonenumber, email, address, password, image);
+		iDoctorservice.ModifyDoctorById(id, doc);
 	}
-
 }

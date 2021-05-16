@@ -12,7 +12,7 @@ import tn.kindergarten.spring.entities.DoctorAvailability;
 @Repository
 public interface DoctorAvaibilityRepository extends CrudRepository<DoctorAvailability, Integer>{
 	
-	@Query("select c from DoctorAvailability c where c.doc.id=:id")
+	@Query("select DISTINCT c from DoctorAvailability c where c.doc.id=:id")
 	List<DoctorAvailability> findAllTimeslotbyDoctor(@Param("id")int id);
 
 }

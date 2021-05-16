@@ -1,6 +1,7 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -14,7 +15,7 @@ public class AgendaDoctorDay implements Serializable {
 	
 	
 	private Doctor doc;
-	private Date day;
+	private LocalDate day;
 	private DocAvaibilityDay[] docAvaiblityday;
 	
 	
@@ -24,10 +25,10 @@ public class AgendaDoctorDay implements Serializable {
 	public void setDoc(Doctor doc) {
 		this.doc = doc;
 	}
-	public Date getDay() {
+	public LocalDate getDay() {
 		return day;
 	}
-	public void setDay(Date day) {
+	public void setDay(LocalDate day) {
 		this.day = day;
 	}
 	public DocAvaibilityDay[] getDocAvaiblityday() {
@@ -36,7 +37,7 @@ public class AgendaDoctorDay implements Serializable {
 	public void setDocAvaiblityday(DocAvaibilityDay[] docAvaiblityday) {
 		this.docAvaiblityday = docAvaiblityday;
 	}
-	public AgendaDoctorDay(Doctor doc, Date day, DocAvaibilityDay[] docAvaiblityday) {
+	public AgendaDoctorDay(Doctor doc, LocalDate day, DocAvaibilityDay[] docAvaiblityday) {
 		super();
 		this.doc = doc;
 		this.day = day;

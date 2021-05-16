@@ -2,9 +2,12 @@ package tn.kindergarten.spring.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -105,7 +109,13 @@ public class AppoitmentDocController {
 		return new Response<Parent>(0, null, parent);
 	}
 	
+	@GetMapping(value = "/getAllAppointement/{iddoc}")
+    @ResponseBody
+	public List<AppoitementDoc> getAllAppointement(@PathVariable("iddoc") int idoc) {
+		
 	
+		 return AvaibilityAppService.findAppointmentsByDoctor(idoc);
+	}
 	
 	
 	private Response<AppoitementDoc> getApp(int id) {
@@ -205,33 +215,58 @@ public class AppoitmentDocController {
 	public Response<List<AppoitementDoc>> getRvMedecinJour(@PathVariable("idDoctor") int idDoctor,
 			@PathVariable("day") String day) {
 		// date verification
-		Date jourAgenda = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(false);
-		try {
-			jourAgenda = sdf.parse(day);
-		} catch (ParseException e) {
-			List<String> messages = new ArrayList<String>();
-			messages.add(String.format("La date [%s] est invalide", day));
-			return new Response<List<AppoitementDoc>>(3, messages, null);
-		}
+		
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+
+		  //convert String to LocalDate
+		  LocalDate localDate = LocalDate.parse(day, formatter);
+		
+	//	@SuppressWarnings("deprecation")
+	//	Date datefinal = new Date(sdf.format(day));
+		System.out.println("*************************************************************");
+		//System.out.println(datefinal);
+		
+		
+	
 		// we get the doctor
 		Response<Doctor> responseDoc = getDoctor(idDoctor);
 		if (responseDoc.getStatus() != 0) {
 			return new Response<List<AppoitementDoc>>(responseDoc.getStatus(), responseDoc.getMessages(), null);
 		}
 		Doctor médecin = responseDoc.getBody();
+		System.out.println("*************************************************************");
+		System.out.println(médecin);
+		System.out.println("*************************************************************");
+		
 		// liste of appoitement
-		List<AppoitementDoc> rvs = null;
+		List<AppoitementDoc> rvs = new ArrayList<AppoitementDoc>();
+		
+		rvs=AvaibilityAppService.findAppointmentsByDoctorByDay(médecin.getId(),localDate);
+		
+		System.out.println("*************************************************************");
+		System.out.println(day +" "+localDate);
+		System.out.println("*************************************************************");
+		
+		
+		/*
 		try {
-			rvs = AvaibilityAppService.findAppointmentsByDoctorByDay(médecin.getId(), jourAgenda);
+			
+			 rvs.addAll(AvaibilityAppService.findAppointmentsByDoctorByDay(médecin.getId(),jourAgenda));
+			
+			System.out.println("*************************************************************");
+			//System.out.println(rvs);
+			System.out.println("*************************************************************");
 		} catch (Exception e1) {
 			List<String> messages = new ArrayList<String>();
 			messages.add(e1.toString());
 			return new Response<List<AppoitementDoc>>(4,messages, null);
 		}
+		*/
 		// on rend la réponse
-
+		
 		return new Response<List<AppoitementDoc>>(0, null, rvs);
 	}
 	
@@ -264,18 +299,12 @@ public class AppoitmentDocController {
 	
 	
 	@RequestMapping(value = "/getAgenda/{id}/{day}", method = RequestMethod.GET)
-	public Response<AgendaDoctorDay> getAgenda(@PathVariable("id") int id ,@PathVariable("day") String day) 
+	public Response<AgendaDoctorDay> getAgenda(@PathVariable("id") int id ,@PathVariable("day") LocalDate day) 
 	{
 		Date jourAgenda = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(false);
-		try {
-			jourAgenda = sdf.parse(day);
-		} catch (ParseException e) {
-			List<String> messages = new ArrayList<String>();
-			messages.add(String.format("the date [%s] is not valid", day));
-			return new Response<AgendaDoctorDay>(6, messages, null);
-		}
+	
 		
 		Response<Doctor> responseDoc = getDoctor(id);
 		if (responseDoc.getStatus() != 0) {
@@ -283,7 +312,7 @@ public class AppoitmentDocController {
 		}
 		
 		AgendaDoctorDay ADD = null;
-		ADD=AvaibilityAppService.getAgendaDoctorDay(id, jourAgenda);
+		ADD=AvaibilityAppService.getAgendaDoctorDay(id, day);
 		
 		
 		return new Response<AgendaDoctorDay>(0, messages, ADD);
@@ -304,7 +333,7 @@ public class AppoitmentDocController {
 		}
 		AvaibilityAppService.confirmAppoitement(appdoc);
 		
-		String phone = appdoc.getParent().getPhonenumber();
+		String phone = appdoc.getParent().getPhoneNumber();
 		System.out.println("******************************************");
 		System.out.println(phone);
 		String msg =("your appoitement of the doctor "+appdoc.getAvailability().getDoc().getName() +" is confirmed");
@@ -323,27 +352,35 @@ public class AppoitmentDocController {
 		return new Response<AppoitementDoc>(0, null, appdoc);
 	}
 	
-	@RequestMapping(value = "/ajouterRv/{day}/{idDocAvaib}/{idParent}" ,method = RequestMethod.POST)
-	public Response<Boolean> ajouterRv(@PathVariable("day") String day,@PathVariable("idDocAvaib") int idDoctoravai,@PathVariable("idParent") int idParent) {
+	@RequestMapping(value = "/ajouterRv" ,method = RequestMethod.POST)
+	public Response<Boolean> ajouterRv(@RequestBody AppoitementDoc appDoc) {
+		
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		// date verification
-		Date jourAgenda = null;
+		LocalDate jourAgenda = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(false);
 		try {
-			jourAgenda = sdf.parse(day);
-		} catch (ParseException e) {
+			jourAgenda = appDoc.getDay();
+			//jourAgenda=sdf.parse("2021-04-30");
+		} catch (Exception e) {
 			List<String> messages = new ArrayList<String>();
-			messages.add(String.format("the date [%s] is not valid", day));
+			messages.add(String.format("the date [%s] is not valid", appDoc.getDay()));
 			return new Response<Boolean>(6, messages, null);
 		}
 		// we get the avaibility
-		Response<DoctorAvailability> responseAvaiblity = getAvailability(idDoctoravai);
+		System.out.println("***************************************");
+		System.out.println(appDoc.getDay());
+		System.out.println("***************************************");
+		System.out.println(appDoc.getIdAvailability());
+		System.out.println("***************************************");
+		Response<DoctorAvailability> responseAvaiblity = getAvailability(appDoc.getIdAvailability());
 		if (responseAvaiblity.getStatus() != 0) {
 			return new Response<Boolean>(responseAvaiblity.getStatus(), responseAvaiblity.getMessages(), null);
 		}
 		DoctorAvailability créneau = responseAvaiblity.getBody();
 		// we get the parent
-		Response<Parent> responseParent = getParent(idParent);
+		Response<Parent> responseParent = getParent(appDoc.getIdParent());
 		if (responseParent.getStatus() != 0) {
 			return new Response<Boolean>(responseParent.getStatus() + 2, responseParent.getMessages(), null);
 		}
@@ -354,7 +391,7 @@ public class AppoitmentDocController {
 			 rv =AvaibilityAppService.createApp(créneau, jourAgenda, parent);
 		} catch (Exception e) {
 			// TODO: handle exception
-			
+		
 			return new Response<Boolean>(6,messages , rv);
 		}
 		

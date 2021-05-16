@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -35,8 +40,14 @@ public class Doctor extends ProfilAdmin implements Serializable {
 	@OneToMany(mappedBy="doc")
 	private List<HealthRecord> healthRecords;
 	
-	@OneToMany(mappedBy="doc")
-	private List<DoctorAvailability> avaibility = new ArrayList<>();
+	
+	
+	@OneToMany(targetEntity = DoctorAvailability.class,cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<DoctorAvailability> avaibility ;
+	
+	
+	
 	
 	
 	

@@ -1,7 +1,7 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -36,11 +34,10 @@ public class Post implements Serializable {
 	private String body;
 	
 	
-	private int likes = 0;
-	private int dislikes = 0;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate = new Date();
-	@Temporal(TemporalType.TIMESTAMP)
+	private int likes;
+	private int dislikes;
+	
+	private Date creationDate;
 	private Date modificationDate;
 	public int getId() {
 		return id;

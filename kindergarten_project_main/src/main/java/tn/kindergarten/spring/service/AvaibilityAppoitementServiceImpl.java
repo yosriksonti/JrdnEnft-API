@@ -1,5 +1,6 @@
 package tn.kindergarten.spring.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -46,7 +47,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 	
 	
 	@Override
-	public boolean createApp(DoctorAvailability docAvai, Date day, Parent parent) {
+	public boolean createApp(DoctorAvailability docAvai, LocalDate day, Parent parent) {
 		// TODO Auto-generated method stub
 		
 		AppoitementDoc rv = new AppoitementDoc() ;
@@ -81,7 +82,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 
 	@Override
 
-	public List<AppoitementDoc> findAppointmentsByDoctorByDay(int idDoctor, Date day) {
+	public List<AppoitementDoc> findAppointmentsByDoctorByDay(int idDoctor, LocalDate day) {
 		// TODO Auto-generated method stub
 		return appRepo.findAppointmentByDoctorByDay(idDoctor, day);
 	}
@@ -128,7 +129,7 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 
 	@Override
 	
-	public AgendaDoctorDay getAgendaDoctorDay(int idDoc, Date day) {
+	public AgendaDoctorDay getAgendaDoctorDay(int idDoc, LocalDate day) {
 				// get doctor's timeslot list
 				List<DoctorAvailability> avaibilityHours = findAllTimeslotOfDoctor(idDoc);
 				// get appointment list fo given doctor in given day
@@ -189,6 +190,13 @@ public class AvaibilityAppoitementServiceImpl implements AvaibilityAppoitementSe
 		
 		
 		
+	}
+
+
+	@Override
+	public List<AppoitementDoc> findAppointmentsByDoctor(int iDoctor) {
+		// TODO Auto-generated method stub
+		return appRepo.findAppointmentByDoctor(iDoctor);
 	}
 
 

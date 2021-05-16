@@ -31,14 +31,20 @@ public class DoctorServiceImpl implements IDoctorService{
 	}
 
 	@Override
-	public void ModifyDoctorById(int docId , int phonenumber, String email, String address, String password,
-			String image) {
+	public void ModifyDoctorById(int docId , Doctor doc) {
 		Doctor doctor = docR.findById(docId).get();
-		doctor.setAddress(address);
-		doctor.setImage(image);
-		doctor.setEmail(email);
-		doctor.setPhonenumber(phonenumber);
-		doctor.setPassword(password);
+		doctor.setAddress(doc.getAddress());
+		doctor.setImage(doc.getImage());
+		doctor.setEmail(doc.getEmail());
+		doctor.setPhonenumber(doc.getPhonenumber());
+		doctor.setPassword(doc.getPassword());
+		doctor.setName(doc.getName());
+		doctor.setLastname(doc.getLastname());
+		doctor.setBirthday(doc.getBirthday());
+		doctor.setActive(doc.isActive());
+		doctor.setDaycare(doc.getDaycare());
+		doctor.setRoleA(doc.getRoleA());
+		
 		
 		docR.save(doctor);
 		

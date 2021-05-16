@@ -1,6 +1,8 @@
 package tn.kindergarten.spring.service;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -9,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -26,9 +27,6 @@ import tn.kindergarten.spring.entities.Graph;
 import tn.kindergarten.spring.entities.Node;
 import tn.kindergarten.spring.repository.DaycareRepository;
 import tn.kindergarten.spring.repository.FavoriteRepository;
-import tn.kindergarten.spring.repository.PostRepository;
-
-import java.awt.geom.Point2D;
 @Service
 public class DaycareServiceImpl implements IDaycareService 
 {
@@ -36,8 +34,6 @@ public class DaycareServiceImpl implements IDaycareService
 	
 	@Autowired
 	DaycareRepository daycareRepository;
-	@Autowired
-	PostRepository postRepository;
 
 	@Override
 	public boolean addDaycare(Daycare daycare) {
@@ -107,8 +103,7 @@ public class DaycareServiceImpl implements IDaycareService
 	
 	
 	/*////////////////// APIs /////////////////////*/
-	
-	public List<Child> getDaycareChildren(int id){
+public List<Child> getDaycareChildren(int id){
 		
 		List<Daycare> daycares = findAll();
 		List<Child> daycareChildren = new ArrayList<Child>();
@@ -173,16 +168,16 @@ public class DaycareServiceImpl implements IDaycareService
 			    }
 			}
 	
-	public Map<String,String> getShortestPathsChildren(int daycareId) {
+	public List<String> getShortestPathsChildren(int daycareId) {
 		Daycare daycare = findById(daycareId);
 		Position daycarePosition = daycare.getPosition();
 		List<Child> daycareChildren = getDaycareChildren(daycareId);
 		Graph graph = new Graph();
-		Node daycareNode = new Node("Daycare",": 'https://www.google.com/maps/search/"+daycare.getPosition().getX()+","+daycare.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
+		Node daycareNode = new Node("Daycare","https://www.google.com/maps/search/"+daycare.getPosition().getX()+","+daycare.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ");
 		List<Node> nodes = new ArrayList<Node>();
 		int mainCounter = 0, secondaryCounter = 0;
 		for(Child child : daycareChildren) {
-			Node childNode = new Node(child.getName(),": 'https://www.google.com/maps/search/"+child.getPosition().getX()+","+child.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ' ");
+			Node childNode = new Node(child.getName(),"https://www.google.com/maps/search/"+child.getPosition().getX()+","+child.getPosition().getY()+"?sa=X&ved=2ahUKEwjPx4HuxsbvAhUJC-wKHQeiCzwQ8gEwAHoECAIQAQ");
 			nodes.add(childNode);
 		}
 		int nodesSize = nodes.size();
@@ -210,11 +205,10 @@ public class DaycareServiceImpl implements IDaycareService
 		for(Node node : pathGraph.getNodes()) {
 			map.put(node, node.getDistance());
 		}
-		LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-		map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedMap.put(x.getKey().getName(), x.getKey().getMaps()));;
-		return sortedMap;
+		List<String> sortedList = new ArrayList();
+		map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x -> sortedList.add(x.getKey().getMaps()));;
+		return sortedList;
 	}
-	
 	/* Node mainChildNode = new Node(child.getName());
 			if(counter == 0 ) {
 				daycareNode.addDestination(mainChildNode, 1);
@@ -235,25 +229,13 @@ public class DaycareServiceImpl implements IDaycareService
 
 	/*////////////////// APIs /////////////////////*/
 
-	///////////////////// POSTS /////////////////////
-	public List<Post> addDaycarePost(Post post){
-		Daycare daycare = daycareRepository.findById(post.getDaycare().getId()).get();
-		List<Post> posts = daycare.getPosts();
-		posts.add(post);
-		daycare.setPosts(posts);
-		daycareRepository.save(daycare);
-		return posts;
-	}
-	
-	
-	
-	///////////////////// POSTS /////////////////////
 	
 	
 	@Autowired
     FavoriteRepository favoriteRepository;
 	public int affecterDaycareFavoritee(Favorite favorite) 
 	{
+		System.out.println("Resp"+favorite.getDaycares().get(0).getId());
 		Daycare daycare = favorite.getDaycares().get(0);
 		Daycare daycareManagerEntity = daycareRepository.findById(favorite.getDaycares().get(0).getId()).get();
 		Favorite favoriteManagedEntity = favoriteRepository.findById(favorite.getId()).get();
@@ -301,11 +283,68 @@ public class DaycareServiceImpl implements IDaycareService
         return 1;
 	}
 	
-	public Favorite getFavoriteeById(int id) 
+	public List<Daycare> getFavoriteeById(int id) 
 	{
+		List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
+		int favoriteId = -1;
+		for(Favorite favorite : favorites) {
+			if(favorite.getVisitor().getId() == id) {
+				favoriteId = favorite.getId();
+				break;
+			}
+		}
 		
-		return favoriteRepository.findById(id).get();
-
-	
+		if(favoriteId != -1) {
+			return favoriteRepository.findById(favoriteId).get().getDaycares();
+		} else {
+			return new ArrayList();
+		}
 	}
+	public Daycare removeParent(int daycareId , int parentId) {
+		Daycare daycare = findById(daycareId);
+		List<Parent> parents = daycare.getParents();
+		for(int i = 0;i<parents.size();i++) {
+			if (parents.get(i).getId()==parentId) {
+				parents.remove(i);
+			}
+		}
+		daycare.setParents(parents);
+		daycareRepository.save(daycare);
+		return daycare;
+		
+		
+		
+	}
+	/////////////statistic/////////////
+    @Override
+    public Map<String,Double> getStatic(){
+    	List<Daycare> daycares = findAll();
+    	Map<String,Double> statics = new HashMap<String,Double>();
+		for(Daycare daycare : daycares) {
+			double sumLikes = 0;
+			double sumDislikes = 0;
+			List<Post> daycarePosts = daycare.getPosts();
+			for(Post post : daycarePosts) {
+				sumLikes += post.getLikes();
+				sumDislikes += post.getDislikes();
+			}
+			statics.put(daycare.getDaycareName(),(sumLikes+sumDislikes) != 0 ? 100*sumLikes/(sumLikes+sumDislikes) : 0);
+		
+		}
+    	LinkedHashMap<String,Double> sortedMap = new LinkedHashMap<>();
+    	statics.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()) );
+    	return sortedMap;
+    	
+    	
+    	
+    	
+    }
+    public List<Daycare> getClosestToPosition(Position position){
+    	
+    	List<Daycare> daycares = findAll();
+    	daycares.sort(( d1, d2) -> {
+    		return (int) (Point2D.distance(d1.getPosition().getX(), d1.getPosition().getY(), position.getX(),position.getY()) - Point2D.distance(d2.getPosition().getX(), d2.getPosition().getY(), position.getX(),position.getY())) * 1000;
+    	});
+    	return daycares;
+    }
 }

@@ -1,6 +1,7 @@
 package tn.kindergarten.spring.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 
@@ -39,25 +41,26 @@ public class AppoitementDoc implements Serializable {
 	private int id;
 	
 	@Column(name = "jour", nullable = false)
-	@Temporal(TemporalType.DATE)
+
 	@NotNull
 	//@Future(message="appoitement must be in the future")
-	private Date day;
-	
+	private LocalDate day;
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_parent")
 	private Parent parent;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_availability")
+	@JsonIgnore
 	private DoctorAvailability availability;
 	
 	@Column(name = "id_parent", nullable = false, insertable = false, updatable = false)
 	private int idParent;
 	
 	@Column(name = "id_availability", nullable = false, insertable = false, updatable = false)
-	private long idAvailability;
+	private int idAvailability;
 	
 	@Column(name = "is_Confirmed", nullable = false)
 	private boolean isConfirmed;
@@ -74,7 +77,7 @@ public class AppoitementDoc implements Serializable {
 		this.isConfirmed = isConfirmed;
 	}
 
-	public long getIdAvailability() {
+	public int getIdAvailability() {
 		return idAvailability;
 	}
 
@@ -91,11 +94,11 @@ public class AppoitementDoc implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDay() {
+	public LocalDate getDay() {
 		return day;
 	}
 
-	public void setDay(Date day) {
+	public void setDay(LocalDate day) {
 		this.day = day;
 	}
 
@@ -115,8 +118,8 @@ public class AppoitementDoc implements Serializable {
 		super();
 	}
 
-	public AppoitementDoc(Date day, Parent parent, DoctorAvailability availability, int idParent,
-			long idAvailability) {
+	public AppoitementDoc(LocalDate day, Parent parent, DoctorAvailability availability, int idParent,
+			int idAvailability) {
 		super();
 		this.day = day;
 		this.parent = parent;
@@ -125,7 +128,7 @@ public class AppoitementDoc implements Serializable {
 		this.idAvailability = idAvailability;
 	}
 
-	public long getIdParent() {
+	public int getIdParent() {
 		return idParent;
 	}
 
@@ -133,7 +136,7 @@ public class AppoitementDoc implements Serializable {
 		this.idParent = idParent;
 	}
 
-	public void setIdAvailability(long idAvailability) {
+	public void setIdAvailability(int idAvailability) {
 		this.idAvailability = idAvailability;
 	}
 
