@@ -18,6 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,21 +29,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import tn.kindergarten.spring.entities.Favorite;
 import tn.kindergarten.spring.entities.Status;
 
-
 @Entity
 public class Visitor implements Serializable {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
+	@Size(max=50)
 	private String name;
-	
+	@Size(max=50)
+
 	private String lastname;
-	
+    @NotNull
 	private int phonenumber;
-	
-	//@Column(unique=true)
+
+	// @Column(unique=true)
+	@Email(message="In needs to be @.")
 	private String email;
+<<<<<<< Updated upstream
 	
     private String Address;
     
@@ -71,6 +78,44 @@ public class Visitor implements Serializable {
 		this.birthday = birthday;
 		Status = status;
 	}
+=======
+	@Size(max=50)
+
+	private String Address;
+	@Size(max=50)
+
+	private String Password;
+
+	@OneToOne()
+	private FileDB filedb;
+	@Size(max=8)
+
+	private String cin;
+
+	public FileDB getFiledb() {
+		return filedb;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	@OneToOne
+	private Position position;
+
+	public void setFiledb(FileDB filedb) {
+		this.filedb = filedb;
+	}
+	@Size(max=50)
+
+	private String login;
+
+	private boolean isVIP;
+>>>>>>> Stashed changes
 
 	public boolean isVIP() {
 		return isVIP;
@@ -80,9 +125,8 @@ public class Visitor implements Serializable {
 		this.isVIP = isVIP;
 	}
 
-
-
 	@Temporal(TemporalType.DATE)
+<<<<<<< Updated upstream
     private Date birthday;
 	
 	
@@ -106,6 +150,10 @@ public class Visitor implements Serializable {
 		this.birthday = birthday;
 		Status = status;
 	}
+=======
+	@NotNull(message="{user.birthday.notNull")
+	private Date birthday;
+>>>>>>> Stashed changes
 
 	public String getName() {
 		return name;
@@ -155,6 +203,7 @@ public class Visitor implements Serializable {
 		Password = password;
 	}
 
+<<<<<<< Updated upstream
 	public String getImage() {
 		return Image;
 	}
@@ -163,6 +212,8 @@ public class Visitor implements Serializable {
 		Image = image;
 	}
 
+=======
+>>>>>>> Stashed changes
 	public String getCin() {
 		return cin;
 	}
@@ -187,9 +238,6 @@ public class Visitor implements Serializable {
 		this.birthday = birthday;
 	}
 
-	
-	
-	
 	public Status getStatus() {
 		return Status;
 	}
@@ -197,8 +245,6 @@ public class Visitor implements Serializable {
 	public void setStatus(Status status) {
 		Status = status;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -211,10 +257,30 @@ public class Visitor implements Serializable {
 	public Visitor() {
 		super();
 	}
+<<<<<<< Updated upstream
+=======
 
-	
+	public Visitor(int id, String name, String lastname, int phonenumber, String email, String address, String password,
+			FileDB filedb, String cin, String login, boolean isVIP, Date birthday,
+			tn.kindergarten.spring.entities.Status status) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.lastname = lastname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		Address = address;
+		Password = password;
+		this.filedb = filedb;
+		this.cin = cin;
+		this.login = login;
+		this.isVIP = isVIP;
+		this.birthday = birthday;
+		Status = status;
+	}
+>>>>>>> Stashed changes
 
 	@Enumerated(EnumType.STRING)
-	//@NotNull
+	// @NotNull
 	private Status Status;
 }

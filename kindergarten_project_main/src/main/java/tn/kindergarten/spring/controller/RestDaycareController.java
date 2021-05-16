@@ -51,7 +51,7 @@ public class RestDaycareController
 
 @GetMapping(value = "/DaycareFavorite/{favoriteId}") 
 @ResponseBody
-	public Favorite getFavorite(@PathVariable("favoriteId") int favoriteId) 
+	public List<Daycare> getFavorite(@PathVariable("favoriteId") int favoriteId) 
 	{
 	
 	return daycareServiceImpl.getFavoriteeById(favoriteId);

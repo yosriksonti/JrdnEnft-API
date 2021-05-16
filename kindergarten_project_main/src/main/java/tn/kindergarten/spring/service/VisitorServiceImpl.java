@@ -12,6 +12,16 @@ public class VisitorServiceImpl implements IVisitorService
 { 
 	@Autowired 
 	VisitorRepository visitorRepository ;
+<<<<<<< Updated upstream
+=======
+	@Autowired
+	FileDBRepository filedbrepository;
+	@Autowired
+	DaycareServiceImpl daycareService;
+	@Autowired
+	DaycareRepository daycareRepository;
+	
+>>>>>>> Stashed changes
 	@Override
 	public int addVisitorr(Visitor visitor) {
 		visitorRepository.save(visitor);
@@ -33,7 +43,7 @@ public class VisitorServiceImpl implements IVisitorService
 		visitor1.setEmail(visitor.getEmail());
 		visitor1.setLogin(visitor.getLogin());
 		visitor1.setPhonenumber(visitor.getPhonenumber());
-		
+		System.out.println(visitor1.getId());
 		visitorRepository.save(visitor1);
 	}
 	@Override
@@ -46,6 +56,7 @@ public class VisitorServiceImpl implements IVisitorService
 	
 	@Override
 	public Visitor read (int id) {
+		System.out.println(id);
 		Visitor visitor = visitorRepository.findById(id).get();
 		return visitor;
 	}
@@ -56,5 +67,30 @@ public class VisitorServiceImpl implements IVisitorService
 		visitorRepository.save(visitor);
 		return visitor;
 	}
+<<<<<<< Updated upstream
+=======
+	@Override
+	public List<Daycare> getClosest(Visitor visitor){
+		Visitor vis = read(visitor.getId());
+		return daycareService.getClosestToPosition(vis.getPosition());
+	}
+	
+	@Override
+	public List<Daycare> getDaycaresForVisitor(Visitor visitor){
+		Visitor vis = read(visitor.getId());
+		if(vis.isVIP()) {
+			return daycareService.findAll();
+		} else {
+			return daycareRepository.getThree();
+		}
+		
+	}
+	@Override
+	public List<Visitor> readAll(){
+		return (List<Visitor>) visitorRepository.findAll();
+	}
+	
+	
+>>>>>>> Stashed changes
 	
 }

@@ -52,7 +52,7 @@ public class PaymentService implements IPaymentService
 	    // set `accept` header
 	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-	    // create a map for post parameters
+	    // create a map for post parameters JSON(Key/Value)
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("receiverWallet", "600216e6fd5f7e2d78da9bf4");
 	    map.put("amount",payment.getAmount());
@@ -83,6 +83,7 @@ public class PaymentService implements IPaymentService
 	    {
 	    	String respString = response.toString();
 	    	;
+	    	//Json Parser
 //	    	try {
 //	    	JSONObject obj = new JSONObject(response );
 	    	String firstSlice = respString.substring(respString.indexOf("\"payUrl\":\"")+"\"payUrl\":\"".length());
